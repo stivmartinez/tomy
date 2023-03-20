@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "feature": "Lectura: ¿Cómo migrar WordPress a NextJS?",
+    "title": "Actualiza tu WordPress con tecnología moderna.    ",
+    "description": "Create a website in less than a minute that’s easy to manage and looks great, with instant page loads, SEO optimization, and no-code. All your content stays in Notion so you can focus on creating while Super handles the rest.",
+    "form": {
+      "placeholder": "URL de tu sitio web de WordPress",
+      "button": "Previsualizar"
+    }
+  }
+}

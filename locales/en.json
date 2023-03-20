@@ -1,0 +1,11 @@
+{
+  "hero": {
+    "feature": "Read: How to migrate WordPress to NextJS?",
+    "title": "Upgrade your WordPress with modern tech.",
+    "description": "The world is rapidly evolving. Don't fall behind; switch from WordPress to modern technologies in seconds.",
+    "form": {
+      "placeholder": "Your WordPress website URL",
+      "button": "Preview"
+    }
+  }
+}
