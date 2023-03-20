@@ -11,7 +11,7 @@ export default async function Home({
   const t = await getLocale(lang)
 
   return (
-    <StyledContainer>
+    <StyledContainer t={t}>
       <Landing t={t} />
     </StyledContainer>
   )

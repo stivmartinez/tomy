@@ -7,19 +7,21 @@ const inter = DM_Sans({ weight: ["400", "500"], subsets: ["latin"] })
 
 export default function StyledContainer({
   children,
+  t,
 }: {
   children: React.ReactNode
+  t: any
 }) {
   return (
     <div className="h-screen overflow-y-auto bg-white text-slate-600">
       <div className="flex h-full flex-col">
-        <Header />
+        <Header t={t} />
         <main
-          className={cn`${inter.className} w-full max-w-6xl mx-auto flex flex-col relative flex-1`}
+          className={cn`${inter.className} w-full max-w-6xl mx-auto flex flex-col relative px-4`}
         >
           {children}
         </main>
-        <Footer />
+        <Footer t={t} />
       </div>
     </div>
   )

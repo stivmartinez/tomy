@@ -7,20 +7,22 @@ import { Inter } from "next/font/google"
 
 const inter = Inter({ subsets: ["latin"] })
 
-export default function Header() {
+export default function Header({ t }: { t: any }) {
   return (
-    <header className={cn`${inter.className} w-full flex items-center border-b`}>
-      <div className="mx-auto flex w-full max-w-6xl flex-row items-center justify-between">
-        <div className={cn`w-28 py-4`}>
+    <header
+      className={cn`${inter.className} w-full flex items-center border-b`}
+    >
+      <div className="mx-auto flex w-full max-w-6xl flex-row items-center justify-between px-4">
+        <div className={cn`w-24 py-4 md:w-28`}>
           <img src="/logo.svg" alt="Logo" className="w-full" />
         </div>
         <div className="flex flex-row gap-2">
-          <Button className="h-auto w-fit gap-2 whitespace-nowrap bg-transparent py-2 px-5 text-sm font-normal text-slate-900 hover:bg-transparent">
-            <span>Sign in</span>
-            <ChevronRight size="20" />
+          <Button className="h-8 w-fit gap-2 whitespace-nowrap bg-transparent px-3 text-xs font-normal text-slate-900 hover:bg-transparent sm:text-sm">
+            <span>{t.header.buttons.signIn}</span>
+            <ChevronRight size="16" />
           </Button>
-          <Button className="h-auto w-fit gap-2 whitespace-nowrap border border-slate-700 py-2 px-5 text-sm font-normal hover:bg-transparent">
-            <span>Request access</span>
+          <Button className="h-8 w-fit gap-2 whitespace-nowrap border border-slate-700 px-3 text-xs font-normal md:text-sm">
+            <span>{t.header.buttons.requestAccess}</span>
           </Button>
         </div>
       </div>

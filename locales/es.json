@@ -1,11 +1,27 @@
 {
+  "seo": {
+    "home": {
+      "title": "Themesei - WordPress a tencología moderna",
+      "description": "Reinventa tu sitio web con el poder de Next.js y un entorno tecnológico avanzado para aumentar el tráfico y optimizar la experiencia del usuario."
+    }
+  },
+  "header": {
+    "buttons": {
+      "signIn": "Iniciar sesión",
+      "requestAccess": "Solicitar acceso"
+    }
+  },
+  "footer": {
+    "copyright": "© 2023 Themesei. Todos los derechos reservados."
+  },
   "hero": {
     "feature": "Lectura: ¿Cómo migrar WordPress a NextJS?",
-    "title": "Actualiza tu WordPress con tecnología moderna.    ",
-    "description": "Create a website in less than a minute that’s easy to manage and looks great, with instant page loads, SEO optimization, and no-code. All your content stays in Notion so you can focus on creating while Super handles the rest.",
+    "title": "Convierte WordPress a una tecnología optimizada para SEO y rendimiento",
+    "description": "Reinventa tu sitio web con el poder de Next.js y un entorno tecnológico avanzado para aumentar el tráfico y optimizar la experiencia del usuario.",
     "form": {
       "placeholder": "URL de tu sitio web de WordPress",
       "button": "Previsualizar"
-    }
+    },
+    "randomDemo": "Demo aleatoria"
   }
 }
