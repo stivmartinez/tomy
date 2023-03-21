@@ -21,9 +21,6 @@ export default function Header({ t }: { t: any }) {
             <span>{t.header.buttons.signIn}</span>
             <ChevronRight size="16" />
           </Button>
-          <Button className="h-8 w-fit gap-2 whitespace-nowrap border border-slate-700 px-3 text-xs font-normal md:text-sm">
-            <span>{t.header.buttons.requestAccess}</span>
-          </Button>
         </div>
       </div>
     </header>

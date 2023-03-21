@@ -1,7 +1,7 @@
 import Footer from "@/components/footer"
 import Header from "@/components/header"
 import { cn } from "@/lib/utils"
-import { DM_Sans, Inter } from "next/font/google"
+import { DM_Sans } from "next/font/google"
 
 const inter = DM_Sans({ weight: ["400", "500"], subsets: ["latin"] })
 
@@ -13,7 +13,7 @@ export default function StyledContainer({
   t: any
 }) {
   return (
-    <div className="h-screen overflow-y-auto bg-white text-slate-600">
+    <div className="overflow-y-auto text-slate-600">
       <div className="flex h-full flex-col">
         <Header t={t} />
         <main

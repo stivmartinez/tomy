@@ -1,42 +1,34 @@
-import { ArrowRight, RefreshCcw } from "lucide-react"
-
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 /* eslint-disable @next/next/no-img-element */
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ArrowRight, RefreshCcw } from "lucide-react"
 
 export default function LandingHero({ t }: { t: any }) {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-6 py-16 text-center md:py-28">
       <div className="flex w-60 flex-row items-center justify-center gap-4">
-        <img
-          src="/wordpress-logo.svg"
-          alt="Logo"
-          className="w-12 md:w-20"
-        />
+        <img src="/wordpress-logo.svg" alt="Logo" className="w-12 md:w-20" />
         <div className="flex animate-pulse flex-row justify-between gap-1">
           <div className="h-1 w-1 animate-bounce rounded-full bg-gray-700 p-0"></div>
           <div className="h-1 w-1 animate-bounce rounded-full bg-gray-700 p-0 delay-200"></div>
           <div className="h-1 w-1 animate-bounce rounded-full bg-gray-700 p-0 delay-500"></div>
         </div>
-        <img
-          src="/themesei-logo.svg"
-          alt="Logo"
-          className="w-14 md:w-24"
-        />
+        <img src="/themesei-logo.svg" alt="Logo" className="w-12 md:w-20" />
       </div>
       <a className="flex w-fit cursor-pointer flex-row items-center gap-2 rounded-full bg-blue-600/10 px-3 py-1 text-xs text-blue-900 hover:bg-blue-600/20 md:text-sm">
         <h1 className="text-blue-900">{t.hero.feature}</h1>
         <ArrowRight size="14" />
       </a>
       <h2
-        className={cn`font-bold tracking-tight text-gray-900 text-xl max-w-sm leading-tight md:text-4xl md:max-w-2xl`}
+        className={cn`font-bold tracking-tight text-gray-900 text-xl max-w-sm md:text-4xl md:max-w-2xl`}
+        style={{ lineHeight: "1.25" }}
       >
         {t.hero.title}
       </h2>
       <p
-        className={cn`text-md leading-6 max-w-sm md:text-lg md:max-w-xl md:leading-7`}
+        className={cn`text-md leading-6 max-w-sm md:text-md md:max-w-lg md:leading-7`}
       >
         {t.hero.description}
       </p>
@@ -44,7 +36,7 @@ export default function LandingHero({ t }: { t: any }) {
         <div className="mt-4 flex w-full items-center justify-center rounded-t-2xl bg-slate-200 p-2">
           <form className="mx-lg flex w-full max-w-2xl flex-col items-center justify-center gap-2 md:flex-row md:gap-4">
             <div className="relative w-full">
-              <span className="md:text-md pointer-events-none absolute top-[14px] left-6 text-sm md:top-3 md:left-8">
+              <span className="absolute top-0 left-8 flex h-full items-center justify-center">
                 https://
               </span>
               <Input
