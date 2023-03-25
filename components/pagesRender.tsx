@@ -187,7 +187,8 @@ const PagesRender: FunctionComponent<PagesRenderProps> = ({
                     {
                       id: "34567890",
                       tag: "div",
-                      className: "flex flex-col w-full",
+                      className:
+                        "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2",
                       componentName: "BlockPosts",
                       props: {
                         posts: "regularPosts",
