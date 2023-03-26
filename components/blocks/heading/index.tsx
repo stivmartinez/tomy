@@ -1,22 +1,21 @@
 import React from "react"
 
+import { cn } from "@/lib/utils"
+
 interface BlockHeadingProps {
   title: string
-  subtitle?: string
-  titleClassName?: string
-  subtitleClassName?: string
+  className?: string
+  tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
 }
 
 export default function BlockHeading({
   title,
-  subtitle,
-  titleClassName,
-  subtitleClassName,
+  className,
+  tag = "h1",
 }: BlockHeadingProps) {
-  return (
-    <>
-      <h1 className={titleClassName}>{title}</h1>
-      {subtitle && <h2 className={subtitleClassName}>{subtitle}</h2>}
-    </>
-  )
+  const TitleTag = tag
+
+  const defaultClassName = cn("my-3 text-3xl font-bold", className)
+
+  return <TitleTag className={defaultClassName}>{title}</TitleTag>
 }

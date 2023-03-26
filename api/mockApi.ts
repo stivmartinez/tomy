@@ -7,24 +7,29 @@ export const apiResponse = {
       {
         id: "1234",
         tag: "section",
-        className: "w-full py-4 bg-black",
+        className: "w-full",
         children: [
           {
             id: "12345",
             tag: "div",
             className:
-              "w-full max-w-6xl mx-auto flex flex-row justify-between",
+              "w-full max-w-6xl mx-auto flex flex-row justify-between py-6",
             children: [
               {
                 id: "123456",
                 tag: "div",
-                className: "flex flex-col w-full",
+                className: "flex flex-col w-full justify-center",
                 children: [
                   {
                     id: "1234567",
-                    tag: "h1",
-                    className: "flex flex-col w-full text-2xl text-white",
-                    content: "Viralike",
+                    tag: "div",
+                    componentName: "BlockLogo",
+                    className: "w-32",
+                    props: {
+                      src: "/logo.svg",
+                      alt: "logo",
+                      className: "w-full h-auto",
+                    },
                   },
                 ],
               },
@@ -41,7 +46,7 @@ export const apiResponse = {
                       icon: "Facebook",
                       type: "a",
                       className:
-                        "inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-600 text-white",
+                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-blue-600 text-white",
                       props: {
                         href: "https://facebook.com",
                         target: "_blank",
@@ -54,7 +59,7 @@ export const apiResponse = {
                       icon: "Twitter",
                       type: "a",
                       className:
-                        "inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-400 text-white",
+                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-blue-400 text-white",
                       props: {
                         href: "https://twitter.com",
                         target: "_blank",
@@ -67,7 +72,7 @@ export const apiResponse = {
                       icon: "Youtube",
                       type: "a",
                       className:
-                        "inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-600 text-white",
+                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-red-600 text-white",
                       props: {
                         href: "https://youtube.com",
                         target: "_blank",
@@ -80,7 +85,7 @@ export const apiResponse = {
                       icon: "Instagram",
                       type: "a",
                       className:
-                        "inline-flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white",
+                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white",
                       props: {
                         href: "https://instagram.com",
                         target: "_blank",
@@ -94,18 +99,30 @@ export const apiResponse = {
           },
         ],
       },
+      {
+        id: "1234",
+        tag: "nav",
+        className: "w-full",
+        children: [
+          {
+            id: "12345",
+            tag: "div",
+            className:
+              "w-full max-w-6xl mx-auto flex flex-row justify-between h-12 bg-black rounded-xl",
+          },
+        ],
+      },
     ],
   },
   body: {
     id: "345",
     tag: "main",
-    className: "w-full",
+    className: "w-full my-3",
     children: [
       {
         id: "3456",
         tag: "section",
         className: "w-full",
-        style: { backgroundColor: "#f0f0f0", minHeight: "100vh" },
         children: [
           {
             id: "34567",
@@ -115,57 +132,19 @@ export const apiResponse = {
               {
                 id: "345678",
                 tag: "div",
-                className: "flex flex-col w-8/12",
+                className: "w-full",
                 children: [
-                  {
-                    id: "3456789",
-                    tag: "div",
-                    className: "flex flex-col w-full",
-                    style: { backgroundColor: "#ffffff", minHeight: "300px" },
-                    componentName: "BlockHeading",
-                    props: {
-                      title: "My Block Heading",
-                      subtitle: "A sample subtitle",
-                      titleClassName: "text-4xl",
-                      subtitleClassName: "text-2xl",
-                    },
-                  },
                   {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2",
+                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
                     componentName: "BlockPosts",
                     props: {
                       posts: "regularPosts",
                     },
-                  },
-                  {
-                    id: "345678901",
-                    tag: "div",
-                    className: "flex flex-col w-full",
-                    style: { backgroundColor: "#ffffff", minHeight: "300px" },
-                    componentName: "BlockLogo",
-                    props: {
-                      src: "/logo.svg",
-                      alt: "logo",
-                    },
-                  },
-                  {
-                    id: "3456789012",
-                    tag: "div",
-                    className: "flex flex-col w-full",
-                    style: { backgroundColor: "#ffffff", minHeight: "300px" },
-                    content: "Main Content",
-                  },
+                  }
                 ],
-              },
-              {
-                id: "34567890123",
-                tag: "div",
-                className: "flex flex-col w-4/12",
-                style: { backgroundColor: "#e6e6e6", minHeight: "300px" },
-                content: "Sidebar",
               },
             ],
           },
@@ -173,10 +152,29 @@ export const apiResponse = {
       },
     ],
   },
-  footer: {},
+  footer: {
+    id: "567",
+    tag: "footer",
+    className: "w-full",
+    children: [
+      {
+        id: "12324",
+        tag: "section",
+        className: "w-full max-w-6xl mx-auto flex flex-row justify-between my-6",
+        children: [
+          {
+            id: "121345",
+            tag: "p",
+            className: 'text-sm',
+            content: "© Themesei 2021 - All rights reserved",
+          },
+        ],
+      },
+    ],
+  },
 }
 
-export const fetchApiResponse = (delay: number = 2000): Promise<typeof apiResponse> => {
+export const fetchApiResponse = (delay: number = 500): Promise<typeof apiResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(apiResponse);

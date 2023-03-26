@@ -45,6 +45,7 @@ const PagesRender: FunctionComponent<PagesRenderProps> = ({
     <>
       {renderPagesRender(template?.header)}
       {renderPagesRender(template?.body)}
+      {renderPagesRender(template?.footer)}
     </>
   )
 }
