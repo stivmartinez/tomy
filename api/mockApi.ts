@@ -12,7 +12,8 @@ export const apiResponse = {
           {
             id: "12345",
             tag: "div",
-            className: "w-full max-w-6xl mx-auto flex flex-row justify-between",
+            className:
+              "w-full max-w-6xl mx-auto flex flex-row justify-between",
             children: [
               {
                 id: "123456",
@@ -173,4 +174,12 @@ export const apiResponse = {
     ],
   },
   footer: {},
+}
+
+export const fetchApiResponse = (delay: number = 2000): Promise<typeof apiResponse> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(apiResponse);
+    }, delay);
+  });
 };

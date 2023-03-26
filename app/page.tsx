@@ -1,4 +1,5 @@
 import React from "react"
+import { fetchApiResponse } from "@/api/mockApi"
 
 import {
   concatenateMediaAndCategories,
@@ -18,12 +19,8 @@ export default async function Home() {
   const featuredPostsParams = generatePostParams({ perPage: 3, featured: true })
   const featuredPosts = await getPosts(featuredPostsParams)
 
-  // Fetch sticky posts
-  const stickyPostsParams = generatePostParams({ perPage: 3, sticky: true })
-  const stickyPosts = await getPosts(stickyPostsParams)
-
   // Fetch media and categories for all the post types
-  const allPosts = [...regularPosts, ...featuredPosts, ...stickyPosts]
+  const allPosts = [...regularPosts, ...featuredPosts]
   const [media, categories] = await Promise.all([
     getMedia(allPosts),
     getCategories(allPosts),
@@ -42,18 +39,15 @@ export default async function Home() {
     categories
   )
 
-  const stickyPostsWithMediaAndCategories = concatenateMediaAndCategories(
-    stickyPosts,
-    media,
-    categories
-  )
+  // Get API response
+  const template = await fetchApiResponse()
 
   // Pass the posts to the PagesRender component
   return (
     <PagesRender
+      template={template}
       regularPosts={regularPostsWithMediaAndCategories}
       featuredPosts={featuredPostsWithMediaAndCategories}
-      stickyPosts={stickyPostsWithMediaAndCategories}
     />
   )
 }

@@ -1,61 +1,15 @@
 import React, { FunctionComponent, ReactElement } from "react"
 import dynamic from "next/dynamic"
 
-import { apiResponse } from "@/lib/apiResponse"
-import componentsMap from "./componentsMap"
-
-export type { Post }
-
-interface JSONComponent {
-  id: string
-  tag: string
-  className?: string
-  children?: JSONComponent[]
-  content?: string
-  style?: React.CSSProperties
-  componentName?: string
-  props?: Record<string, any>
-}
-
-interface Media {
-  id: number
-  source_url: string
-  // Add any other relevant properties for media
-}
-
-interface Category {
-  id: number
-  name: string
-  // Add any other relevant properties for categories
-}
-
-interface Post {
-  id: number
-  slug: string
-  title: {
-    rendered: string
-  }
-  featured_media: number
-  categories: number[]
-  media: Media
-  category: Category
-}
-
-interface PagesRenderProps {
-  regularPosts: Post[]
-  featuredPosts: Post[]
-  stickyPosts: Post[]
-}
+import { JSONComponent } from "@/types/JSONComponent"
+import { PagesRenderProps } from "@/types/PagesRenderProps"
+import componentsMap from "@/components/componentsMap"
 
 const PagesRender: FunctionComponent<PagesRenderProps> = ({
+  template,
   regularPosts,
-  featuredPosts,
-  stickyPosts,
 }) => {
-  const renderPagesRender = (
-    component: JSONComponent,
-    index: number
-  ): ReactElement => {
+  const renderPagesRender = (component: JSONComponent): ReactElement => {
     const {
       id,
       tag,
@@ -80,17 +34,17 @@ const PagesRender: FunctionComponent<PagesRenderProps> = ({
         : props
 
     return (
-      <Tag key={id || index} className={className} style={style}>
+      <Tag key={id} className={className} style={style}>
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
-        {children?.map((child, index) => renderPagesRender(child, index))}
+        {children?.map((child) => renderPagesRender(child))}
       </Tag>
     )
   }
 
   return (
     <>
-      {renderPagesRender(apiResponse.header, 0)}
-      {renderPagesRender(apiResponse.body, 0)}
+      {renderPagesRender(template?.header)}
+      {renderPagesRender(template?.body)}
     </>
   )
 }
