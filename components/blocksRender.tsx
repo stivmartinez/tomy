@@ -1,11 +1,10 @@
-import React, { FunctionComponent, ReactElement } from "react"
-import dynamic from "next/dynamic"
-
-import { JSONComponent } from "@/types/JSONComponent"
 import componentsMap from "@/components/componentsMap"
+import { JSONComponent } from "@/types/JSONComponent"
+import dynamic from "next/dynamic"
+import React, { FunctionComponent, ReactElement } from "react"
 
-const PagesRender: FunctionComponent<any> = ({ template, data }) => {
-  const renderPagesRender = (component: JSONComponent): ReactElement => {
+const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
+  const blocksRender = (component: JSONComponent): ReactElement => {
     const {
       id,
       tag,
@@ -32,18 +31,12 @@ const PagesRender: FunctionComponent<any> = ({ template, data }) => {
     return (
       <Tag key={id} className={className} style={style}>
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
-        {children?.map((child) => renderPagesRender(child))}
+        {children?.map((child) => blocksRender(child))}
       </Tag>
     )
   }
 
-  return (
-    <>
-      {renderPagesRender(template?.header)}
-      {renderPagesRender(template?.body)}
-      {renderPagesRender(template?.footer)}
-    </>
-  )
+  return blocksRender(template)
 }
 
-export default PagesRender
+export default BlocksRender

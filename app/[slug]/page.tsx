@@ -8,7 +8,7 @@ import {
   getMedia,
   getPosts,
 } from "@/lib/fetchPosts"
-import PagesRender from "@/components/pagesRender"
+import BlocksRender from "@/components/blocksRender"
 
 export default async function Single({ params }: { params: { slug: string } }) {
   // Fetch post
@@ -32,9 +32,9 @@ export default async function Single({ params }: { params: { slug: string } }) {
   // Get API response
   const template = await fetchApiResponse()
 
-  // Pass the posts to the PagesRender component
+  // Pass the posts to the BlocksRender component
   return (
-    <PagesRender
+    <BlocksRender
       template={template}
       data={{
         wordpress: {

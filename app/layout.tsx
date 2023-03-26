@@ -3,6 +3,9 @@ import { Inter } from "next/font/google"
 
 import { cn } from "@/lib/utils"
 import "./globals.css"
+import { fetchApiResponse } from "@/api/mockApi"
+
+import BlocksRender from "@/components/blocksRender"
 
 const inter = Inter({ weight: ["400", "600"], subsets: ["latin"] })
 
@@ -29,9 +32,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const template = await fetchApiResponse()
+
   return (
     <html lang="en">
-      <body className={cn`${inter.className} text-slate-900`}>{children}</body>
+      <body className={cn`${inter.className} text-slate-900`}>
+        <BlocksRender template={template.header} />
+        {children}
+        <BlocksRender template={template.footer} />
+      </body>
     </html>
   )
 }
