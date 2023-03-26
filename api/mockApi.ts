@@ -141,9 +141,9 @@ export const apiResponse = {
                       "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
                     componentName: "BlockPosts",
                     props: {
-                      posts: "regularPosts",
+                      posts: "recent",
                     },
-                  }
+                  },
                 ],
               },
             ],

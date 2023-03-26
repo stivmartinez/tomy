@@ -2,13 +2,9 @@ import React, { FunctionComponent, ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 import { JSONComponent } from "@/types/JSONComponent"
-import { PagesRenderProps } from "@/types/PagesRenderProps"
 import componentsMap from "@/components/componentsMap"
 
-const PagesRender: FunctionComponent<PagesRenderProps> = ({
-  template,
-  regularPosts,
-}) => {
+const PagesRender: FunctionComponent<any> = ({ template, data }) => {
   const renderPagesRender = (component: JSONComponent): ReactElement => {
     const {
       id,
@@ -27,10 +23,10 @@ const PagesRender: FunctionComponent<PagesRenderProps> = ({
         ? dynamic(() => import(`${componentsMap[componentName]}`))
         : null
 
-    // Check if props contain the "posts" key with a value of "regularPosts"
+    // Check if props contain the "posts" key and update it with the corresponding data from the "data" prop
     const updatedProps =
-      props?.posts === "regularPosts"
-        ? { ...props, posts: regularPosts }
+      props?.posts && data?.wordpress?.posts?.[props.posts]
+        ? { ...props, posts: data.wordpress.posts[props.posts] }
         : props
 
     return (

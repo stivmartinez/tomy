@@ -3,6 +3,32 @@ import React from "react"
 import Link from "next/link"
 import { Calendar } from "lucide-react"
 
+/*
+How to use this component:
+
+RECENT:
+{
+  "id": "123456",
+  "tag": "div",
+  "className": "flex flex-wrap justify-between",
+  "componentName": "BlockPosts",
+  "props": {
+    "posts": "recent"
+  }
+}
+
+FEATURED EXAMPLE:
+{
+  "id": "789012",
+  "tag": "div",
+  "className": "flex flex-wrap justify-between",
+  "componentName": "BlockPosts",
+  "props": {
+    "posts": "featured"
+  }
+}
+*/
+
 interface TypePost {
   slug?: string
   media?: {

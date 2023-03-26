@@ -46,8 +46,16 @@ export default async function Home() {
   return (
     <PagesRender
       template={template}
-      regularPosts={regularPostsWithMediaAndCategories}
-      featuredPosts={featuredPostsWithMediaAndCategories}
+      data={{
+        wordpress: {
+          posts: {
+            recent: regularPostsWithMediaAndCategories,
+            featured: featuredPostsWithMediaAndCategories,
+            // Add more custom post sorts here, e.g.:
+            // popular: popularPostsWithMediaAndCategories,
+          },
+        },
+      }}
     />
   )
 }
