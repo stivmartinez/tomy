@@ -1,4 +1,4 @@
-const website = "https://disenadorescolombianos.co";
+const website = "https://mejorconsalud.as.com";
 
 interface Post {
   id: number;
