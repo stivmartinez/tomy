@@ -1,5 +1,5 @@
 import React from "react"
-import { fetchApiResponse } from "@/api/single"
+import { fetchSingle } from "@/api/single"
 
 import {
   concatenateMediaAndCategories,
@@ -30,12 +30,12 @@ export default async function Single({ params }: { params: { slug: string } }) {
   )
 
   // Get API response
-  const template = await fetchApiResponse()
+  const body = (await fetchSingle()).body
 
   // Pass the posts to the BlocksRender component
   return (
     <BlocksRender
-      template={template}
+      template={body}
       data={{
         wordpress: {
           posts: {

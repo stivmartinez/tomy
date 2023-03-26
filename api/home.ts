@@ -23,10 +23,10 @@ export const apiResponse = {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "w-full",
-                    componentName: "BlockSingle",
+                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+                    componentName: "BlockPosts",
                     props: {
-                      posts: "single",
+                      posts: "recent",
                     },
                   },
                 ],
@@ -39,7 +39,7 @@ export const apiResponse = {
   },
 }
 
-export const fetchSingle = (delay: number = 500): Promise<typeof apiResponse> => {
+export const fetchHome = (delay: number = 500): Promise<typeof apiResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(apiResponse);

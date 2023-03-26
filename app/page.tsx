@@ -1,7 +1,14 @@
-import { fetchApiResponse } from "@/api/mockApi"
-import BlocksRender from "@/components/blocksRender"
-import { concatenateMediaAndCategories, generatePostParams, getCategories, getMedia, getPosts } from "@/lib/fetchPosts"
 import React from "react"
+import { fetchHome } from "@/api/home"
+
+import {
+  concatenateMediaAndCategories,
+  generatePostParams,
+  getCategories,
+  getMedia,
+  getPosts,
+} from "@/lib/fetchPosts"
+import BlocksRender from "@/components/blocksRender"
 
 export default async function Home() {
   // Fetch regular posts
@@ -33,12 +40,12 @@ export default async function Home() {
   )
 
   // Get API response
-  const template = await fetchApiResponse()
+  const body = (await fetchHome()).body
 
   // Pass the posts to the BlocksRender component
   return (
     <BlocksRender
-      template={template.body}
+      template={body}
       data={{
         wordpress: {
           posts: {

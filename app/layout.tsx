@@ -3,7 +3,8 @@ import { Inter } from "next/font/google"
 
 import { cn } from "@/lib/utils"
 import "./globals.css"
-import { fetchApiResponse } from "@/api/mockApi"
+import { fetchFooter } from "@/api/footer"
+import { fetchHeader } from "@/api/header"
 
 import BlocksRender from "@/components/blocksRender"
 
@@ -32,14 +33,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const template = await fetchApiResponse()
+  const header = (await fetchHeader()).header
+  const footer = (await fetchFooter()).footer
 
   return (
     <html lang="en">
       <body className={cn`${inter.className} text-slate-900`}>
-        <BlocksRender template={template.header} />
+        <BlocksRender template={header} />
         {children}
-        <BlocksRender template={template.footer} />
+        <BlocksRender template={footer} />
       </body>
     </html>
   )
