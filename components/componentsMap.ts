@@ -4,6 +4,7 @@ const componentsMap: Record<string, string> = {
   BlockMenu: "./blocks/menu",
   BlockSocial: "./blocks/social",
   BlockPosts: "./blocks/posts",
+  BlockSingle: "./blocks/single",
 };
 
 export default componentsMap;

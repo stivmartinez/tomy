@@ -100,7 +100,7 @@ export const apiResponse = {
         ],
       },
       {
-        id: "188234",
+        id: "123488989",
         tag: "nav",
         className: "w-full",
         children: [
@@ -138,10 +138,10 @@ export const apiResponse = {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
-                    componentName: "BlockPosts",
+                      "w-full",
+                    componentName: "BlockSingle",
                     props: {
-                      posts: "recent",
+                      posts: "single",
                     },
                   },
                 ],
