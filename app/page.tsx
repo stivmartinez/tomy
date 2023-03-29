@@ -20,7 +20,8 @@ export default async function Home() {
   // Fetch posts for each type of post
   const allPostsPromises = Object.entries(postParams).map(
     async ([postType, params]) => {
-      const posts = await getPosts(params)
+      // Pass the params to the getPosts function
+      const posts = await getPosts({ ...params, post_type: postType })
       return { postType, posts }
     }
   )

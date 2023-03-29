@@ -28,7 +28,8 @@ export const apiResponse = {
                     props: {
                       posts: "featured",
                       params: {
-                        limit: 3,
+                        //post_type: "page",
+                        per_page: 3,
                         page: 1,
                       },
                       variants: {
@@ -37,6 +38,7 @@ export const apiResponse = {
                         //category: false,
                         //caption: false
                         //description: false,
+                        //inverse: true,
                         title: {
                           size: "md",
                         }
@@ -52,7 +54,7 @@ export const apiResponse = {
                     props: {
                       posts: "recent",
                       params: {
-                        limit: 9,
+                        per_page: 2,
                         page: 1,
                       },
                       imageHeight: "3xl",

@@ -96,15 +96,25 @@ interface Category {
 
 const fetchApi = async (
   endpoint: string,
-  params: Record<string, string>
+  params: Record<string, string>,
+  post_type?: string // Add the post_type parameter
 ) => {
   const searchParams = new URLSearchParams(params);
+
+  // Add the post_type to the searchParams if it exists
+  if (post_type) {
+    searchParams.append("post_type", post_type);
+  }
+
   const res = await fetch(`${website}${endpoint}?${searchParams}`);
   return res.json();
 };
 
-async function getPosts(params: Record<string, string> = {}): Promise<Post[]> {
-  return fetchApi("/wp-json/wp/v2/posts", params);
+async function getPosts(
+  params: Record<string, string> = {},
+  post_type?: string // Add the post_type parameter
+): Promise<Post[]> {
+  return fetchApi("/wp-json/wp/v2/posts", params, post_type); // Pass the post_type parameter
 }
 
 async function getMedia(posts: Post[]): Promise<Media[]> {
