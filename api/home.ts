@@ -23,12 +23,16 @@ export const apiResponse = {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-3 my-3 sm:grid-cols-1 lg:grid-cols-2",
+                      "grid gap-3 my-3 sm:grid-cols-1 lg:grid-cols-3",
                     componentName: "BlockPosts",
                     props: {
-                      posts: "recent",
+                      posts: "featured",
+                      params: {
+                        limit: 3,
+                        page: 1,
+                      },
                       variants: {
-                        type: "list",
+                        type: "card",
                         //image: false,
                         //category: false,
                         //caption: false
@@ -43,13 +47,17 @@ export const apiResponse = {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-8 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+                      "grid gap-8 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
                     componentName: "BlockPosts",
                     props: {
                       posts: "recent",
+                      params: {
+                        limit: 9,
+                        page: 1,
+                      },
                       imageHeight: "3xl",
                       variants: {
-                        type: "card",
+                        type: "list",
                         //overlay: true,
                       },
                     },

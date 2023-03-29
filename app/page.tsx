@@ -1,9 +1,8 @@
-import React from "react"
 import { fetchHome } from "@/api/home"
 
+import { extractPostParams } from "@/lib/extractPostParams"
 import {
   concatenateMediaAndCategories,
-  generatePostParams,
   getCategories,
   getMedia,
   getPosts,
@@ -11,49 +10,53 @@ import {
 import BlocksRender from "@/components/blocksRender"
 
 export default async function Home() {
-  // Fetch regular posts
-  const regularPostsParams = generatePostParams({ perPage: 9 })
-  const regularPosts = await getPosts(regularPostsParams)
+  // Get API response
+  const response = await fetchHome()
+  const body = response.body
 
-  // Fetch featured posts
-  const featuredPostsParams = generatePostParams({ perPage: 3, featured: true })
-  const featuredPosts = await getPosts(featuredPostsParams)
+  // Extract the post params from the body
+  const postParams = extractPostParams(body)
+
+  // Fetch posts for each type of post
+  const allPostsPromises = Object.entries(postParams).map(
+    async ([postType, params]) => {
+      const posts = await getPosts(params)
+      return { postType, posts }
+    }
+  )
+
+  const allPostsArray = await Promise.all(allPostsPromises)
+  const allPosts = allPostsArray.reduce((acc, { postType, posts }) => {
+    acc[postType] = posts
+    return acc
+  }, {} as Record<string, any[]>)
 
   // Fetch media and categories for all the post types
-  const allPosts = [...regularPosts, ...featuredPosts]
+  const allPostsCombined = Object.values(allPosts).flat()
   const [media, categories] = await Promise.all([
-    getMedia(allPosts),
-    getCategories(allPosts),
+    getMedia(allPostsCombined),
+    getCategories(allPostsCombined),
   ])
 
   // Concatenate media and categories for each post type
-  const regularPostsWithMediaAndCategories = concatenateMediaAndCategories(
-    regularPosts,
-    media,
-    categories
+  const allPostsWithMediaAndCategories = Object.fromEntries(
+    Object.entries(allPosts).map(([postType, posts]) => [
+      postType,
+      concatenateMediaAndCategories(posts, media, categories),
+    ])
   )
 
-  const featuredPostsWithMediaAndCategories = concatenateMediaAndCategories(
-    featuredPosts,
-    media,
-    categories
-  )
-
-  // Get API response
-  const body = (await fetchHome()).body
-
-  // Pass the posts to the BlocksRender component
   return (
     <BlocksRender
       template={body}
       data={{
         wordpress: {
-          posts: {
-            recent: regularPostsWithMediaAndCategories,
-            featured: featuredPostsWithMediaAndCategories,
-            // Add more custom post sorts here, e.g.:
-            // popular: popularPostsWithMediaAndCategories,
-          },
+          posts: allPostsWithMediaAndCategories,
+          // This will include all custom post sorts, e.g.:
+          // recent: regularPostsWithMediaAndCategories,
+          // featured: featuredPostsWithMediaAndCategories,
+          // pinned: pinnedPostsWithMediaAndCategories,
+          // sticky: stickyPostsWithMediaAndCategories,
         },
       }}
     />

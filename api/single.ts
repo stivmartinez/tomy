@@ -25,6 +25,9 @@ export const apiResponse = {
                     className:
                       "w-full",
                     componentName: "BlockSingle",
+                    params: {
+                      slug: "{post_slug}",
+                    },
                     props: {
                       posts: "single",
                     },

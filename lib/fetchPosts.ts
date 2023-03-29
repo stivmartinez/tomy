@@ -186,80 +186,9 @@ function concatenateMediaAndCategories(
   });
 }
 
-function generatePostParams({
-  page = 1,
-  perPage = 9,
-  featured,
-  sticky,
-  search,
-  categories,
-  tags,
-  author,
-  orderby,
-  order,
-  slug
-}: {
-  page?: number;
-  perPage?: number;
-  featured?: boolean;
-  sticky?: boolean;
-  search?: string;
-  categories?: string;
-  tags?: string;
-  author?: string;
-  orderby?: string;
-  order?: string;
-  slug?: string;
-}): Record<string, string> {
-  const params: Record<string, string> = {
-    page: String(page),
-    per_page: String(perPage),
-  };
-
-  if (featured) {
-    params["filter[meta_key]"] = "featured";
-    params["filter[meta_value]"] = "1";
-  }
-
-  if (sticky) {
-    params["sticky"] = "true";
-  }
-
-  if (search) {
-    params["search"] = search;
-  }
-
-  if (categories) {
-    params["categories"] = categories;
-  }
-
-  if (tags) {
-    params["tags"] = tags;
-  }
-
-  if (author) {
-    params["author"] = author;
-  }
-
-  if (orderby) {
-    params["orderby"] = orderby;
-  }
-
-  if (order) {
-    params["order"] = order;
-  }
-
-  if (slug) {
-    params["slug"] = slug;
-  }
-
-  return params;
-}
-
 export {
   getPosts,
   getMedia,
   getCategories,
   concatenateMediaAndCategories,
-  generatePostParams,
 };

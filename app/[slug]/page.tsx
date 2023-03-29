@@ -1,9 +1,7 @@
-import React from "react"
 import { fetchSingle } from "@/api/single"
 
 import {
   concatenateMediaAndCategories,
-  generatePostParams,
   getCategories,
   getMedia,
   getPosts,
@@ -11,28 +9,29 @@ import {
 import BlocksRender from "@/components/blocksRender"
 
 export default async function Single({ params }: { params: { slug: string } }) {
-  // Fetch post
-  const singlePostParams = generatePostParams({ slug: params.slug })
-  const singlePost = await getPosts(singlePostParams)
+  // Get API response
+  const response = await fetchSingle()
+  const body = JSON.parse(
+    JSON.stringify(response.body).replace("{post_slug}", params.slug)
+  )
 
-  // Fetch media and categories for all the post types
-  const allPosts = [...singlePost]
+  // Fetch post using the extracted params
+  const singlePost = await getPosts({ slug: params.slug })
+
+  // Fetch media and categories for the post
   const [media, categories] = await Promise.all([
-    getMedia(allPosts),
-    getCategories(allPosts),
+    getMedia(singlePost),
+    getCategories(singlePost),
   ])
 
-  // Concatenate media and categories for each post type
+  // Concatenate media and categories for the post
   const singlePostData = concatenateMediaAndCategories(
     singlePost,
     media,
     categories
   )
 
-  // Get API response
-  const body = (await fetchSingle()).body
-
-  // Pass the posts to the BlocksRender component
+  // Pass the post to the BlocksRender component
   return (
     <BlocksRender
       template={body}

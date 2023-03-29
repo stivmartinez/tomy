@@ -53,8 +53,8 @@ const BlockPosts = ({
   posts,
   variants,
 }: {
-  posts: TypePost[]
-  variants: any
+  posts: TypePost[];
+  variants: any;
 }) => {
   function truncateWithEllipsis(content: any, limit: any) {
     var words = content
@@ -83,7 +83,7 @@ const BlockPosts = ({
         >
           {variants.image === "off" ? null : (
             <a
-              href={post?.slug || "/"}
+              href={`${post?.slug}` || "/"}
               className={cn(
                 "mt-1 flex w-full flex-col gap-1",
                 variants.type === "list" ? "w-4/12" : "w-full"
@@ -132,13 +132,13 @@ const BlockPosts = ({
               </div>
               {variants.category === "off" ? null : (
                 <a
-                  href={post.category?.slug || "/"}
+                  href={`${post?.slug}` || "/"}
                   className="text-xs font-bold text-blue-600"
                 >
                   {post.category?.name}
                 </a>
               )}
-              <a href={post?.slug || "/"}>
+              <a href={`${post?.slug}` || "/"}>
                 <h2
                   className={cn(
                     "text-lg font-bold leading-snug tracking-tight hover:underline"
