@@ -8,7 +8,7 @@ import { fetchHeader } from "@/api/header"
 
 import BlocksRender from "@/components/blocksRender"
 
-const inter = Inter({ weight: ["400", "600"], subsets: ["latin"] })
+const inter = Inter({ weight: ["300", "500", "700"], subsets: ["latin"] })
 
 export async function generateMetadata(): Promise<Metadata> {
   const title = {

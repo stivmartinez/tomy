@@ -85,7 +85,7 @@ export const apiResponse = {
                       icon: "Instagram",
                       type: "a",
                       className:
-                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-gradient-to-r from-purple-600 to-pink-500 text-white",
+                        "inline-flex items-center justify-center w-[28px] h-[28px] rounded-full bg-gradient-to-t from-purple-600 to-pink-600 text-white",
                       props: {
                         href: "https://instagram.com",
                         target: "_blank",
@@ -108,7 +108,7 @@ export const apiResponse = {
             id: "12345",
             tag: "div",
             className:
-              "w-full max-w-6xl mx-auto flex flex-row justify-between h-12 bg-black rounded-xl",
+              "w-full max-w-6xl mx-auto flex flex-row justify-between h-12 bg-blue-700 rounded-xl",
           },
         ],
       },

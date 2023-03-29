@@ -1,4 +1,4 @@
-const website = "https://mejorconsalud.as.com";
+const website = "https://www.saastoday.co";
 
 interface Post {
   id: number;
@@ -134,11 +134,48 @@ function concatenateMediaAndCategories(
     const defaultMedia: Media = {
       id: -1,
       source_url: "",
+      date: "",
+      date_gmt: "",
+      guid: {
+        rendered: ""
+      },
+      modified: "",
+      modified_gmt: "",
+      slug: "",
+      status: "",
+      type: "",
+      link: "",
+      title: {
+        rendered: ""
+      },
+      author: 0,
+      comment_status: "",
+      ping_status: "",
+      template: "",
+      meta: [],
+      description: {
+        rendered: ""
+      },
+      caption: {
+        rendered: ""
+      },
+      alt_text: "",
+      media_type: "",
+      mime_type: "",
+      media_details: {},
+      post: 0,
+      _links: {}
     };
 
     const defaultCategory: Category = {
       id: -1,
       name: "",
+      link: "",
+      slug: "",
+      taxonomy: "",
+      parent: 0,
+      meta: [],
+      _links: {}
     };
 
     return {
