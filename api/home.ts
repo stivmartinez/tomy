@@ -2,7 +2,7 @@ export const apiResponse = {
   body: {
     id: "345",
     tag: "main",
-    className: "w-full my-3",
+    className: "w-full",
     children: [
       {
         id: "3456",
@@ -17,13 +17,13 @@ export const apiResponse = {
               {
                 id: "345678",
                 tag: "div",
-                className: "w-full",
+                className: "w-full px-3",
                 children: [
                   {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-3 my-3 sm:grid-cols-1 lg:grid-cols-3",
+                      "grid gap-12 my-3 sm:grid-cols-1 lg:grid-cols-3",
                     componentName: "BlockPosts",
                     props: {
                       posts: "featured",
@@ -49,7 +49,7 @@ export const apiResponse = {
                     id: "34567890",
                     tag: "div",
                     className:
-                      "grid gap-8 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
+                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
                     componentName: "BlockPosts",
                     props: {
                       posts: "recent",

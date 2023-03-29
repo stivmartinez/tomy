@@ -7,13 +7,13 @@ export const apiResponse = {
       {
         id: "1234",
         tag: "section",
-        className: "w-full",
+        className: "w-full bg-gray-800",
         children: [
           {
             id: "12345",
             tag: "div",
             className:
-              "w-full max-w-6xl mx-auto flex flex-row justify-between py-6",
+              "w-full max-w-6xl mx-auto flex flex-row justify-between py-3 px-3",
             children: [
               {
                 id: "123456",
@@ -24,9 +24,9 @@ export const apiResponse = {
                     id: "1234567",
                     tag: "div",
                     componentName: "BlockLogo",
-                    className: "w-32",
+                    className: "w-36",
                     props: {
-                      src: "/logo.svg",
+                      src: "https://www.saastoday.co/wp-content/uploads/2023/02/SaaS-today-3.svg",
                       alt: "logo",
                       className: "w-full h-auto",
                     },
@@ -36,7 +36,7 @@ export const apiResponse = {
               {
                 id: "1234567",
                 tag: "div",
-                className: "flex flex-row w-full justify-end gap-2",
+                className: "flex flex-row w-full justify-end gap-2 items-center",
                 componentName: "BlockSocial",
                 props: {
                   items: [
@@ -108,7 +108,14 @@ export const apiResponse = {
             id: "12345",
             tag: "div",
             className:
-              "w-full max-w-6xl mx-auto flex flex-row justify-between h-12 bg-blue-700 rounded-xl",
+              "w-full bg-blue-700",
+            children: [
+              {
+                id: "123487656",
+                tag: "div",
+                className: "max-w-6xl mx-auto flex flex-row justify-between px-3 h-12",
+              },
+            ]
           },
         ],
       },
