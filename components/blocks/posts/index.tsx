@@ -76,7 +76,7 @@ interface BlockPostsProps {
 const BlockPosts = ({ posts, variants }: BlockPostsProps) => {
   return (
     <>
-      {posts.map((post, index) => (
+      {posts?.map((post, index) => (
         <article
           key={index}
           className={cn("relative w-full items-center", {
@@ -140,7 +140,7 @@ const BlockPosts = ({ posts, variants }: BlockPostsProps) => {
               </div>
               {variants.category !== "off" && (
                 <a
-                  href={`${post?.slug}` || "/"}
+                  href={`/${post?.category?.slug}` || "/"}
                   className="text-xs font-bold text-blue-600"
                 >
                   {post.category?.name}

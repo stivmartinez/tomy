@@ -117,24 +117,41 @@ async function getPosts(
   return fetchApi("/wp-json/wp/v2/posts", params, post_type); // Pass the post_type parameter
 }
 
-async function getMedia(posts: Post[]): Promise<Media[]> {
-  const mediaIds = posts.map((post) => post.featured_media);
+async function getMedia(posts: any): Promise<Media[]> {
+  const mediaIds = posts.map((post: any) => post.featured_media);
   return fetchApi("/wp-json/wp/v2/media", { include: mediaIds.join(",") });
 }
 
-async function getCategories(posts: Post[]): Promise<Category[]> {
-  const categoryIds = posts.flatMap((post) => post.categories);
-  return fetchApi("/wp-json/wp/v2/categories", {
-    include: categoryIds.join(","),
-  });
+interface CategoryParams {
+  [key: string]: any;
 }
 
+async function getCategories(
+  posts?: any,
+  allCategories = false,
+  additionalParams?: CategoryParams
+): Promise<Category[]> {
+  const defaultParams: CategoryParams = allCategories
+    ? {}
+    : {
+      include: posts?.flatMap((post: any) => post.categories)?.join(",") || "",
+    };
+
+  const params = {
+    ...defaultParams,
+    ...additionalParams,
+  };
+
+  return fetchApi("/wp-json/wp/v2/categories", params);
+}
+
+
 function concatenateMediaAndCategories(
-  postList: Post[],
+  postList: any,
   media: Media[],
   categories: Category[]
 ): Post[] {
-  return postList.map((post) => {
+  return postList.map((post: any) => {
     const mediaItem = media.find((item) => item.id === post.featured_media);
     const categoryItem = categories.find(
       (item) => item.id === post.categories[0]

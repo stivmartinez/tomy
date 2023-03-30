@@ -20,7 +20,7 @@ export const apiResponse = {
                 className: "w-full px-3",
                 children: [
                   {
-                    id: "3456337890",
+                    id: "34567890",
                     tag: "div",
                     className:
                       "grid gap-12 my-3 sm:grid-cols-1 lg:grid-cols-3",
@@ -28,7 +28,7 @@ export const apiResponse = {
                     props: {
                       posts: "featured",
                       params: {
-                        //post_type: "page",
+                        categories: "{categories_ids}",
                         per_page: 3,
                         page: 1,
                       },
@@ -46,7 +46,7 @@ export const apiResponse = {
                     },
                   },
                   {
-                    id: "34567890",
+                    id: "345267890",
                     tag: "div",
                     className:
                       "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
@@ -74,7 +74,7 @@ export const apiResponse = {
   },
 }
 
-export const fetchHome = (delay: number = 500): Promise<typeof apiResponse> => {
+export const fetchTaxonomy = (delay: number = 500): Promise<typeof apiResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(apiResponse);
