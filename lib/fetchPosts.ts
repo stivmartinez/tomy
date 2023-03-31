@@ -151,6 +151,10 @@ function concatenateMediaAndCategories(
   media: Media[],
   categories: Category[]
 ): Post[] {
+  if (!Array.isArray(postList)) {
+    return [];
+  }
+
   return postList.map((post: any) => {
     const mediaItem = media.find((item) => item.id === post.featured_media);
     const categoryItem = categories.find(
