@@ -1,7 +1,8 @@
-import componentsMap from "@/components/componentsMap"
-import { JSONComponent } from "@/types/JSONComponent"
-import dynamic from "next/dynamic"
 import React, { FunctionComponent, ReactElement } from "react"
+import dynamic from "next/dynamic"
+
+import { JSONComponent } from "@/types/JSONComponent"
+import componentsMap from "@/components/componentsMap"
 
 const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
   const blocksRender = (component: JSONComponent): ReactElement => {
@@ -14,15 +15,21 @@ const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
       style,
       componentName,
       props,
+      componentType,
     } = component
     const Tag = tag as keyof JSX.IntrinsicElements
 
+    const isClientComponent =
+      componentType === "client-side" ||
+      typeof componentsMap[componentName as string] !== "string"
+
     const CustomComponent =
       componentName && componentsMap[componentName]
-        ? dynamic(() => import(`${componentsMap[componentName]}`))
+        ? isClientComponent
+          ? componentsMap[componentName]
+          : dynamic(() => import(`${componentsMap[componentName]}`))
         : null
 
-    // Check if props contain the "posts" key and update it with the corresponding data from the "data" prop
     const updatedProps =
       props?.posts && data?.wordpress?.posts?.[props.posts]
         ? { ...props, posts: data.wordpress.posts[props.posts] }

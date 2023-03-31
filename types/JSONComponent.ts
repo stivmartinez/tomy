@@ -9,4 +9,5 @@ export interface JSONComponent {
   style?: CSSProperties;
   componentName?: string;
   props?: Record<string, any>;
+  componentType?: "client-side" | "server-side";
 }

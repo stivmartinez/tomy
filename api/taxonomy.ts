@@ -46,23 +46,19 @@ export const apiResponse = {
                     },
                   },
                   {
-                    id: "345267890",
+                    id: "34533678",
                     tag: "div",
-                    className:
-                      "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
-                    componentName: "BlockPosts",
-                    props: {
-                      posts: "recent",
-                      params: {
-                        per_page: 2,
-                        page: 1,
+                    className: "w-full px-3",
+                    children: [
+                      {
+                        id: "34522367890",
+                        tag: "div",
+                        className:
+                          "grid gap-12 my-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1",
+                        componentName: "BlockPagination",
+                        componentType: "client-side"
                       },
-                      imageHeight: "3xl",
-                      variants: {
-                        type: "list",
-                        //overlay: true,
-                      },
-                    },
+                    ],
                   },
                 ],
               },
