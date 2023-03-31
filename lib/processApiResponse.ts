@@ -1,22 +1,17 @@
-import {
-  getCategories,
-  getPosts,
-  getMedia,
-  concatenateMediaAndCategories,
-} from "./fetchPosts";
-
 import { extractPostParams } from "./extractPostParams";
+import { concatenateMediaAndCategories, getCategories, getMedia, getPosts } from "./fetchPosts";
 
 export async function processApiResponse(
   response: any,
   slug?: string,
-  pageType: "home" | "taxonomy" | "single" = "home"
+  pageType: "home" | "taxonomy" | "single" = "home",
+  searchParams?: { [key: string]: string }
 ): Promise<{
   body: any;
   data: Record<string, any>;
 }> {
-  let body: any
-  let allPosts: any
+  let body: any;
+  let allPosts: any;
 
   if (pageType === "single") {
     body = JSON.parse(
@@ -49,6 +44,15 @@ export async function processApiResponse(
       : response.body;
 
     const postParams = extractPostParams(body);
+
+    // Update the `page` parameter in the `postParams` object with the value from `searchParams`
+    if (searchParams && searchParams.page) {
+      Object.values(postParams).forEach((params) => {
+        params.page = Array.isArray(searchParams.page)
+          ? parseInt(searchParams.page[0], 10)
+          : parseInt(searchParams.page, 10);
+      });
+    }
 
     const allPostsPromises = Object.entries(postParams).map(
       async ([postType, params]) => {
