@@ -1,6 +1,5 @@
-import React from "react"
-
-import IconWrapper from "@/components/shared/icon-wrapper"
+import IconWrapper from "../../shared/icon-wrapper";
+import React from "react";
 
 /*
 How to use this component:
@@ -69,39 +68,39 @@ How to use this component:
 */
 
 interface SocialItemProps {
-  id: string
-  name: string
-  icon: string
-  type: string
-  className?: string
+  id: string;
+  name: string;
+  icon: string;
+  type: string;
+  className?: string;
   props: {
-    href: string
-    target: string
-    rel: string
-    children?: React.ReactNode
-  }
+    href: string;
+    target: string;
+    rel: string;
+    children?: React.ReactNode;
+  };
 }
 
 interface BlockSocialProps {
-  items: SocialItemProps[]
-  iconLibrary?: Record<string, string>
+  items: SocialItemProps[];
+  iconLibrary?: Record<string, string>;
 }
 
 const BlockSocial: React.FC<BlockSocialProps> = ({ items }) => {
   return (
     <>
       {items.map((item: SocialItemProps) => {
-        const Tag = item.type as keyof JSX.IntrinsicElements
+        const Tag = item.type as keyof JSX.IntrinsicElements;
 
         return (
           <Tag key={item.id} className={item.className} {...item.props}>
             <IconWrapper iconName={item.icon} size={16} />
             {item.props.children}
           </Tag>
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};
 
-export default BlockSocial
+export default BlockSocial;

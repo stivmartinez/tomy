@@ -1,11 +1,10 @@
-import React, { FunctionComponent, ReactElement } from "react"
 import dynamic from "next/dynamic"
+import React, { FunctionComponent, ReactElement } from "react"
 
-import { JSONComponent } from "@/types/JSONComponent"
-import componentsMap from "@/components/componentsMap"
+import componentsMap from "./componentsMap"
 
 const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
-  const blocksRender = (component: JSONComponent): ReactElement => {
+  const blocksRender = (component: any): ReactElement => {
     const {
       id,
       tag,

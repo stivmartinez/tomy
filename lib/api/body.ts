@@ -2,7 +2,7 @@ export const apiResponse = {
   body: {
     id: "345",
     tag: "main",
-    className: "w-full",
+    className: "w-full bg-white",
     children: [
       {
         id: "3456",
@@ -74,7 +74,7 @@ export const apiResponse = {
   },
 }
 
-export const fetchHome = (delay: number = 500): Promise<typeof apiResponse> => {
+export const fetchBody = (delay: number = 500): Promise<typeof apiResponse> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(apiResponse);

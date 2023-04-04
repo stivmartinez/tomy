@@ -2,12 +2,12 @@ export const apiResponse = {
   footer: {
     id: "567",
     tag: "footer",
-    className: "w-full",
+    className: "w-full bg-white",
     children: [
       {
         id: "12324",
         tag: "section",
-        className: "w-full max-w-6xl mx-auto flex flex-row justify-between my-6",
+        className: "w-full max-w-6xl mx-auto flex flex-row justify-between py-6",
         children: [
           {
             id: "121345",

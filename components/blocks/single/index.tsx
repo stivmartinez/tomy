@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
+import React from "react";
 
 export default function BlockSingle({ posts }: any) {
-  const post = posts?.[0] || null
+  const post = posts?.[0] || null;
 
   return (
     <article className="w-full">
-      <h1 className="my-12 mx-auto max-w-2xl text-center text-4xl font-semibold leading-tight tracking-tight">
+      <h1 className="mx-auto my-12 max-w-2xl text-center text-4xl font-semibold leading-tight tracking-tight">
         {post?.title?.rendered}
       </h1>
       <div className="relatives mb-12 w-full">
@@ -22,5 +23,5 @@ export default function BlockSingle({ posts }: any) {
         />
       )}
     </article>
-  )
+  );
 }

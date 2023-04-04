@@ -7,7 +7,7 @@ export const apiResponse = {
       {
         id: "1234",
         tag: "section",
-        className: "w-full bg-gray-800",
+        className: "w-full bg-white",
         children: [
           {
             id: "12345",
@@ -24,9 +24,9 @@ export const apiResponse = {
                     id: "1234567",
                     tag: "div",
                     componentName: "BlockLogo",
-                    className: "w-36",
+                    className: "w-[180px]",
                     props: {
-                      src: "https://www.saastoday.co/wp-content/uploads/2023/02/SaaS-today-3.svg",
+                      src: "/logo.svg",
                       alt: "logo",
                       className: "w-full h-auto",
                     },
@@ -108,7 +108,7 @@ export const apiResponse = {
             id: "12345",
             tag: "div",
             className:
-              "w-full bg-blue-700",
+              "w-full bg-slate-700",
             children: [
               {
                 id: "123487656",

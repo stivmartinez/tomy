@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import React from "react";
 
 export default function BlockPagination({ variants }) {
   const router = useRouter()
