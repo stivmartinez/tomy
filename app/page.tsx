@@ -1,9 +1,5 @@
-import { fetchBody } from "@/lib/api/body"
-import BlocksRender from "@/components/blocksRender"
+import DragAndDrop from "./drag"
 
-export default async function Home() {
-  // Get API response
-  const response = await fetchBody()
-  const body = response.body
-  return <BlocksRender template={body} />
+export default async function Main() {
+  return <DragAndDrop />
 }
