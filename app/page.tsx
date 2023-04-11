@@ -1,5 +1,8 @@
-import DragAndDrop from "./drag"
+import CustomPage from "@/components/CustomPage"
+import React from "react"
 
-export default async function Main() {
-  return <DragAndDrop />
+const Home: React.FC = () => {
+  return <CustomPage />
 }
+
+export default Home

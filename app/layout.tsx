@@ -32,15 +32,14 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Get API response
   const header = (await fetchHeader()).header
   const footer = (await fetchFooter()).footer
 
   return (
     <html lang="en">
       <body className={cn`${inter.className} text-slate-900`}>
-        <BlocksRender template={header} />
         {children}
-        <BlocksRender template={footer} />
       </body>
     </html>
   )

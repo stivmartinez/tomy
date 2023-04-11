@@ -1,9 +1,31 @@
+import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
-import React, { FunctionComponent, ReactElement } from "react"
 
+import { cn } from "@/lib/utils"
+import ClientBlocksRender from "./ClientBlocksRender"
 import componentsMap from "./componentsMap"
 
-const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
+interface BlocksRenderProps {
+  template: any
+  data?: any
+  setStructure: (structure: any[]) => void
+  addChild: (parentId: string) => void
+  level: number
+}
+
+interface Child {
+  id: string
+  tag: string
+  className: string
+  children: Child[]
+}
+
+const BlocksRender: React.FC<BlocksRenderProps> = ({
+  template,
+  setStructure,
+  addChild,
+  level,
+}) => {
   const blocksRender = (component: any): ReactElement => {
     const {
       id,
@@ -14,12 +36,10 @@ const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
       style,
       componentName,
       props,
-      componentType,
     } = component
     const Tag = tag as keyof JSX.IntrinsicElements
 
     const isClientComponent =
-      componentType === "client-side" ||
       typeof componentsMap[componentName as string] !== "string"
 
     const CustomComponent =
@@ -29,15 +49,21 @@ const BlocksRender: FunctionComponent<any> = ({ template, data }) => {
           : dynamic(() => import(`${componentsMap[componentName]}`))
         : null
 
-    const updatedProps =
-      props?.posts && data?.wordpress?.posts?.[props.posts]
-        ? { ...props, posts: data.wordpress.posts[props.posts] }
-        : props
+    const updatedProps = props
 
     return (
-      <Tag key={id} className={className} style={style}>
+      <Tag key={id} className={cn(className)} style={style}>
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
-        {children?.map((child) => blocksRender(child))}
+        {children?.map((child: Child) => (
+          <ClientBlocksRender
+            key={child.id}
+            template={child}
+            setStructure={setStructure}
+            addChild={addChild}
+            level={level + 1}
+          />
+        ))}
+        <button onClick={() => addChild(template.id)}>+</button>
       </Tag>
     )
   }
