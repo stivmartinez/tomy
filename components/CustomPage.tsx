@@ -11,16 +11,13 @@ const CustomPage: React.FC<CustomPageProps> = () => {
 
   const [structure, setStructure] = useState([])
 
-  const addChildToStructure = (parentId: string) => {
+  const addChildToStructure = (parentId: string, blockConfiguration: any) => {
     const newStructure = JSON.parse(JSON.stringify(structure))
 
-    const newId = generateRandomId()
     const newBlock = {
-      id: newId,
-      tag: "div",
-      className: "py-12 w-full border",
+      ...blockConfiguration,
+      id: generateRandomId(),
       children: [],
-      content: newId,
     }
 
     const addChildRecursive = (node: any) => {
@@ -46,6 +43,25 @@ const CustomPage: React.FC<CustomPageProps> = () => {
     setStructure(newStructure)
   }
 
+  const addRowBlock = (parentId: string) => {
+    const rowConfig = {
+      tag: "div",
+      className:
+        "w-full max-w-6xl mx-auto flex flex-row border-2 border-blue-500 min-h-16",
+      content: "",
+    }
+    addChildToStructure(parentId, rowConfig)
+  }
+
+  const addColumnBlock = (parentId: string) => {
+    const columnConfig = {
+      tag: "div",
+      className: "w-full min-h-16 border-2 border-orange-500 flex flex-col",
+      content: "",
+    }
+    addChildToStructure(parentId, columnConfig)
+  }
+
   return (
     <>
       {structure.map((block) => (
@@ -55,6 +71,8 @@ const CustomPage: React.FC<CustomPageProps> = () => {
           setStructure={setStructure}
           level={0}
           addChild={addChildToStructure}
+          addColumnBlock={addColumnBlock}
+          addRowBlock={addRowBlock}
         />
       ))}
       <button

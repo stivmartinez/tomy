@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React, { ReactElement, useState } from "react"
 import dynamic from "next/dynamic"
 
 import { cn } from "@/lib/utils"
@@ -25,7 +25,12 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   setStructure,
   addChild,
   level,
+  addColumnBlock,
+  addRowBlock,
 }) => {
+  // Inside the BlocksRender component
+  const [showDropdown, setShowDropdown] = useState(false)
+
   const blocksRender = (component: any): ReactElement => {
     const {
       id,
@@ -61,9 +66,19 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             setStructure={setStructure}
             addChild={addChild}
             level={level + 1}
+            addColumnBlock={addColumnBlock}
+            addRowBlock={addRowBlock}
           />
         ))}
-        <button onClick={() => addChild(template.id)}>+</button>
+        <button onClick={() => setShowDropdown(!showDropdown)}>+</button>
+        {showDropdown && (
+          <div>
+            <button onClick={() => addRowBlock(template.id)}>Add Row</button>
+            <button onClick={() => addColumnBlock(template.id)}>
+              Add Column
+            </button>
+          </div>
+        )}
       </Tag>
     )
   }
