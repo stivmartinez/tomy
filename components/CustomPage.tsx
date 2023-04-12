@@ -66,29 +66,6 @@ const CustomPage: React.FC<CustomPageProps> = ({ initialData = [] }) => {
           addBlock={addBlock} // Add this line
         />
       ))}
-      <div className="flex">
-        {["header", "main", "footer"].map((tag, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              const id = generateRandomId()
-              const newBlock = {
-                id,
-                tag,
-                className: `min-h-32 w-full border-2 border-red-500`,
-                children: [],
-                content: id,
-              }
-              setStructure((prevStructure: any[]) => [
-                ...prevStructure.filter((block) => block.tag !== tag),
-                newBlock,
-              ])
-            }}
-          >
-            {`Add ${tag}`}
-          </button>
-        ))}
-      </div>
     </>
   )
 }
