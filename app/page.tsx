@@ -1,10 +1,14 @@
 import React from "react"
 
+import { fetchBody } from "@/lib/api/body"
+import { fetchFooter } from "@/lib/api/footer"
+import { fetchHeader } from "@/lib/api/header"
 import CustomPage from "@/components/CustomPage"
 
-const Home: React.FC = () => {
-  const initialStructure: any[] = []
-  return <CustomPage structure={initialStructure} />
-}
+export default async function Home() {
+  const header = await fetchHeader()
+  const body = await fetchBody()
+  const footer = await fetchFooter()
 
-export default Home
+  return <CustomPage initialData={[header.header, body.body, footer.footer]} />
+}
