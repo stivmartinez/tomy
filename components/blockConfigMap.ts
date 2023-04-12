@@ -37,9 +37,9 @@ const blockConfigMap: Record<string, BlockConfig> = {
     content: "Example",
     icon: Type
   },
-  logo: {
+  image: {
     tag: "div",
-    componentName: "BlockLogo",
+    componentName: "BlockImage",
     className: "w-[180px]",
     icon: Image,
     props: {

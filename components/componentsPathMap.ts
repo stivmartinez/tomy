@@ -1,6 +1,6 @@
 const componentsPathMap: any = {
   BlockHeading: "./blocks/heading",
-  BlockLogo: "./blocks/logo",
+  BlockImage: "./blocks/image",
 };
 
 export default componentsPathMap;

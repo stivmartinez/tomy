@@ -4,7 +4,7 @@ export const apiResponse = {
   body: {
     id: generateRandomId(),
     tag: "main",
-    className: "h-32 w-full border-2 border-red-500",
+    className: "w-full border h-32",
     children: [],
   },
 }

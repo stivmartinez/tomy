@@ -4,8 +4,27 @@ export const apiResponse = {
   header: {
     id: generateRandomId(),
     tag: "header",
-    className: "h-32 w-full border-2 border-yellow-500",
-    children: [],
+    className: "w-full bg-black",
+    children: [
+      {
+        id: generateRandomId(),
+        tag: "div",
+        className: "container mx-auto py-3 items-center flex",
+        children: [
+          {
+            id: generateRandomId(),
+            tag: "div",
+            className: "w-full",
+            componentName: "BlockImage",
+            props: {
+              src: "/logo.svg",
+              alt: "Logo",
+              className: "h-4",
+            },
+          }
+        ],
+      }
+    ],
   },
 }
 

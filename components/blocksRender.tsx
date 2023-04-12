@@ -80,7 +80,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
           />
         ))}
         {isContainerElement(tag) && (
-          <>
+          <div className="absolute hidden">
             <button onClick={() => setShowDropdown(!showDropdown)}>
               {showDropdown ? "-" : "+"}
             </button>
@@ -100,7 +100,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
                 })}
               </div>
             )}
-          </>
+          </div>
         )}
       </Tag>
     )

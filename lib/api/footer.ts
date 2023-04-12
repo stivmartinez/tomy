@@ -4,8 +4,22 @@ export const apiResponse = {
   footer: {
     id: generateRandomId(),
     tag: "footer",
-    className: "h-32 w-full border-2 border-orange-500",
-    children: [],
+    className: "w-full",
+    children: [
+      {
+        id: generateRandomId(),
+        tag: "div",
+        className: "container mx-auto py-3 items-center flex",
+        children: [
+          {
+            id: generateRandomId(),
+            tag: "p",
+            className: "w-full text-sm",
+            content: "© 2021 - 2022",
+          }
+        ],
+      }
+    ],
   },
 }
 
