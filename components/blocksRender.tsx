@@ -1,9 +1,10 @@
-import React, { ReactElement, useState } from "react"
-import dynamic from "next/dynamic"
-
 import { cn } from "@/lib/utils"
-import ClientBlocksRender from "./ClientBlocksRender"
+import dynamic from "next/dynamic"
+import React, { ReactElement, useState } from "react"
+
 import blockConfigMap from "./blockConfigMap"
+import BlockSettingsSheet from "./BlockSettingsSheet"
+import ClientBlocksRender from "./ClientBlocksRender"
 import componentsPathMap from "./componentsPathMap"
 
 interface Child {
@@ -19,7 +20,9 @@ interface BlocksRenderProps {
   setStructure: (structure: any[]) => void
   addChild: (parentId: string, blockConfiguration: any) => void
   level: number
-  addBlock: (parentId: string, type: string) => void // Add this line
+  addBlock: (parentId: string, type: string) => void
+  classNames: string // Add this line
+  onClassNamesChange: (color: string) => void // Add this line
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -27,7 +30,9 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   setStructure,
   addChild,
   level,
-  addBlock, // Add this line
+  addBlock,
+  classNames, // Add this line
+  onClassNamesChange, // Add this line
 }) => {
   // Inside the BlocksRender component
   const [showDropdown, setShowDropdown] = useState(false)
@@ -67,7 +72,11 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
     }
 
     return (
-      <Tag key={id} className={cn(className, "relative")} style={style}>
+      <Tag
+        key={id}
+        className={cn(className, "relative", classNames)}
+        style={{ ...style }}
+      >
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
         {children?.map((child: Child) => (
           <ClientBlocksRender
@@ -80,27 +89,33 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
           />
         ))}
         {isContainerElement(tag) && (
-          <div className="absolute hidden">
-            <button onClick={() => setShowDropdown(!showDropdown)}>
-              {showDropdown ? "-" : "+"}
-            </button>
-            {showDropdown && (
-              <div className="absolute left-1 top-0">
-                {Object.keys(blockConfigMap).map((componentName) => {
-                  const Icon = blockConfigMap[componentName].icon
-                  return (
-                    <button
-                      key={componentName}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white"
-                      onClick={() => addBlock(template.id, componentName)}
-                    >
-                      <Icon size="14" />
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </div>
+          <>
+            <div className="absolute">
+              <button onClick={() => setShowDropdown(!showDropdown)}>
+                {showDropdown ? "-" : "+"}
+              </button>
+              {showDropdown && (
+                <div className="absolute left-1 top-0">
+                  {Object.keys(blockConfigMap).map((componentName) => {
+                    const Icon = blockConfigMap[componentName].icon
+                    return (
+                      <button
+                        key={componentName}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white"
+                        onClick={() => addBlock(template.id, componentName)}
+                      >
+                        <Icon size="14" />
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+            <BlockSettingsSheet
+              blockId={id}
+              onClassNamesChange={onClassNamesChange}
+            />
+          </>
         )}
       </Tag>
     )

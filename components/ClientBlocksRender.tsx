@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 
 import BlocksRender from "@/components/blocksRender"
 
@@ -18,15 +18,23 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   setStructure,
   level,
   addChild,
-  addBlock, // Add this line
+  addBlock,
 }) => {
+  const [classNames, setClasNames] = useState("") // Add this line
+
+  const handleClassNamesChange = (color: string) => {
+    setClasNames(color)
+  }
+
   return (
     <BlocksRender
       template={template}
       setStructure={setStructure}
       addChild={addChild}
       level={level}
-      addBlock={addBlock} // Add this line
+      addBlock={addBlock}
+      classNames={classNames} // Add this line
+      onClassNamesChange={handleClassNamesChange} // Add this line
     />
   )
 }
