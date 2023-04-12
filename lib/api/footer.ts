@@ -1,23 +1,11 @@
+const generateRandomId = () => Math.floor(Math.random() * 1000000).toString()
+
 export const apiResponse = {
   footer: {
-    id: "567",
+    id: generateRandomId(),
     tag: "footer",
-    className: "w-full bg-white",
-    children: [
-      {
-        id: "12324",
-        tag: "section",
-        className: "w-full max-w-6xl mx-auto flex flex-row justify-between py-6",
-        children: [
-          {
-            id: "121345",
-            tag: "p",
-            className: 'text-sm',
-            content: "© Themesei 2021 - All rights reserved",
-          },
-        ],
-      },
-    ],
+    className: "h-32 w-full border-2 border-orange-500",
+    children: [],
   },
 }
 

@@ -52,6 +52,20 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
 
     const updatedProps = props
 
+    const isContainerElement = (tag: string): boolean => {
+      const containerElements = [
+        "div",
+        "section",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "aside",
+        "article",
+      ]
+      return containerElements.includes(tag)
+    }
+
     return (
       <Tag key={id} className={cn(className, "relative")} style={style}>
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
@@ -65,21 +79,28 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             addBlock={addBlock} // Replace addColumnBlock and addRowBlock with addBlock
           />
         ))}
-        <button onClick={() => setShowDropdown(!showDropdown)}>
-          {showDropdown ? "-" : "+"}
-        </button>
-        {showDropdown && (
-          <div className="absolute left-1 top-0">
-            {Object.keys(blockConfigMap).map((componentName) => (
-              <button
-                key={componentName}
-                className="inline-flex bg-slate-200 py-2"
-                onClick={() => addBlock(template.id, componentName)}
-              >
-                Add {componentName.replace("Block", "")}
-              </button>
-            ))}
-          </div>
+        {isContainerElement(tag) && (
+          <>
+            <button onClick={() => setShowDropdown(!showDropdown)}>
+              {showDropdown ? "-" : "+"}
+            </button>
+            {showDropdown && (
+              <div className="absolute left-1 top-0">
+                {Object.keys(blockConfigMap).map((componentName) => {
+                  const Icon = blockConfigMap[componentName].icon
+                  return (
+                    <button
+                      key={componentName}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white"
+                      onClick={() => addBlock(template.id, componentName)}
+                    >
+                      <Icon size="14" />
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </>
         )}
       </Tag>
     )
