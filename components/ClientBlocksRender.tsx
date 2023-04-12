@@ -6,10 +6,11 @@ import BlocksRender from "@/components/blocksRender"
 
 interface ClientBlocksRenderProps {
   template: any
+  data?: any
   setStructure: (structure: any[]) => void
   level: number
-  addChild: (parentId: string) => void
-  addBlock: (parentId: string, type: string) => void // Add this line
+  addChild: (parentId: string, blockConfiguration: any) => void
+  addBlock: (parentId: string, type: string) => void
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({

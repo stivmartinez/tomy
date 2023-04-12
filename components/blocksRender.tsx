@@ -16,7 +16,7 @@ interface BlocksRenderProps {
   template: any
   data?: any
   setStructure: (structure: any[]) => void
-  addChild: (parentId: string) => void
+  addChild: (parentId: string, blockConfiguration: any) => void
   level: number
   addBlock: (parentId: string, type: string) => void // Add this line
 }
@@ -57,7 +57,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
     const updatedProps = props
 
     return (
-      <Tag key={id} className={cn(className)} style={style}>
+      <Tag key={id} className={cn(className, "relative")} style={style}>
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
         {children?.map((child: Child) => (
           <ClientBlocksRender
@@ -69,22 +69,39 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             addBlock={addBlock} // Replace addColumnBlock and addRowBlock with addBlock
           />
         ))}
-        <button onClick={() => setShowDropdown(!showDropdown)}>+</button>
+        <button onClick={() => setShowDropdown(!showDropdown)}>
+          {showDropdown ? "-" : "+"}
+        </button>
         {showDropdown && (
-          <div>
-            <button onClick={() => addBlock(template.id, "row")}>
+          <div className="absolute left-1 top-0">
+            <button
+              className="inline-flex bg-slate-200 py-2"
+              onClick={() => addBlock(template.id, "row")}
+            >
               Add Row
             </button>
-            <button onClick={() => addBlock(template.id, "column")}>
+            <button
+              className="inline-flex bg-slate-200 py-2"
+              onClick={() => addBlock(template.id, "column")}
+            >
               Add Column
             </button>
-            <button onClick={() => addBlock(template.id, "heading")}>
+            <button
+              className="inline-flex bg-slate-200 py-2"
+              onClick={() => addBlock(template.id, "heading")}
+            >
               Add Heading
             </button>
-            <button onClick={() => addBlock(template.id, "paragraph")}>
+            <button
+              className="inline-flex bg-slate-200 py-2"
+              onClick={() => addBlock(template.id, "paragraph")}
+            >
               Add Paragraph
             </button>
-            <button onClick={() => addBlock(template.id, "logo")}>
+            <button
+              className="inline-flex bg-slate-200 py-2"
+              onClick={() => addBlock(template.id, "logo")}
+            >
               Add logo
             </button>
           </div>

@@ -4,12 +4,16 @@ import React, { useState } from "react"
 
 import ClientBlocksRender from "@/components/ClientBlocksRender"
 
-interface CustomPageProps {}
+interface CustomPageProps {
+  structure: any[]
+}
 
-const CustomPage: React.FC<CustomPageProps> = () => {
+const CustomPage: React.FC<CustomPageProps> = ({
+  structure: initialStructure,
+}) => {
   const generateRandomId = () => Math.floor(Math.random() * 1000000).toString()
 
-  const [structure, setStructure] = useState([])
+  const [structure, setStructure] = useState<any[]>(initialStructure)
 
   const addChildToStructure = (parentId: string, blockConfiguration: any) => {
     const newStructure = JSON.parse(JSON.stringify(structure))
@@ -114,7 +118,7 @@ const CustomPage: React.FC<CustomPageProps> = () => {
           const newBlock = {
             id,
             tag: "div",
-            className: "py-12 w-full border-2 border-red-500",
+            className: "min-h-32 w-full border-2 border-red-500",
             children: [],
             content: id,
           }

@@ -1,8 +1,10 @@
-import CustomPage from "@/components/CustomPage"
 import React from "react"
 
+import CustomPage from "@/components/CustomPage"
+
 const Home: React.FC = () => {
-  return <CustomPage />
+  const initialStructure: any[] = []
+  return <CustomPage structure={initialStructure} />
 }
 
 export default Home
