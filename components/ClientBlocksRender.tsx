@@ -9,8 +9,7 @@ interface ClientBlocksRenderProps {
   setStructure: (structure: any[]) => void
   level: number
   addChild: (parentId: string) => void
-  addColumnBlock: (parentId: string) => void
-  addRowBlock: (parentId: string) => void
+  addBlock: (parentId: string, type: string) => void // Add this line
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
@@ -18,8 +17,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   setStructure,
   level,
   addChild,
-  addColumnBlock,
-  addRowBlock,
+  addBlock, // Add this line
 }) => {
   return (
     <BlocksRender
@@ -27,8 +25,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       setStructure={setStructure}
       addChild={addChild}
       level={level}
-      addColumnBlock={addColumnBlock}
-      addRowBlock={addRowBlock}
+      addBlock={addBlock} // Add this line
     />
   )
 }

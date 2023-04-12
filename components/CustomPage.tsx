@@ -43,23 +43,57 @@ const CustomPage: React.FC<CustomPageProps> = () => {
     setStructure(newStructure)
   }
 
-  const addRowBlock = (parentId: string) => {
-    const rowConfig = {
-      tag: "div",
-      className:
-        "w-full max-w-6xl mx-auto flex flex-row border-2 border-blue-500 min-h-16",
-      content: "",
-    }
-    addChildToStructure(parentId, rowConfig)
-  }
+  const addBlock = (parentId: string, blockType: string) => {
+    let blockConfig
 
-  const addColumnBlock = (parentId: string) => {
-    const columnConfig = {
-      tag: "div",
-      className: "w-full min-h-16 border-2 border-orange-500 flex flex-col",
-      content: "",
+    switch (blockType) {
+      case "row":
+        blockConfig = {
+          tag: "div",
+          className:
+            "w-full max-w-6xl mx-auto flex flex-row border-2 border-blue-500 min-h-16",
+          content: "",
+        }
+        break
+      case "column":
+        blockConfig = {
+          tag: "div",
+          className:
+            "w-full max-w-6xl mx-auto flex flex-col border-2 border-orange-500 min-h-16",
+          content: "",
+        }
+        break
+      case "heading": // Add this case
+        blockConfig = {
+          tag: "h1",
+          className: "text-4xl font-bold",
+          content: "Example",
+        }
+        break
+      case "paragraph": // Add this case
+        blockConfig = {
+          tag: "p",
+          className: "text-base",
+          content: "Example",
+        }
+        break
+      case "logo": // Add this case
+        blockConfig = {
+          tag: "div",
+          componentName: "BlockLogo",
+          className: "w-[180px]",
+          props: {
+            src: "/logo.svg",
+            alt: "logo",
+            className: "w-full h-auto",
+          },
+        }
+        break
+      default:
+        return
     }
-    addChildToStructure(parentId, columnConfig)
+
+    addChildToStructure(parentId, blockConfig)
   }
 
   return (
@@ -71,8 +105,7 @@ const CustomPage: React.FC<CustomPageProps> = () => {
           setStructure={setStructure}
           level={0}
           addChild={addChildToStructure}
-          addColumnBlock={addColumnBlock}
-          addRowBlock={addRowBlock}
+          addBlock={addBlock} // Add this line
         />
       ))}
       <button
