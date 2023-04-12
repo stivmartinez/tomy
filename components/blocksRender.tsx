@@ -3,7 +3,8 @@ import dynamic from "next/dynamic"
 
 import { cn } from "@/lib/utils"
 import ClientBlocksRender from "./ClientBlocksRender"
-import componentsMap from "./componentsMap"
+import blockConfigMap from "./blockConfigMap"
+import componentsPathMap from "./componentsPathMap"
 
 interface Child {
   id: string
@@ -44,14 +45,9 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
     } = component
     const Tag = tag as keyof JSX.IntrinsicElements
 
-    const isClientComponent =
-      typeof componentsMap[componentName as string] !== "string"
-
     const CustomComponent =
-      componentName && componentsMap[componentName]
-        ? isClientComponent
-          ? componentsMap[componentName]
-          : dynamic(() => import(`${componentsMap[componentName]}`))
+      componentName && componentsPathMap[componentName]
+        ? dynamic(() => import(`${componentsPathMap[componentName]}`))
         : null
 
     const updatedProps = props
@@ -74,36 +70,15 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
         </button>
         {showDropdown && (
           <div className="absolute left-1 top-0">
-            <button
-              className="inline-flex bg-slate-200 py-2"
-              onClick={() => addBlock(template.id, "row")}
-            >
-              Add Row
-            </button>
-            <button
-              className="inline-flex bg-slate-200 py-2"
-              onClick={() => addBlock(template.id, "column")}
-            >
-              Add Column
-            </button>
-            <button
-              className="inline-flex bg-slate-200 py-2"
-              onClick={() => addBlock(template.id, "heading")}
-            >
-              Add Heading
-            </button>
-            <button
-              className="inline-flex bg-slate-200 py-2"
-              onClick={() => addBlock(template.id, "paragraph")}
-            >
-              Add Paragraph
-            </button>
-            <button
-              className="inline-flex bg-slate-200 py-2"
-              onClick={() => addBlock(template.id, "logo")}
-            >
-              Add logo
-            </button>
+            {Object.keys(blockConfigMap).map((componentName) => (
+              <button
+                key={componentName}
+                className="inline-flex bg-slate-200 py-2"
+                onClick={() => addBlock(template.id, componentName)}
+              >
+                Add {componentName.replace("Block", "")}
+              </button>
+            ))}
           </div>
         )}
       </Tag>
