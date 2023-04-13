@@ -1,11 +1,12 @@
-import { cn } from "@/lib/utils"
-import dynamic from "next/dynamic"
 import React, { ReactElement, useState } from "react"
+import dynamic from "next/dynamic"
 
-import blockConfigMap from "./blockConfigMap"
+import { cn } from "@/lib/utils"
 import BlockSettingsSheet from "./BlockSettingsSheet"
 import ClientBlocksRender from "./ClientBlocksRender"
+import blockConfigMap from "./blockConfigMap"
 import componentsPathMap from "./componentsPathMap"
+import { Button } from "./ui/button"
 
 interface Child {
   id: string
@@ -23,6 +24,7 @@ interface BlocksRenderProps {
   addBlock: (parentId: string, type: string) => void
   classNames: string // Add this line
   onClassNamesChange: (color: string) => void // Add this line
+  isHovered: boolean
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -33,6 +35,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   addBlock,
   classNames, // Add this line
   onClassNamesChange, // Add this line
+  isHovered,
 }) => {
   // Inside the BlocksRender component
   const [showDropdown, setShowDropdown] = useState(false)
@@ -57,24 +60,19 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
 
     const updatedProps = props
 
-    const isContainerElement = (tag: string): boolean => {
-      const containerElements = [
-        "div",
-        "section",
-        "footer",
-        "header",
-        "main",
-        "nav",
-        "aside",
-        "article",
-      ]
-      return containerElements.includes(tag)
+    const getBorderColorByLevel = (level: number): string => {
+      const colors = ["red", "blue", "green", "purple", "orange"]
+
+      // Use modulo to loop through the colors array when the level is higher than the available colors
+      return colors[level % colors.length]
     }
 
     return (
       <Tag
         key={id}
-        className={cn(className, "relative", classNames)}
+        className={cn(className, "relative", classNames, {
+          [`border border-${getBorderColorByLevel(level)}-600`]: isHovered,
+        })}
         style={{ ...style }}
       >
         {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
@@ -85,31 +83,25 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             setStructure={setStructure}
             addChild={addChild}
             level={level + 1}
-            addBlock={addBlock} // Replace addColumnBlock and addRowBlock with addBlock
+            addBlock={addBlock}
           />
         ))}
-        {isContainerElement(tag) && (
+
+        {isHovered && (
           <>
-            <div className="absolute">
-              <button onClick={() => setShowDropdown(!showDropdown)}>
-                {showDropdown ? "-" : "+"}
-              </button>
-              {showDropdown && (
-                <div className="absolute left-1 top-0">
-                  {Object.keys(blockConfigMap).map((componentName) => {
-                    const Icon = blockConfigMap[componentName].icon
-                    return (
-                      <button
-                        key={componentName}
-                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white"
-                        onClick={() => addBlock(template.id, componentName)}
-                      >
-                        <Icon size="14" />
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
+            <div className="absolute left-8 top-0 flex flex-row gap-2">
+              {Object.keys(blockConfigMap).map((componentName) => {
+                const Icon = blockConfigMap[componentName].icon
+                return (
+                  <Button
+                    key={componentName}
+                    className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
+                    onClick={() => addBlock(template.id, componentName)}
+                  >
+                    <Icon size="14" />
+                  </Button>
+                )
+              })}
             </div>
             <BlockSettingsSheet
               blockId={id}

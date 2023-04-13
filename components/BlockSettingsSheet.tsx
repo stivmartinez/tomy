@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react"
 import { Settings } from "lucide-react"
 
@@ -22,8 +24,8 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">
-          <Settings />
+        <Button className="absolute left-0 top-0 h-6 w-6 p-0">
+          <Settings size="14" />
         </Button>
       </SheetTrigger>
       <SheetContent position="right" size="sm">

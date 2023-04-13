@@ -13,6 +13,7 @@ interface ClientBlocksRenderProps {
   addBlock: (parentId: string, type: string) => void
 }
 
+// ClientBlocksRender.tsx
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   template,
   setStructure,
@@ -20,22 +21,34 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   addChild,
   addBlock,
 }) => {
-  const [classNames, setClasNames] = useState("") // Add this line
+  const [classNames, setClassNames] = useState("")
+  const [isHovered, setIsHovered] = useState(false)
 
   const handleClassNamesChange = (color: string) => {
-    setClasNames(color)
+    setClassNames(color)
+  }
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
   }
 
   return (
-    <BlocksRender
-      template={template}
-      setStructure={setStructure}
-      addChild={addChild}
-      level={level}
-      addBlock={addBlock}
-      classNames={classNames} // Add this line
-      onClassNamesChange={handleClassNamesChange} // Add this line
-    />
+    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <BlocksRender
+        template={template}
+        setStructure={setStructure}
+        addChild={addChild}
+        level={level}
+        addBlock={addBlock}
+        classNames={classNames}
+        onClassNamesChange={handleClassNamesChange}
+        isHovered={isHovered}
+      />
+    </div>
   )
 }
 
