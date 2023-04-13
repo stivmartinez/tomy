@@ -1,6 +1,7 @@
-import React, { ReactElement, useState } from "react"
+import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
+import { generateRandomId } from "@/lib/generateRandomId"
 import { cn } from "@/lib/utils"
 import BlockSettingsSheet from "./BlockSettingsSheet"
 import ClientBlocksRender from "./ClientBlocksRender"
@@ -25,6 +26,7 @@ interface BlocksRenderProps {
   classNames: string // Add this line
   onClassNamesChange: (color: string) => void // Add this line
   isHovered: boolean
+  removeBlock: (blockId: string) => void
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -33,13 +35,11 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   addChild,
   level,
   addBlock,
-  classNames, // Add this line
-  onClassNamesChange, // Add this line
+  classNames,
+  onClassNamesChange,
   isHovered,
+  removeBlock,
 }) => {
-  // Inside the BlocksRender component
-  const [showDropdown, setShowDropdown] = useState(false)
-
   const blocksRender = (component: any): ReactElement => {
     const {
       id,
@@ -60,56 +60,93 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
 
     const updatedProps = props
 
-    const getBorderColorByLevel = (level: number): string => {
-      const colors = ["red", "blue", "green", "purple", "orange"]
+    const isContainerElement = (tag: string): boolean => {
+      const containerElements = [
+        "div",
+        "section",
+        "footer",
+        "header",
+        "main",
+        "nav",
+        "aside",
+        "article",
+      ]
+      return containerElements.includes(tag)
+    }
 
-      // Use modulo to loop through the colors array when the level is higher than the available colors
-      return colors[level % colors.length]
+    const handleClick = (event: React.MouseEvent) => {
+      event.stopPropagation()
+    }
+
+    const handleRemove = (event: React.MouseEvent) => {
+      event.stopPropagation()
+      removeBlock(template.id)
+    }
+
+    const handleClone = (event: React.MouseEvent) => {
+      event.stopPropagation()
+      const clonedBlock = JSON.parse(JSON.stringify(template))
+      clonedBlock.id = generateRandomId() // You'll need to move the generateRandomId() function to a shared location.
+      addChild(template.parentId, clonedBlock)
     }
 
     return (
-      <Tag
-        key={id}
-        className={cn(className, "relative", classNames, {
-          [`border border-${getBorderColorByLevel(level)}-600`]: isHovered,
-        })}
-        style={{ ...style }}
-      >
-        {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
-        {children?.map((child: Child) => (
-          <ClientBlocksRender
-            key={child.id}
-            template={child}
-            setStructure={setStructure}
-            addChild={addChild}
-            level={level + 1}
-            addBlock={addBlock}
-          />
-        ))}
-
-        {isHovered && (
-          <>
-            <div className="absolute left-8 top-0 flex flex-row gap-2">
-              {Object.keys(blockConfigMap).map((componentName) => {
-                const Icon = blockConfigMap[componentName].icon
-                return (
-                  <Button
-                    key={componentName}
-                    className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
-                    onClick={() => addBlock(template.id, componentName)}
-                  >
-                    <Icon size="14" />
-                  </Button>
-                )
-              })}
-            </div>
-            <BlockSettingsSheet
-              blockId={id}
-              onClassNamesChange={onClassNamesChange}
+      <BlockSettingsSheet blockId={id} onClassNamesChange={onClassNamesChange}>
+        <Tag
+          key={id}
+          className={cn(className, "relative", classNames)}
+          style={style}
+          onClick={handleClick}
+        >
+          {CustomComponent ? <CustomComponent {...updatedProps} /> : content}
+          {children?.map((child: Child) => (
+            <ClientBlocksRender
+              key={child.id}
+              template={child}
+              setStructure={setStructure}
+              addChild={addChild}
+              level={level + 1}
+              addBlock={addBlock}
+              removeBlock={removeBlock}
             />
+          ))}
+          <>
+            <div
+              className="mx-auto flex h-full w-fit flex-row items-center justify-center gap-1 rounded-xl bg-transparent p-2"
+              style={{ zIndex: level * 10 }}
+            >
+              <Button
+                className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-600 p-0 text-white"
+                onClick={handleClone}
+              >
+                C
+              </Button>
+              <Button
+                className="flex h-6 w-6 items-center justify-center rounded-lg bg-red-600 p-0 text-white"
+                onClick={handleRemove}
+              >
+                X
+              </Button>
+              {isContainerElement(tag) &&
+                Object.keys(blockConfigMap).map((componentName) => {
+                  const Icon = blockConfigMap[componentName].icon
+                  return (
+                    <Button
+                      key={componentName}
+                      className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        addBlock(template.id, componentName)
+                      }}
+                    >
+                      <Icon size="14" />
+                    </Button>
+                  )
+                })}
+            </div>
           </>
-        )}
-      </Tag>
+        </Tag>
+      </BlockSettingsSheet>
     )
   }
 

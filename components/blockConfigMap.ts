@@ -1,4 +1,4 @@
-import { Heading, Image, MoveHorizontal, MoveVertical, Type } from "lucide-react";
+import { Heading, Image, MoveHorizontal, MoveVertical, Square, Type } from "lucide-react";
 
 // blockConfigMap.ts
 type BlockConfig = {
@@ -11,19 +11,12 @@ type BlockConfig = {
 };
 
 const blockConfigMap: Record<string, BlockConfig> = {
-  row: {
+  container: {
     tag: "div",
     className:
-      "w-full max-w-6xl mx-auto flex flex-row border-2 border-blue-500 h-16",
+      "w-full max-w-6xl mx-auto flex flex-col min-h-[24px]",
     content: "",
-    icon: MoveHorizontal
-  },
-  column: {
-    tag: "div",
-    className:
-      "w-full max-w-6xl mx-auto flex flex-col border-2 border-orange-500 h-16",
-    content: "",
-    icon: MoveVertical
+    icon: Square
   },
   heading: {
     tag: "h1",
@@ -38,7 +31,7 @@ const blockConfigMap: Record<string, BlockConfig> = {
     icon: Type
   },
   image: {
-    tag: "div",
+    tag: "span",
     componentName: "BlockImage",
     className: "w-[180px]",
     icon: Image,

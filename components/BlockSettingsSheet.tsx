@@ -1,19 +1,19 @@
 "use client"
 
-import React from "react"
-import { Settings } from "lucide-react"
+import React, { ReactNode } from "react"
 
-import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 interface BlockSettingsSheetProps {
   blockId: string
   onClassNamesChange: (color: string) => void
+  children: ReactNode
 }
 
 const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   blockId,
   onClassNamesChange,
+  children,
 }) => {
   const handleClassNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -21,19 +21,18 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
     onClassNamesChange(event.target.value)
   }
 
+  // Add handleClick function
+  const handleClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button className="absolute left-0 top-0 h-6 w-6 p-0">
-          <Settings size="14" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent position="right" size="sm">
+      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetContent position="right" size="sm" onClick={handleClick}>
+        <h3>Settings for block {blockId}</h3>
         <div>
-          <h3>Settings for block {blockId}</h3>
-          <div>
-            <input className="border" onChange={handleClassNameChange} />
-          </div>
+          <input className="border" onChange={handleClassNameChange} />
         </div>
       </SheetContent>
     </Sheet>
