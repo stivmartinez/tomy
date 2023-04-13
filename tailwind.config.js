@@ -1,4 +1,5 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const { default: safelist } = require("./tailwind-safelist")
 
 /** @type {import('tailwindcss').Config} */
 
@@ -13,6 +14,7 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: safelist,
   theme: {
     container: {
       center: true,
