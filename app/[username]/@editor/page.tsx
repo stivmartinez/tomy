@@ -3,5 +3,6 @@ import ProfileEditor from "./profile-editor"
 
 export default async function ProfilePageEditor() {
   const body = await fetchBody()
-  return <ProfileEditor initialData={[body.body]} />
+  //body.body
+  return <ProfileEditor initialData={[]} />
 }

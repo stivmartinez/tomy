@@ -1,8 +1,11 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 
+import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
+import blockConfigMap from "./blockConfigMap"
+import { Button } from "./ui/button"
 
 interface ClientBlocksRenderProps {
   template: any
@@ -23,29 +26,74 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   removeBlock,
 }) => {
   const [classNames, setClassNames] = useState("")
-  const [isHovered, setIsHovered] = useState(false)
-  const blockRef = useRef(null)
 
   const handleClassNamesChange = (color: string) => {
     setClassNames(color)
   }
 
-  const handleMouseEnter = () => {
-    setIsHovered(true)
+  const handleRemove = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    removeBlock(template.id)
   }
 
-  const handleMouseLeave = () => {
-    setIsHovered(false)
+  const handleClone = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    const clonedBlock = JSON.parse(JSON.stringify(template))
+    clonedBlock.id = generateRandomId() // You'll need to move the generateRandomId() function to a shared location.
+    addChild(template.parentId, clonedBlock)
   }
 
-  const getBorderColorByLevel = (level: number): string => {
-    const colors = ["red", "blue", "green", "purple", "orange"]
-
-    // Use modulo to loop through the colors array when the level is higher than the available colors
-    return colors[level % colors.length]
+  const isContainerElement = (tag: string): boolean => {
+    const containerElements = [
+      "div",
+      "section",
+      "footer",
+      "header",
+      "main",
+      "nav",
+      "aside",
+      "article",
+    ]
+    return containerElements.includes(tag)
   }
 
-  const blocksRenderElement = (
+  const buttons = (
+    <div
+      className="mx-auto flex h-full w-fit flex-row items-center justify-center gap-1 rounded-xl bg-transparent p-2"
+      style={{ zIndex: level * 10 }}
+    >
+      <Button
+        className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-600 p-0 text-white"
+        onClick={handleClone}
+      >
+        C
+      </Button>
+      <Button
+        className="flex h-6 w-6 items-center justify-center rounded-lg bg-red-600 p-0 text-white"
+        onClick={handleRemove}
+      >
+        X
+      </Button>
+      {isContainerElement(template.tag) &&
+        Object.keys(blockConfigMap).map((componentName) => {
+          const Icon = blockConfigMap[componentName].icon
+          return (
+            <Button
+              key={componentName}
+              className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
+              onClick={(event) => {
+                event.stopPropagation()
+                addBlock(template.id, componentName)
+              }}
+            >
+              <Icon size="14" />
+            </Button>
+          )
+        })}
+    </div>
+  )
+
+  return (
     <BlocksRender
       template={template}
       setStructure={setStructure}
@@ -54,16 +102,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       addBlock={addBlock}
       classNames={`${classNames} border border-blue-600/50`}
       onClassNamesChange={handleClassNamesChange}
-      isHovered={isHovered}
       removeBlock={removeBlock}
-    />
+    >
+      {buttons}
+    </BlocksRender>
   )
-
-  return React.cloneElement(blocksRenderElement, {
-    ref: blockRef,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-  })
 }
 
 export default ClientBlocksRender
