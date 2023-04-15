@@ -15,7 +15,10 @@ interface ProfileEditorProps {
 const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
   const [structure, setStructure] = useState<any[]>(initialData)
 
-  const addChildToStructure = (parentId: string, blockConfiguration: any) => {
+  const addChildToStructure = (
+    parentId: string | null,
+    blockConfiguration: any
+  ) => {
     const newStructure = JSON.parse(JSON.stringify(structure))
 
     const newBlock = {
@@ -41,9 +44,13 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
       return false
     }
 
-    newStructure.forEach((node: any) => {
-      addChildRecursive(node)
-    })
+    if (parentId) {
+      newStructure.forEach((node: any) => {
+        addChildRecursive(node)
+      })
+    } else {
+      newStructure.push(newBlock)
+    }
 
     setStructure(newStructure)
   }

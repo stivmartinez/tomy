@@ -39,8 +39,8 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const handleClone = (event: React.MouseEvent) => {
     event.stopPropagation()
     const clonedBlock = JSON.parse(JSON.stringify(template))
-    clonedBlock.id = generateRandomId() // You'll need to move the generateRandomId() function to a shared location.
-    addChild(template.parentId, clonedBlock)
+    clonedBlock.id = generateRandomId()
+    addChild(template.parentId || null, clonedBlock)
   }
 
   const isContainerElement = (tag: string): boolean => {
