@@ -27,8 +27,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 }) => {
   const [classNames, setClassNames] = useState("")
 
-  const handleClassNamesChange = (color: string) => {
-    setClassNames(color)
+  const handleClassNamesChange = (newStyles: { [key: string]: string }) => {
+    const updatedClassNames = Object.entries(newStyles)
+      .map(([key, value]) => `${key}-${value}`)
+      .join(" ")
+    setClassNames(updatedClassNames)
   }
 
   const handleRemove = (event: React.MouseEvent) => {
@@ -59,8 +62,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const buttons = (
     <div
-      className="mx-auto flex h-full w-fit flex-row items-center justify-center gap-1 rounded-xl bg-transparent p-2"
-      style={{ zIndex: level * 10 }}
+      className="absolute mx-auto flex h-full w-fit flex-row items-center justify-center gap-1 rounded-xl bg-transparent p-2"
+      style={{
+        left: !isContainerElement(template.tag) ? "inherit" : "50%",
+        zIndex: level * 10,
+      }}
     >
       <Button
         className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-600 p-0 text-white"

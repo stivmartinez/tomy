@@ -13,6 +13,16 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    {
+      pattern: /^h-/,
+      variants: ["responsive"],
+    },
+    {
+      pattern: /^w-/,
+      variants: ["responsive"],
+    },
+  ],
   theme: {
     container: {
       center: true,

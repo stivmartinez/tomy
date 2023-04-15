@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 interface BlockSettingsSheetProps {
   blockId: string
-  onClassNamesChange: (color: string) => void
+  onClassNamesChange: (newStyles: { [key: string]: string }) => void
   children: ReactNode
 }
 
@@ -16,9 +16,15 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   children,
 }) => {
   const handleClassNameChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
+    prefix: string = "",
+    suffix: string = "",
+    useBrackets: boolean = false
   ) => {
-    onClassNamesChange(event.target.value)
+    const value = useBrackets
+      ? `[${event.target.value}${suffix}]`
+      : `${event.target.value}${suffix}`
+    onClassNamesChange({ [prefix]: value })
   }
 
   // Add handleClick function
@@ -32,7 +38,28 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
       <SheetContent position="right" size="sm" onClick={handleClick}>
         <h3>Settings for block {blockId}</h3>
         <div>
-          <input className="border" onChange={handleClassNameChange} />
+          <input
+            className="border"
+            onChange={(event) => handleClassNameChange(event, "custom")}
+          />
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            className="slider"
+            onChange={(event) =>
+              handleClassNameChange(event, "h", "px", true)
+            }
+          />
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            className="slider"
+            onChange={(event) =>
+              handleClassNameChange(event, "max-w", "px", true)
+            }
+          />
         </div>
       </SheetContent>
     </Sheet>

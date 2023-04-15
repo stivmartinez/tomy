@@ -21,7 +21,7 @@ interface BlocksRenderProps {
   level: number
   addBlock: (parentId: string, type: string) => void
   classNames: string // Add this line
-  onClassNamesChange: (color: string) => void // Add this line
+  onClassNamesChange: (newStyles: { [key: string]: string }) => void
   isHovered?: boolean
   removeBlock: (blockId: string) => void
   children?: React.ReactNode // Add this line
