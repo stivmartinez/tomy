@@ -26,12 +26,25 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   removeBlock,
 }) => {
   const [classNames, setClassNames] = useState("")
+  const [styles, setStyles] = useState<Record<string, string | number>>({})
 
   const handleClassNamesChange = (newStyles: { [key: string]: string }) => {
     const updatedClassNames = Object.entries(newStyles)
-      .map(([key, value]) => `${key}-${value}`)
+      .map(([key, value]) => {
+        if (value) {
+          return `${key}-${value}`
+        } else {
+          return key
+        }
+      })
       .join(" ")
     setClassNames(updatedClassNames)
+  }
+
+  const handleStylesChange = (newStyles: {
+    [key: string]: string | number
+  }) => {
+    setStyles((prevState) => ({ ...prevState, ...newStyles }))
   }
 
   const handleRemove = (event: React.MouseEvent) => {
@@ -106,6 +119,8 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       addChild={addChild}
       level={level}
       addBlock={addBlock}
+      styles={styles}
+      onStylesChange={handleStylesChange}
       classNames={`${classNames} border border-blue-600/50`}
       onClassNamesChange={handleClassNamesChange}
       removeBlock={removeBlock}

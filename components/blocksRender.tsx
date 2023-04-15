@@ -20,11 +20,13 @@ interface BlocksRenderProps {
   addChild: (parentId: string, blockConfiguration: any) => void
   level: number
   addBlock: (parentId: string, type: string) => void
-  classNames: string // Add this line
+  classNames: string
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
   isHovered?: boolean
   removeBlock: (blockId: string) => void
-  children?: React.ReactNode // Add this line
+  children?: React.ReactNode
+  onStylesChange: (newStyles: { [key: string]: string | number }) => void
+  styles: any
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -37,6 +39,8 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   onClassNamesChange,
   removeBlock,
   children,
+  onStylesChange,
+  styles,
 }) => {
   const blocksRender = (component: any): ReactElement => {
     const {
@@ -60,12 +64,18 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
       event.stopPropagation()
     }
 
+    console.log("styles", styles)
+
     return (
-      <BlockSettingsSheet blockId={id} onClassNamesChange={onClassNamesChange}>
+      <BlockSettingsSheet
+        blockId={id}
+        onClassNamesChange={onClassNamesChange}
+        onStylesChange={onStylesChange}
+      >
         <Tag
           key={id}
           className={cn(className, "relative", classNames)}
-          style={style}
+          style={{ ...style, ...styles }}
           onClick={handleClick}
         >
           {CustomComponent ? <CustomComponent {...props} /> : content}

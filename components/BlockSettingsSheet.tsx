@@ -7,12 +7,14 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 interface BlockSettingsSheetProps {
   blockId: string
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
+  onStylesChange: (newStyles: { [key: string]: string | number }) => void
   children: ReactNode
 }
 
 const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   blockId,
   onClassNamesChange,
+  onStylesChange,
   children,
 }) => {
   const handleClassNameChange = (
@@ -24,10 +26,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
     const value = useBrackets
       ? `[${event.target.value}${suffix}]`
       : `${event.target.value}${suffix}`
-    onClassNamesChange({ [prefix]: value })
+    if (prefix) {
+      onClassNamesChange({ [prefix]: value })
+    } else {
+      onClassNamesChange({ [value]: "" });
+    }
   }
 
-  // Add handleClick function
+  const handleStyleChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    styleProp: string
+  ) => {
+    onStylesChange({ [styleProp]: event.target.value + "px" })
+  }
+
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation()
   }
@@ -40,16 +52,14 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
         <div>
           <input
             className="border"
-            onChange={(event) => handleClassNameChange(event, "custom")}
+            onChange={(event) => handleClassNameChange(event)}
           />
           <input
             type="range"
             min="0"
             max="1000"
             className="slider"
-            onChange={(event) =>
-              handleClassNameChange(event, "h", "px", true)
-            }
+            onChange={(event) => handleClassNameChange(event, "h", "px", true)}
           />
           <input
             type="range"
@@ -59,6 +69,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
             onChange={(event) =>
               handleClassNameChange(event, "max-w", "px", true)
             }
+          />
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            className="slider"
+            onChange={(event) => handleStyleChange(event, "height")}
+          />
+          <input
+            type="range"
+            min="0"
+            max="1000"
+            className="slider"
+            onChange={(event) => handleStyleChange(event, "width")}
           />
         </div>
       </SheetContent>
