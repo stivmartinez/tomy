@@ -64,8 +64,6 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
       event.stopPropagation()
     }
 
-    console.log("styles", styles)
-
     return (
       <BlockSettingsSheet
         blockId={id}
