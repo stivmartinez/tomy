@@ -4,6 +4,7 @@ import React, { useState } from "react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
+import BlockSettingsSheet from "./BlockSettingsSheet"
 import blockConfigMap from "./blockConfigMap"
 import { Button } from "./ui/button"
 
@@ -81,6 +82,14 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         zIndex: level * 10,
       }}
     >
+      <BlockSettingsSheet
+        onClassNamesChange={handleClassNamesChange}
+        onStylesChange={handleStylesChange}
+      >
+        <Button className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 p-0 text-white">
+          S
+        </Button>
+      </BlockSettingsSheet>
       <Button
         className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-600 p-0 text-white"
         onClick={handleClone}
@@ -120,9 +129,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       level={level}
       addBlock={addBlock}
       styles={styles}
-      onStylesChange={handleStylesChange}
       classNames={`${classNames} border border-blue-600/50`}
-      onClassNamesChange={handleClassNamesChange}
       removeBlock={removeBlock}
     >
       {buttons}

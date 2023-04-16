@@ -7,14 +7,12 @@ import { Label } from "./ui/label"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 
 interface BlockSettingsSheetProps {
-  blockId: string
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
   onStylesChange: (newStyles: { [key: string]: string | number }) => void
   children: ReactNode
 }
 
 const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
-  blockId,
   onClassNamesChange,
   onStylesChange,
   children,
@@ -89,7 +87,7 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent position="right" size="sm" onClick={handleClick}>
-        <h3>Settings for block {blockId}</h3>
+        <h3>Settings for block</h3>
         <div className="my-8 border-y py-4">
           <Label className="mb-2 text-sm">Padding</Label>
           {generateRadioGroup(paddingOptions, (value) =>
