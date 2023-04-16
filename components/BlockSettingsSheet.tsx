@@ -3,6 +3,7 @@
 import React, { ReactNode } from "react"
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Button } from "./ui/button"
 import { Label } from "./ui/label"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 
@@ -41,6 +42,10 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   }
 
   const handleClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+  }
+
+  const stopPropagation = (event: React.MouseEvent) => {
     event.stopPropagation()
   }
 
@@ -85,7 +90,14 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
 
   return (
     <Sheet>
-      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetTrigger asChild>
+        <Button
+          className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 p-0 text-white"
+          onClick={stopPropagation}
+        >
+          S
+        </Button>
+      </SheetTrigger>
       <SheetContent position="right" size="sm" onClick={handleClick}>
         <h3>Settings for block</h3>
         <div className="my-8 border-y py-4">

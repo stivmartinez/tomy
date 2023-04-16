@@ -13,6 +13,7 @@ interface ProfileEditorProps {
 }
 
 const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
+  const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
 
   const addChildToStructure = (
@@ -90,6 +91,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
           addChild={addChildToStructure}
           addBlock={addBlock}
           removeBlock={removeBlock}
+          selectedBlockId={selectedBlockId}
+          setSelectedBlockId={setSelectedBlockId}
         />
       ))}
       <div className="mt-4 flex justify-center">

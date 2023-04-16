@@ -22,6 +22,9 @@ interface BlocksRenderProps {
   removeBlock: (blockId: string) => void
   children?: React.ReactNode
   styles: any
+  onClick?: any
+  setSelectedBlockId: (id: string | null) => void
+  selectedBlockId: string | null
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -34,6 +37,9 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   removeBlock,
   children,
   styles,
+  onClick,
+  setSelectedBlockId,
+  selectedBlockId,
 }) => {
   const blocksRender = (component: any): ReactElement => {
     const {
@@ -53,16 +59,12 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
         ? dynamic(() => import(`${componentsPathMap[componentName]}`))
         : null
 
-    const handleClick = (event: React.MouseEvent) => {
-      event.stopPropagation()
-    }
-
     return (
       <Tag
         key={id}
         className={cn(className, "relative", classNames)}
         style={{ ...style, ...styles }}
-        onClick={handleClick}
+        onClick={onClick ? (event) => onClick(event) : undefined}
       >
         {CustomComponent ? <CustomComponent {...props} /> : content}
         {componentChildren?.map((child: Child) => (
@@ -74,6 +76,8 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             level={level + 1}
             addBlock={addBlock}
             removeBlock={removeBlock}
+            selectedBlockId={selectedBlockId}
+            setSelectedBlockId={setSelectedBlockId}
           />
         ))}
         {children}

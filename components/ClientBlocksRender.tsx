@@ -1,5 +1,6 @@
 "use client"
 
+import { relative } from "path"
 import React, { useState } from "react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
@@ -16,6 +17,8 @@ interface ClientBlocksRenderProps {
   addChild: (parentId: string, blockConfiguration: any) => void
   addBlock: (parentId: string, type: string) => void
   removeBlock: (blockId: string) => void
+  selectedBlockId: string | null
+  setSelectedBlockId: (blockId: string | null) => void
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
@@ -25,9 +28,21 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   addChild,
   addBlock,
   removeBlock,
+  selectedBlockId,
+  setSelectedBlockId,
 }) => {
   const [classNames, setClassNames] = useState("")
   const [styles, setStyles] = useState<Record<string, string | number>>({})
+
+  const handleSelect = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    setSelectedBlockId((prevState: any) => {
+      if (prevState === template.id) {
+        return null
+      }
+      return template.id
+    })
+  }
 
   const handleClassNamesChange = (newStyles: { [key: string]: string }) => {
     const updatedClassNames = Object.entries(newStyles)
@@ -121,6 +136,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     </div>
   )
 
+  const shadow =
+    selectedBlockId === template.id
+      ? "inset 0 0 0 1px rgba(255, 0, 0, 0.6)"
+      : "none"
+
   return (
     <BlocksRender
       template={template}
@@ -128,11 +148,14 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       addChild={addChild}
       level={level}
       addBlock={addBlock}
-      styles={styles}
-      classNames={`${classNames} border border-blue-600/50`}
+      styles={{ ...styles, boxShadow: shadow }}
+      classNames={`${classNames}`}
       removeBlock={removeBlock}
+      onClick={handleSelect}
+      selectedBlockId={selectedBlockId}
+      setSelectedBlockId={setSelectedBlockId}
     >
-      {buttons}
+      {selectedBlockId === template.id && buttons}
     </BlocksRender>
   )
 }
