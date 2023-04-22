@@ -1,12 +1,11 @@
 "use client"
 
-import React, { useState } from "react"
-import { Plus } from "lucide-react"
+import React, { useRef, useState } from "react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import ClientBlocksRender from "@/components/ClientBlocksRender"
 import blockConfigMap from "@/components/blockConfigMap"
-import { Button } from "@/components/ui/button"
+import ProfileEditorNavbar from "./components/navbar"
 
 interface ProfileEditorProps {
   initialData?: any[] // Add this line
@@ -15,6 +14,8 @@ interface ProfileEditorProps {
 const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
+
+  const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   const addChildToStructure = (
     parentId: string | null,
@@ -93,25 +94,15 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
           removeBlock={removeBlock}
           selectedBlockId={selectedBlockId}
           setSelectedBlockId={setSelectedBlockId}
+          blockRef={blockRef}
         />
       ))}
-      <div className="mt-4 flex justify-center">
-        <Button
-          onClick={() => {
-            const newBlock = {
-              id: generateRandomId(),
-              tag: "section",
-              type: "container",
-              className: "w-full min-h-[24px]",
-              children: [],
-            }
-            setStructure((prevStructure: any[]) => [...prevStructure, newBlock])
-          }}
-          className="h-8 w-8 rounded-full p-0"
-        >
-          <Plus size="16" />
-        </Button>
-      </div>
+      <ProfileEditorNavbar
+        setStructure={setStructure}
+        structure={structure}
+        selectedBlockId={selectedBlockId}
+        setSelectedBlockId={setSelectedBlockId}
+      />
     </>
   )
 }

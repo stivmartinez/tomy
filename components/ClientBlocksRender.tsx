@@ -19,6 +19,7 @@ interface ClientBlocksRenderProps {
   removeBlock: (blockId: string) => void
   selectedBlockId: string | null
   setSelectedBlockId: (blockId: string | null) => void
+  blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
@@ -30,6 +31,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   removeBlock,
   selectedBlockId,
   setSelectedBlockId,
+  blockRef,
 }) => {
   const [classNames, setClassNames] = useState("")
   const [styles, setStyles] = useState<Record<string, string | number>>({})
@@ -138,10 +140,10 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const shadow =
     selectedBlockId === template.id
-      ? "inset 0 0 0 1px rgba(255, 0, 0, 0.6)"
-      : "none"
+      ? "0 0 0 2px red"
+      : "inset 0 0 0 1px blue"
 
-  return (
+  return React.cloneElement(
     <BlocksRender
       template={template}
       setStructure={setStructure}
@@ -156,7 +158,12 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       setSelectedBlockId={setSelectedBlockId}
     >
       {selectedBlockId === template.id && buttons}
-    </BlocksRender>
+    </BlocksRender>,
+    {
+      ref: (el: HTMLDivElement) => {
+        blockRef.current[template.id] = el
+      },
+    }
   )
 }
 
