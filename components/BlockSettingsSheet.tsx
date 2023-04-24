@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "./ui/button"
 import { Label } from "./ui/label"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+import { Settings } from "lucide-react"
 
 interface BlockSettingsSheetProps {
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
@@ -92,10 +93,10 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 p-0 text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
           onClick={stopPropagation}
         >
-          S
+          <Settings size="12" />
         </Button>
       </SheetTrigger>
       <SheetContent position="right" size="sm" onClick={handleClick}>

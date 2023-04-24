@@ -231,4 +231,4 @@ const ProfileEditorNavbar = ({
   )
 }
 
-export default ProfileEditorNavbar
+export default React.memo(ProfileEditorNavbar);

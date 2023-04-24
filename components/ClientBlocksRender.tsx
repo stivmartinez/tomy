@@ -2,6 +2,7 @@
 
 import { relative } from "path"
 import React, { useState } from "react"
+import { Copy, Delete, Edit, Settings, Settings2, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
@@ -39,7 +40,9 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const handleBlur = (event: React.FocusEvent<HTMLHeadingElement>) => {
     const newContent = event.target.textContent
-    if (newContent !== template.content) {
+    if (newContent === "E" && !isEditing) {
+      event.target.textContent = template.content
+    } else if (newContent !== template.content) {
       setStructure((prevStructure: any[]) => {
         const newStructure = JSON.parse(JSON.stringify(prevStructure))
         const updateContentRecursive = (node: any) => {
@@ -71,9 +74,12 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     event.stopPropagation()
     setSelectedBlockId((prevState: any) => {
       if (prevState === template.id) {
+        setIsEditing(true)
         return null
+      } else {
+        setIsEditing(false)
+        return template.id
       }
-      return template.id
     })
   }
 
@@ -154,34 +160,36 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const buttons = (
     <div
-      className="absolute left-0 top-full flex flex-row items-center gap-1 rounded-xl bg-slate-900 p-2"
-      style={{
-        left: !isContainerElement(template.tag) ? "inherit" : "50%",
-        zIndex: level * 10,
-      }}
+      className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
+      style={{ zIndex: level * 10 }}
     >
+      {template.type && (
+        <span className="flex px-2 text-sm font-normal text-slate-300">
+          {template.type}
+        </span>
+      )}
       <BlockSettingsSheet
         onClassNamesChange={handleClassNamesChange}
         onStylesChange={handleStylesChange}
       >
-        <Button className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 p-0 text-white">
-          S
+        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 p-0 text-white">
+          <Settings2 size="12" />
         </Button>
       </BlockSettingsSheet>
       <Button
-        className="flex h-6 w-6 items-center justify-center rounded-lg bg-green-600 p-0 text-white"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
         onClick={handleClone}
       >
-        C
+        <Copy size="12" />
       </Button>
       <Button
-        className="flex h-6 w-6 items-center justify-center rounded-lg bg-red-600 p-0 text-white"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
         onClick={handleRemove}
       >
-        X
+        <Trash size="12" />
       </Button>
       <Button
-        className="flex h-6 w-6 items-center justify-center rounded-lg bg-yellow-600 p-0 text-white"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
         onClick={(event) => {
           event.stopPropagation()
           if (template.type === "image") {
@@ -191,7 +199,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
           }
         }}
       >
-        E
+        <Edit size="12" />
       </Button>
       {isContainerElement(template.tag) &&
         Object.keys(blockConfigMap).map((componentName) => {
@@ -199,7 +207,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
           return (
             <Button
               key={componentName}
-              className="flex h-6 w-6 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
               onClick={(event) => {
                 event.stopPropagation()
                 addBlock(template.id, componentName)
@@ -222,13 +230,13 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       addChild={addChild}
       level={level}
       addBlock={addBlock}
-      styles={{ ...styles, boxShadow: shadow }}
+      styles={{ ...styles, boxShadow: shadow, cursor: "pointer" }}
       classNames={`${classNames}`}
       removeBlock={removeBlock}
       onClick={handleSelect}
       selectedBlockId={selectedBlockId}
       setSelectedBlockId={setSelectedBlockId}
-      contentEditable={isEditing}
+      contentEditable={isEditing && selectedBlockId === template.id}
       onBlur={isEditing ? handleBlur : undefined}
       blockRef={blockRef}
       suppressContentEditableWarning
@@ -243,4 +251,4 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   )
 }
 
-export default ClientBlocksRender
+export default React.memo(ClientBlocksRender)
