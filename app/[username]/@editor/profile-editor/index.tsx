@@ -17,6 +17,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
 
   const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
+  console.log(structure)
+
   const addChildToStructure = (
     parentId: string | null,
     blockConfiguration: any

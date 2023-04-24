@@ -25,6 +25,10 @@ interface BlocksRenderProps {
   onClick?: any
   setSelectedBlockId: (id: string | null) => void
   selectedBlockId: string | null
+  contentEditable?: boolean
+  onBlur?: any
+  suppressContentEditableWarning?: boolean
+  blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -40,6 +44,10 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   onClick,
   setSelectedBlockId,
   selectedBlockId,
+  contentEditable,
+  onBlur,
+  suppressContentEditableWarning,
+  blockRef,
 }) => {
   const blocksRender = (component: any): ReactElement => {
     const {
@@ -65,6 +73,9 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
         className={cn(className, "relative", classNames)}
         style={{ ...style, ...styles }}
         onClick={onClick ? (event) => onClick(event) : undefined}
+        onBlur={onBlur}
+        contentEditable={contentEditable}
+        suppressContentEditableWarning={suppressContentEditableWarning}
       >
         {CustomComponent ? <CustomComponent {...props} /> : content}
         {componentChildren?.map((child: Child) => (
@@ -78,6 +89,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             removeBlock={removeBlock}
             selectedBlockId={selectedBlockId}
             setSelectedBlockId={setSelectedBlockId}
+            blockRef={blockRef}
           />
         ))}
         {children}

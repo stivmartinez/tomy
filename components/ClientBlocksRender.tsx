@@ -11,7 +11,6 @@ import { Button } from "./ui/button"
 
 interface ClientBlocksRenderProps {
   template: any
-  data?: any
   setStructure: (structure: any[]) => void
   level: number
   addChild: (parentId: string, blockConfiguration: any) => void
@@ -35,6 +34,38 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 }) => {
   const [classNames, setClassNames] = useState("")
   const [styles, setStyles] = useState<Record<string, string | number>>({})
+
+  const [isEditing, setIsEditing] = useState(false)
+
+  const handleBlur = (event: React.FocusEvent<HTMLHeadingElement>) => {
+    const newContent = event.target.textContent
+    if (newContent !== template.content) {
+      setStructure((prevStructure: any[]) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
+        const updateContentRecursive = (node: any) => {
+          if (!node) return false
+          if (node.id === template.id) {
+            node.content = newContent
+            return true
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              if (updateContentRecursive(child)) {
+                return true
+              }
+            }
+          }
+          return false
+        }
+
+        newStructure.forEach((node: any) => {
+          updateContentRecursive(node)
+        })
+
+        return newStructure
+      })
+    }
+  }
 
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
@@ -93,7 +124,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const buttons = (
     <div
-      className="absolute mx-auto flex h-full w-fit flex-row items-center justify-center gap-1 rounded-xl bg-transparent p-2"
+      className="absolute left-0 top-full flex flex-row items-center gap-1 rounded-xl bg-slate-900 p-2"
       style={{
         left: !isContainerElement(template.tag) ? "inherit" : "50%",
         zIndex: level * 10,
@@ -119,6 +150,15 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       >
         X
       </Button>
+      <Button
+        className="flex h-6 w-6 items-center justify-center rounded-lg bg-yellow-600 p-0 text-white"
+        onClick={(event) => {
+          event.stopPropagation()
+          setIsEditing((prev) => !prev)
+        }}
+      >
+        E
+      </Button>
       {isContainerElement(template.tag) &&
         Object.keys(blockConfigMap).map((componentName) => {
           const Icon = blockConfigMap[componentName].icon
@@ -139,9 +179,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   )
 
   const shadow =
-    selectedBlockId === template.id
-      ? "0 0 0 2px red"
-      : "inset 0 0 0 1px blue"
+    selectedBlockId === template.id ? "0 0 0 2px red" : "inset 0 0 0 1px blue"
 
   return React.cloneElement(
     <BlocksRender
@@ -156,6 +194,10 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       onClick={handleSelect}
       selectedBlockId={selectedBlockId}
       setSelectedBlockId={setSelectedBlockId}
+      contentEditable={isEditing}
+      onBlur={isEditing ? handleBlur : undefined}
+      blockRef={blockRef}
+      suppressContentEditableWarning
     >
       {selectedBlockId === template.id && buttons}
     </BlocksRender>,
