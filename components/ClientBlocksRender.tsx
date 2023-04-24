@@ -2,7 +2,16 @@
 
 import { relative } from "path"
 import React, { useState } from "react"
-import { Copy, Delete, Edit, Settings, Settings2, Trash } from "lucide-react"
+import {
+  ArrowDown,
+  ArrowUp,
+  Copy,
+  Delete,
+  Edit,
+  Settings,
+  Settings2,
+  Trash,
+} from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
@@ -158,11 +167,67 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     }
   }
 
+  const moveBlock = (blockId, direction) => {
+    setStructure((prevStructure) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure))
+
+      const findParentAndIndex = (children, blockId) => {
+        for (let i = 0; i < children.length; i++) {
+          if (children[i].id === blockId) {
+            return { parent: children, index: i }
+          }
+          if (children[i].children) {
+            const result = findParentAndIndex(children[i].children, blockId)
+            if (result) {
+              return result
+            }
+          }
+        }
+        return null
+      }
+
+      const { parent, index } = findParentAndIndex(newStructure, blockId)
+
+      if (!parent) {
+        console.error("Block not found")
+        return prevStructure
+      }
+
+      const block = parent[index]
+
+      if (direction === "up") {
+        if (index > 0) {
+          parent.splice(index, 1)
+          parent.splice(index - 1, 0, block)
+        }
+      } else if (direction === "down") {
+        if (index < parent.length - 1) {
+          parent.splice(index, 1)
+          parent.splice(index + 1, 0, block)
+        }
+      }
+
+      return newStructure
+    })
+  }
+
   const buttons = (
     <div
       className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
       style={{ zIndex: level * 10 }}
     >
+      <Button
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+        onClick={(e) => moveBlock(template.id, "up")}
+      >
+        <ArrowUp size="12" />
+      </Button>
+      <Button
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+        onClick={(e) => moveBlock(template.id, "down")}
+      >
+        <ArrowDown size="12" />
+      </Button>
       {template.type && (
         <span className="flex px-2 text-sm font-normal text-slate-300">
           {template.type}
