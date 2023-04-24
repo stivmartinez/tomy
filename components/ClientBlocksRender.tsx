@@ -122,6 +122,36 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     return containerElements.includes(tag)
   }
 
+  const handleImageSourceUpdate = () => {
+    const newSrc = prompt("Please enter the new image source URL:")
+    if (newSrc) {
+      setStructure((prevStructure: any[]) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
+        const updateImageSourceRecursive = (node: any) => {
+          if (!node) return false
+          if (node.id === template.id) {
+            node.props.src = newSrc
+            return true
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              if (updateImageSourceRecursive(child)) {
+                return true
+              }
+            }
+          }
+          return false
+        }
+
+        newStructure.forEach((node: any) => {
+          updateImageSourceRecursive(node)
+        })
+
+        return newStructure
+      })
+    }
+  }
+
   const buttons = (
     <div
       className="absolute left-0 top-full flex flex-row items-center gap-1 rounded-xl bg-slate-900 p-2"
@@ -154,7 +184,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         className="flex h-6 w-6 items-center justify-center rounded-lg bg-yellow-600 p-0 text-white"
         onClick={(event) => {
           event.stopPropagation()
-          setIsEditing((prev) => !prev)
+          if (template.type === "image") {
+            handleImageSourceUpdate()
+          } else {
+            setIsEditing((prev) => !prev)
+          }
         }}
       >
         E
