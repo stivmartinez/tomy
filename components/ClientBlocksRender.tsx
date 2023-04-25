@@ -159,6 +159,33 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     [key: string]: string | number
   }) => {
     setStyles((prevState) => ({ ...prevState, ...newStyles }))
+
+    // Update the structure with the new styles
+    setStructure((prevStructure: any[]) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure))
+      const updateStylesRecursive = (node: any) => {
+        if (!node) return false
+        if (node.id === template.id) {
+          node.style = node.style || {}
+          Object.assign(node.style, newStyles)
+          return true
+        }
+        if (node.children) {
+          for (const child of node.children) {
+            if (updateStylesRecursive(child)) {
+              return true
+            }
+          }
+        }
+        return false
+      }
+
+      newStructure.forEach((node: any) => {
+        updateStylesRecursive(node)
+      })
+
+      return newStructure
+    })
   }
 
   const handleRemove = (event: React.MouseEvent) => {
