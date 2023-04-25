@@ -1,4 +1,5 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const colors = require("tailwindcss/colors")
 
 /** @type {import('tailwindcss').Config} */
 
@@ -20,6 +21,10 @@ module.exports = {
     },
     {
       pattern: /^w-/,
+      variants: ["responsive"],
+    },
+    {
+      pattern: /^bg-/,
       variants: ["responsive"],
     },
   ],

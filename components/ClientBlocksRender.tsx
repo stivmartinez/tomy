@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import React, { useState } from "react"
 import { ArrowDown, ArrowUp, Copy, Edit, Settings2, Trash } from "lucide-react"
 
