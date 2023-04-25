@@ -16,6 +16,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
   const [structure, setStructure] = useState<any[]>(initialData)
   const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
+  console.log(structure)
+
   const addChildToStructure = useCallback(
     (parentId: string | null, blockConfiguration: any) => {
       const newStructure = JSON.parse(JSON.stringify(structure))
