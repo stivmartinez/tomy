@@ -1,17 +1,7 @@
 "use client"
 
-import { relative } from "path"
 import React, { useState } from "react"
-import {
-  ArrowDown,
-  ArrowUp,
-  Copy,
-  Delete,
-  Edit,
-  Settings,
-  Settings2,
-  Trash,
-} from "lucide-react"
+import { ArrowDown, ArrowUp, Copy, Edit, Settings2, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
@@ -221,7 +211,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const buttons = (
     <div
       className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
-      style={{ zIndex: "99999" }}
+      style={{ zIndex: 1 }}
     >
       <Button
         className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${

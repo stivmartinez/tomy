@@ -90,6 +90,8 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
             selectedBlockId={selectedBlockId}
             setSelectedBlockId={setSelectedBlockId}
             blockRef={blockRef}
+            parentLength={componentChildren.length}
+            index={componentChildren.indexOf(child)}
           />
         ))}
         {children}
