@@ -90,7 +90,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
 
   return (
     <>
-      {structure.map((block) => (
+      {structure.map((block, index) => (
         <ClientBlocksRender
           key={block.id}
           template={block}
@@ -102,6 +102,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
           selectedBlockId={selectedBlockId}
           setSelectedBlockId={setSelectedBlockId}
           blockRef={blockRef}
+          index={index}
+          parentLength={structure.length}
         />
       ))}
       <ProfileEditorNavbar

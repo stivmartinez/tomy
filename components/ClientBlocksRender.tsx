@@ -29,6 +29,8 @@ interface ClientBlocksRenderProps {
   selectedBlockId: string | null
   setSelectedBlockId: (blockId: string | null) => void
   blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
+  index: number
+  parentLength: number
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
@@ -41,6 +43,8 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   selectedBlockId,
   setSelectedBlockId,
   blockRef,
+  index,
+  parentLength,
 }) => {
   const [classNames, setClassNames] = useState("")
   const [styles, setStyles] = useState<Record<string, string | number>>({})
@@ -81,6 +85,9 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
+    if (event.target.closest("button")) {
+      return
+    }
     setSelectedBlockId((prevState: any) => {
       if (prevState === template.id) {
         setIsEditing(true)
@@ -214,17 +221,31 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const buttons = (
     <div
       className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
-      style={{ zIndex: level * 10 }}
+      style={{ zIndex: "99999" }}
     >
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
-        onClick={(e) => moveBlock(template.id, "up")}
+        className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
+          index === 0 ? "cursor-not-allowed opacity-50" : ""
+        }`}
+        onClick={(e) => {
+          if (index > 0) {
+            moveBlock(template.id, "up")
+          }
+        }}
+        disabled={index === 0}
       >
         <ArrowUp size="12" />
       </Button>
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
-        onClick={(e) => moveBlock(template.id, "down")}
+        className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
+          index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
+        }`}
+        onClick={(e) => {
+          if (index < parentLength - 1) {
+            moveBlock(template.id, "down")
+          }
+        }}
+        disabled={index === parentLength - 1}
       >
         <ArrowDown size="12" />
       </Button>

@@ -4,8 +4,10 @@ import { Inter } from "next/font/google"
 import { cn } from "@/lib/utils"
 import "./globals.css"
 
-const inter = Inter({ weight: ["300", "500", "700"], subsets: ["latin"] })
-
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+})
 export async function generateMetadata(): Promise<Metadata> {
   const title = {
     default: "Viralike",
