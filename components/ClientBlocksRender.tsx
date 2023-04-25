@@ -119,7 +119,39 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       const combinedClassNames = Array.from(
         new Set([...filteredClassNames, ...newClassNames])
       )
-      return combinedClassNames.join(" ")
+      const finalClassNames = combinedClassNames.join(" ")
+
+      // Update the structure with the new classNames
+      setStructure((prevStructure: any[]) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
+        const updateClassNamesRecursive = (node: any) => {
+          if (!node) return false
+          if (node.id === template.id) {
+            const defaultClassNames = node.className.split(" ")
+            const mergedClassNames = Array.from(
+              new Set([...defaultClassNames, ...combinedClassNames])
+            )
+            node.className = mergedClassNames.join(" ")
+            return true
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              if (updateClassNamesRecursive(child)) {
+                return true
+              }
+            }
+          }
+          return false
+        }
+
+        newStructure.forEach((node: any) => {
+          updateClassNamesRecursive(node)
+        })
+
+        return newStructure
+      })
+
+      return finalClassNames
     })
   }
 

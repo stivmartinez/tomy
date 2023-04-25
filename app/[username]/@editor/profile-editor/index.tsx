@@ -88,6 +88,8 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
     [structure]
   )
 
+  console.log(structure)
+
   return (
     <>
       {structure.map((block, index) => (
