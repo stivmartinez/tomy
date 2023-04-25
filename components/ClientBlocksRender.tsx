@@ -38,7 +38,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 }) => {
   const [classNames, setClassNames] = useState("")
   const [styles, setStyles] = useState<Record<string, string | number>>({})
-
   const [isEditing, setIsEditing] = useState(false)
 
   const handleBlur = (event: React.FocusEvent<HTMLHeadingElement>) => {
@@ -89,6 +88,16 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     })
   }
 
+  const filterConflictingClassNames = (
+    classNames: string[],
+    newClassName: string
+  ) => {
+    const newClassNamePrefix = newClassName.split("-")[0]
+    return classNames.filter(
+      (className) => className.split("-")[0] !== newClassNamePrefix
+    )
+  }
+
   const handleClassNamesChange = (newStyles: { [key: string]: string }) => {
     const updatedClassNames = Object.entries(newStyles)
       .map(([key, value]) => {
@@ -99,7 +108,19 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         }
       })
       .join(" ")
-    setClassNames(updatedClassNames)
+
+    setClassNames((prevClassNames) => {
+      const existingClassNames = prevClassNames.split(" ")
+      const newClassNames = updatedClassNames.split(" ")
+      const filteredClassNames = filterConflictingClassNames(
+        existingClassNames,
+        newClassNames[0]
+      )
+      const combinedClassNames = Array.from(
+        new Set([...filteredClassNames, ...newClassNames])
+      )
+      return combinedClassNames.join(" ")
+    })
   }
 
   const handleStylesChange = (newStyles: {
