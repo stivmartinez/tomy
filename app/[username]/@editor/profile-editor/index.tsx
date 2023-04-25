@@ -113,6 +113,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
         structure={structure}
         selectedBlockId={selectedBlockId}
         setSelectedBlockId={setSelectedBlockId}
+        addBlock={addBlock}
       />
     </>
   )

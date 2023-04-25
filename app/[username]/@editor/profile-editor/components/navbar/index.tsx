@@ -21,6 +21,7 @@ import {
 } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
+import blockConfigMap from "@/components/blockConfigMap"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -50,11 +51,13 @@ const ProfileEditorNavbar = ({
   setStructure,
   selectedBlockId,
   setSelectedBlockId,
+  addBlock,
 }: {
   structure: any[]
   setStructure: (structure: any[]) => void
   selectedBlockId: string | null
   setSelectedBlockId: (blockId: string | null) => void
+  addBlock: (parentId: string, componentName: string) => void
 }) => {
   const newBlock = {
     id: generateRandomId(),
@@ -127,15 +130,34 @@ const ProfileEditorNavbar = ({
             <SheetHeader className="flex w-full items-center justify-center">
               <SheetTitle className="text-sm">Choose component</SheetTitle>
             </SheetHeader>
-            <div className="flex w-full flex-row justify-center">
-              <Button
-                variant="outline"
-                className="flex h-32 w-32 flex-col gap-3 rounded-xl border-2"
-                onClick={add}
-              >
-                <Square size="32" />
-                <p className="m-0 text-xs">Empty Container</p>
-              </Button>
+            <div className="flex w-full flex-row justify-center gap-4">
+              {!selectedBlockId && (
+                <Button
+                  variant="outline"
+                  className="flex h-32 w-32 flex-col gap-3 rounded-xl border-2"
+                  onClick={add}
+                >
+                  <Square size="32" />
+                  <p className="m-0 text-xs">Empty Container</p>
+                </Button>
+              )}
+              {selectedBlockId &&
+                Object.keys(blockConfigMap).map((componentName) => {
+                  const Icon = blockConfigMap[componentName].icon
+                  return (
+                    <Button
+                      key={componentName}
+                      variant="outline"
+                      className="flex h-32 w-32 flex-col gap-3 rounded-xl border-2"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        addBlock(String(selectedBlockId), componentName)
+                      }}
+                    >
+                      <Icon size="32" />
+                    </Button>
+                  )
+                })}
             </div>
           </SheetContent>
         </Sheet>
@@ -231,4 +253,4 @@ const ProfileEditorNavbar = ({
   )
 }
 
-export default React.memo(ProfileEditorNavbar);
+export default React.memo(ProfileEditorNavbar)

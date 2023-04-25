@@ -1,12 +1,10 @@
-"use client"
-
+"use client";
 import React, { useState } from "react"
 import { ArrowDown, ArrowUp, Copy, Edit, Settings2, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksRender from "@/components/blocksRender"
 import BlockSettingsSheet from "./BlockSettingsSheet"
-import blockConfigMap from "./blockConfigMap"
 import { Button } from "./ui/button"
 
 interface ClientBlocksRenderProps {
@@ -200,20 +198,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     addChild(template.parentId || null, clonedBlock)
   }
 
-  const isContainerElement = (tag: string): boolean => {
-    const containerElements = [
-      "div",
-      "section",
-      "footer",
-      "header",
-      "main",
-      "nav",
-      "aside",
-      "article",
-    ]
-    return containerElements.includes(tag)
-  }
-
   const handleImageSourceUpdate = () => {
     const newSrc = prompt("Please enter the new image source URL:")
     if (newSrc) {
@@ -293,6 +277,14 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
       style={{ zIndex: 1 }}
     >
+      {template.type && (
+        <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-slate-300">
+          {template.type}
+          <span className="inline-flex rounded-full bg-slate-800 px-2 py-1 text-xs">
+            {template.id}
+          </span>
+        </span>
+      )}
       <Button
         className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
           index === 0 ? "cursor-not-allowed opacity-50" : ""
@@ -319,11 +311,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       >
         <ArrowDown size="12" />
       </Button>
-      {template.type && (
-        <span className="flex px-2 text-sm font-normal text-slate-300">
-          {template.type}
-        </span>
-      )}
       <BlockSettingsSheet
         onClassNamesChange={handleClassNamesChange}
         onStylesChange={handleStylesChange}
@@ -344,35 +331,21 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       >
         <Trash size="12" />
       </Button>
-      <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
-        onClick={(event) => {
-          event.stopPropagation()
-          if (template.type === "image") {
-            handleImageSourceUpdate()
-          } else {
-            setIsEditing((prev) => !prev)
-          }
-        }}
-      >
-        <Edit size="12" />
-      </Button>
-      {isContainerElement(template.tag) &&
-        Object.keys(blockConfigMap).map((componentName) => {
-          const Icon = blockConfigMap[componentName].icon
-          return (
-            <Button
-              key={componentName}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 p-0 text-white"
-              onClick={(event) => {
-                event.stopPropagation()
-                addBlock(template.id, componentName)
-              }}
-            >
-              <Icon size="14" />
-            </Button>
-          )
-        })}
+      {["image", "paragraph", "heading"].includes(template.type) && (
+        <Button
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+          onClick={(event) => {
+            event.stopPropagation()
+            if (template.type === "image") {
+              handleImageSourceUpdate()
+            } else {
+              setIsEditing((prev) => !prev)
+            }
+          }}
+        >
+          <Edit size="12" />
+        </Button>
+      )}
     </div>
   )
 
