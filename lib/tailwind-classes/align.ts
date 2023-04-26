@@ -1,4 +1,4 @@
-export const tailwindAlign = [
+const tailwindAlign = [
   "normal",
   "start",
   "end",
@@ -8,3 +8,5 @@ export const tailwindAlign = [
   "evenly",
   "stretch",
 ];
+
+export { tailwindAlign }

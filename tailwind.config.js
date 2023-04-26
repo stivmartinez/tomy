@@ -1,6 +1,4 @@
 const { fontFamily } = require("tailwindcss/defaultTheme")
-const colors = require("tailwindcss/colors")
-
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
@@ -8,28 +6,20 @@ module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/**/*.{js,ts,jsx,tsx}",
-
-    // Or if using `src` directory:
-    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
     {
-      pattern: /^h-/,
-      variants: ["responsive"],
-    },
-    {
-      pattern: /^w-/,
-      variants: ["responsive"],
-    },
-    {
-      pattern: /^bg-/,
-      variants: ["responsive"],
-    },
-    {
-      pattern: /^text-/,
-      variants: ["responsive"],
+      pattern: /^/,
+      variants: [
+        "hover",
+        "focus",
+        "focus-within",
+        "after",
+        "before",
+        "hover",
+        "selection",
+      ],
     },
   ],
   theme: {

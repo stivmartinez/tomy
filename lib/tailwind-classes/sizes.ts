@@ -1,4 +1,4 @@
-export const tailwindSizes = [
+const tailwindSizes = [
   "xs",
   "0.125",
   "0.25",
@@ -65,3 +65,5 @@ export const tailwindSizes = [
   "max",
   "fit",
 ];
+
+export { tailwindSizes }

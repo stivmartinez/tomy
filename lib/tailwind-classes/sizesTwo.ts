@@ -1,4 +1,4 @@
-export const tailwindSizesTwo = [
+const tailwindSizesTwo = [
   "xs",
   "sm",
   "md",
@@ -13,3 +13,5 @@ export const tailwindSizesTwo = [
   "8xl",
   "9xl",
 ];
+
+export { tailwindSizesTwo }

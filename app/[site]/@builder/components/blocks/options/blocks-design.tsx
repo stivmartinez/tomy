@@ -3,51 +3,43 @@
 import React, { ReactNode } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
-import { tailwindColors } from "@/lib/tailwindColors"
-import { tailwindDisplayOptions } from "@/lib/tailwindDisplayOptions"
-import { tailwindSizes } from "@/lib/tailwindSizes"
-import { tailwindSizesTwo } from "@/lib/tailwindSizesTwo"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  tailwindAlign,
+  tailwindAlignItems,
+  tailwindColors,
+  tailwindDisplayOptions,
+  tailwindFontWeights,
+  tailwindSizes,
+  tailwindSizesTwo,
+} from "@/lib/tailwind-classes"
+import { tailwindTextAlign } from "@/lib/tailwind-classes/textAlign"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../../../../../../components/ui/accordion"
-import { Label } from "../../../../../../components/ui/label"
-import { RadioGroup, RadioGroupItem } from "../../../../../../components/ui/radio-group"
+} from "@/components/ui/accordion"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import ColorPicker from "./colorpicker"
+import Picker from "./picker"
 
 interface BlocksDesignProps {
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
-  onStylesChange: (newStyles: { [key: string]: string | number }) => void
   children: ReactNode
   defaultValues: { [key: string]: string }
 }
 
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   onClassNamesChange,
-  onStylesChange,
   defaultValues,
   children,
 }) => {
-  const handleClassNameChange = (
-    event: React.ChangeEvent<HTMLInputElement> | string,
-    prefix: string = "",
-    suffix: string = "",
-    useBrackets: boolean = false
-  ) => {
-    const e = event?.target ? event?.target.value : event
-    const suf = suffix ? suffix : ""
-    const value = useBrackets ? `[${e}${suf}]` : `${e}${suf}`
+  const handleClassNameChange = (value: any, prefix: string = "") => {
     if (prefix) {
       onClassNamesChange({ [prefix]: value })
     } else {
       onClassNamesChange({ [value]: "" })
     }
-  }
-
-  const stopPropagation = (event: React.MouseEvent) => {
-    event.stopPropagation()
   }
 
   return (
@@ -57,363 +49,220 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
         className="m-2 mt-16 h-fit max-h-[60vh] w-full max-w-[360px] overflow-y-auto rounded-xl border"
         position="right"
         size="sm"
-        onClick={stopPropagation}
+        onClick={(e) => e.stopPropagation()}
         style={{
           zIndex: 9999,
         }}
       >
         <h3>Settings for block</h3>
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="bg-color">
             <AccordionTrigger>Background color</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
-                  {Object.keys(tailwindColors).map((colorGroup) =>
-                    tailwindColors[colorGroup].map((colorClass) => (
-                      <div key={colorClass} className={`snap-center`}>
-                        <button
-                          // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
-                            defaultValues["bg"] === colorClass
-                              ? "ring-2 ring-offset-2 ring-slate-500"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            handleClassNameChange(colorClass, "bg", "")
-                          }
-                        />
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
-                  {Object.keys(tailwindColors).map((colorGroup) =>
-                    tailwindColors[colorGroup].map((colorClass) => (
-                      <div key={colorClass} className={`snap-center`}>
-                        <button
-                          // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
-                            defaultValues["md:bg"] === colorClass
-                              ? "ring-2 ring-offset-2 ring-slate-500"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            handleClassNameChange(colorClass, "md:bg", "")
-                          }
-                        />
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
+              <ColorPicker
+                prefix="bg"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindColors}
+              />
+              <ColorPicker
+                prefix="md:bg"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindColors}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
+          <AccordionItem value="text-color">
             <AccordionTrigger>Text color</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
-                  {Object.keys(tailwindColors).map((colorGroup) =>
-                    tailwindColors[colorGroup].map((colorClass) => (
-                      <div key={colorClass} className={`snap-center`}>
-                        <button
-                          // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
-                            defaultValues["text"] === colorClass
-                              ? "ring-2 ring-offset-2 ring-slate-500"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            handleClassNameChange(colorClass, "text", "")
-                          }
-                        />
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
-                  {Object.keys(tailwindColors).map((colorGroup) =>
-                    tailwindColors[colorGroup].map((colorClass) => (
-                      <div key={colorClass} className={`snap-center`}>
-                        <button
-                          // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
-                            defaultValues["md:text"] === colorClass
-                              ? "ring-2 ring-offset-2 ring-slate-500"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            handleClassNameChange(colorClass, "md:text", "")
-                          }
-                        />
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
+              <ColorPicker
+                prefix="text"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindColors}
+              />
+              <ColorPicker
+                prefix="md:text"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindColors}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
+          <AccordionItem value="height">
             <AccordionTrigger>Height</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <RadioGroup
-                  onValueChange={(event) => handleClassNameChange(event, "h")}
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                  defaultValue={defaultValues["h"]}
-                >
-                  {tailwindSizes.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["md:bg"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "md:h")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindSizes.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
+              <Picker
+                prefix="h"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizes}
+              />
+              <Picker
+                prefix="md:h"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizes}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-4">
+          <AccordionItem value="width">
             <AccordionTrigger>Width</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["w"]}
-                  onValueChange={(event) => handleClassNameChange(event, "w")}
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindSizes.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["md:w"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "md:w")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindSizes.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
+              <Picker
+                prefix="w"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizes}
+              />
+              <Picker
+                prefix="md:w"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizes}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-5">
+          <AccordionItem value="font-size">
             <AccordionTrigger>Font size</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["text"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "text")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindSizesTwo.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["md:text"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "md:text")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindSizesTwo.map((height) => (
-                    <div key={height} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={height} id={height} />
-                        <Label htmlFor={height}>{height}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
+              <Picker
+                prefix="text"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizesTwo}
+              />
+              <Picker
+                prefix="md:text"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindSizesTwo}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-6">
+          <AccordionItem value="display">
             <AccordionTrigger>Display</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["display"]}
-                  onValueChange={(event) => handleClassNameChange(event)}
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindDisplayOptions.map((displayOption) => (
-                    <div key={displayOption} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value={displayOption}
-                          id={displayOption}
-                        />
-                        <Label
-                          htmlFor={displayOption}
-                          className="whitespace-nowrap"
-                        >
-                          {displayOption}
-                        </Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["md:display"]}
-                  onValueChange={(event) => handleClassNameChange(event, "md:")}
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {tailwindDisplayOptions.map((displayOption) => (
-                    <div key={`md:${displayOption}`} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value={`md:${displayOption}`}
-                          id={`md:${displayOption}`}
-                        />
-                        <Label
-                          htmlFor={`md:${displayOption}`}
-                          className="whitespace-nowrap"
-                        >
-                          {displayOption}
-                        </Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
+              <Picker
+                prefix=""
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindDisplayOptions}
+              />
+              <Picker
+                prefix="md:"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindDisplayOptions}
+              />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-7">
-            <AccordionTrigger>Text Align</AccordionTrigger>
+          <AccordionItem value="justify">
+            <AccordionTrigger>Justify</AccordionTrigger>
             <AccordionContent>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Monitor size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["text"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "text")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {["left", "center", "right", "justify"].map((align) => (
-                    <div key={align} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value={align} id={align} />
-                        <Label htmlFor={align}>{align}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-2 text-sm">
-                  <Smartphone size="16" />
-                </Label>
-                <RadioGroup
-                  defaultValue={defaultValues["md:text"]}
-                  onValueChange={(event) =>
-                    handleClassNameChange(event, "md:text")
-                  }
-                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
-                >
-                  {["left", "center", "right", "justify"].map((align) => (
-                    <div key={align} className={`snap-center`}>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value={`text-${align}`}
-                          id={`md:text-${align}`}
-                        />
-                        <Label htmlFor={`md:text-${align}`}>{align}</Label>
-                      </div>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
+              <Picker
+                prefix="justify"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlign}
+              />
+              <Picker
+                prefix="md:justify"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlign}
+              />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="content">
+            <AccordionTrigger>Content</AccordionTrigger>
+            <AccordionContent>
+              <Picker
+                prefix="content"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlign}
+              />
+              <Picker
+                prefix="md:content"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlign}
+              />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="items">
+            <AccordionTrigger>Items</AccordionTrigger>
+            <AccordionContent>
+              <Picker
+                prefix="items"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlignItems}
+              />
+              <Picker
+                prefix="md:items"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindAlignItems}
+              />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="text-align">
+            <AccordionTrigger>Text align</AccordionTrigger>
+            <AccordionContent>
+              <Picker
+                prefix="text"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindTextAlign}
+              />
+              <Picker
+                prefix="md:text"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindTextAlign}
+              />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="font-weight">
+            <AccordionTrigger>Font weight</AccordionTrigger>
+            <AccordionContent>
+              <Picker
+                prefix="font"
+                icon={<Monitor size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindFontWeights}
+              />
+              <Picker
+                prefix="md:font"
+                icon={<Smartphone size="16" />}
+                defaultValues={defaultValues}
+                handleClassNameChange={handleClassNameChange}
+                options={tailwindFontWeights}
+              />
             </AccordionContent>
           </AccordionItem>
         </Accordion>
