@@ -4,6 +4,9 @@ import React, { ReactNode } from "react"
 import { Monitor, Settings, Smartphone } from "lucide-react"
 
 import { tailwindColors } from "@/lib/tailwindColors"
+import { tailwindDisplayOptions } from "@/lib/tailwindDisplayOptions"
+import { tailwindSizes } from "@/lib/tailwindSizes"
+import { tailwindSizesTwo } from "@/lib/tailwindSizesTwo"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {
   Accordion,
@@ -19,11 +22,13 @@ interface BlockSettingsSheetProps {
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
   onStylesChange: (newStyles: { [key: string]: string | number }) => void
   children: ReactNode
+  defaultValues: { [key: string]: string }
 }
 
 const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   onClassNamesChange,
   onStylesChange,
+  defaultValues,
 }) => {
   const handleClassNameChange = (
     event: React.ChangeEvent<HTMLInputElement> | string,
@@ -70,16 +75,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
             <AccordionTrigger>Background color</AccordionTrigger>
             <AccordionContent>
               <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-1 text-sm">
+                <Label className="relative top-2 text-sm">
                   <Monitor size="16" />
                 </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4">
+                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
                   {Object.keys(tailwindColors).map((colorGroup) =>
                     tailwindColors[colorGroup].map((colorClass) => (
                       <div key={colorClass} className={`snap-center`}>
                         <button
                           // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass}`}
+                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
+                            defaultValues["bg"] === colorClass
+                              ? "ring-2 ring-offset-2 ring-slate-500"
+                              : ""
+                          }`}
                           onClick={() =>
                             handleClassNameChange(colorClass, "bg", "")
                           }
@@ -90,16 +99,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
                 </div>
               </div>
               <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-1 text-sm">
+                <Label className="relative top-2 text-sm">
                   <Smartphone size="16" />
                 </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4">
+                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
                   {Object.keys(tailwindColors).map((colorGroup) =>
                     tailwindColors[colorGroup].map((colorClass) => (
                       <div key={colorClass} className={`snap-center`}>
                         <button
                           // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass}`}
+                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
+                            defaultValues["md:bg"] === colorClass
+                              ? "ring-2 ring-offset-2 ring-slate-500"
+                              : ""
+                          }`}
                           onClick={() =>
                             handleClassNameChange(colorClass, "md:bg", "")
                           }
@@ -115,16 +128,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
             <AccordionTrigger>Text color</AccordionTrigger>
             <AccordionContent>
               <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-1 text-sm">
+                <Label className="relative top-2 text-sm">
                   <Monitor size="16" />
                 </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4">
+                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
                   {Object.keys(tailwindColors).map((colorGroup) =>
                     tailwindColors[colorGroup].map((colorClass) => (
                       <div key={colorClass} className={`snap-center`}>
                         <button
                           // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass}`}
+                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
+                            defaultValues["text"] === colorClass
+                              ? "ring-2 ring-offset-2 ring-slate-500"
+                              : ""
+                          }`}
                           onClick={() =>
                             handleClassNameChange(colorClass, "text", "")
                           }
@@ -135,16 +152,20 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
                 </div>
               </div>
               <div className="relative flex w-full flex-row items-start gap-4">
-                <Label className="relative top-1 text-sm">
+                <Label className="relative top-2 text-sm">
                   <Smartphone size="16" />
                 </Label>
-                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4">
+                <div className="flex w-full snap-x gap-2 overflow-x-auto pb-4 pt-1">
                   {Object.keys(tailwindColors).map((colorGroup) =>
                     tailwindColors[colorGroup].map((colorClass) => (
                       <div key={colorClass} className={`snap-center`}>
                         <button
                           // eslint-disable-next-line tailwindcss/classnames-order
-                          className={`flex h-6 w-6 rounded-md bg-${colorClass}`}
+                          className={`flex h-6 w-6 rounded-md bg-${colorClass} ${
+                            defaultValues["md:text"] === colorClass
+                              ? "ring-2 ring-offset-2 ring-slate-500"
+                              : ""
+                          }`}
                           onClick={() =>
                             handleClassNameChange(colorClass, "md:text", "")
                           }
@@ -156,62 +177,253 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
               </div>
             </AccordionContent>
           </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>Height</AccordionTrigger>
+            <AccordionContent>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Monitor size="16" />
+                </Label>
+                <RadioGroup
+                  onValueChange={(event) => handleClassNameChange(event, "h")}
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                  defaultValue={defaultValues["h"]}
+                >
+                  {tailwindSizes.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Smartphone size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["md:bg"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "md:h")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindSizes.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>Width</AccordionTrigger>
+            <AccordionContent>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Monitor size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["w"]}
+                  onValueChange={(event) => handleClassNameChange(event, "w")}
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindSizes.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Smartphone size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["md:w"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "md:w")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindSizes.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5">
+            <AccordionTrigger>Font size</AccordionTrigger>
+            <AccordionContent>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Monitor size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["text"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "text")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindSizesTwo.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Smartphone size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["md:text"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "md:text")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindSizesTwo.map((height) => (
+                    <div key={height} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={height} id={height} />
+                        <Label htmlFor={height}>{height}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-6">
+            <AccordionTrigger>Display</AccordionTrigger>
+            <AccordionContent>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Monitor size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["display"]}
+                  onValueChange={(event) => handleClassNameChange(event)}
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindDisplayOptions.map((displayOption) => (
+                    <div key={displayOption} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value={displayOption}
+                          id={displayOption}
+                        />
+                        <Label
+                          htmlFor={displayOption}
+                          className="whitespace-nowrap"
+                        >
+                          {displayOption}
+                        </Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Smartphone size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["md:display"]}
+                  onValueChange={(event) => handleClassNameChange(event, "md:")}
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {tailwindDisplayOptions.map((displayOption) => (
+                    <div key={`md:${displayOption}`} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value={`md:${displayOption}`}
+                          id={`md:${displayOption}`}
+                        />
+                        <Label
+                          htmlFor={`md:${displayOption}`}
+                          className="whitespace-nowrap"
+                        >
+                          {displayOption}
+                        </Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-7">
+            <AccordionTrigger>Text Align</AccordionTrigger>
+            <AccordionContent>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Monitor size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["text"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "text")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {["left", "center", "right", "justify"].map((align) => (
+                    <div key={align} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value={align} id={align} />
+                        <Label htmlFor={align}>{align}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div className="relative flex w-full flex-row items-start gap-4">
+                <Label className="relative top-2 text-sm">
+                  <Smartphone size="16" />
+                </Label>
+                <RadioGroup
+                  defaultValue={defaultValues["md:text"]}
+                  onValueChange={(event) =>
+                    handleClassNameChange(event, "md:text")
+                  }
+                  className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
+                >
+                  {["left", "center", "right", "justify"].map((align) => (
+                    <div key={align} className={`snap-center`}>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem
+                          value={`text-${align}`}
+                          id={`md:text-${align}`}
+                        />
+                        <Label htmlFor={`md:text-${align}`}>{align}</Label>
+                      </div>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
-        <div className="my-4 flex flex-col gap-2">
-          <Label className="text-sm">Height</Label>
-          <div className="flex w-full flex-row items-center gap-4">
-            <div className="flex w-full flex-row items-center gap-4">
-              <Label className="text-sm">
-                <Monitor size="16" />
-              </Label>
-              <RadioGroup
-                onValueChange={(event) => handleClassNameChange(event, "h")}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="0" id="0" />
-                  <Label htmlFor="0">h-0</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="56" id="56" />
-                  <Label htmlFor="56">h-56</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="80" id="80" />
-                  <Label htmlFor="80">h-80</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="screen" id="screen" />
-                  <Label htmlFor="screen">h-screen</Label>
-                </div>
-              </RadioGroup>
-            </div>
-            <div className="flex w-full flex-row items-center gap-4">
-              <Label className="text-sm">
-                <Smartphone size="16" />
-              </Label>
-              <RadioGroup
-                onValueChange={(event) => handleClassNameChange(event, "md:h")}
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="0" id="0" />
-                  <Label htmlFor="0">h-0</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="56" id="56" />
-                  <Label htmlFor="56">h-56</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="80" id="80" />
-                  <Label htmlFor="80">h-80</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="screen" id="screen" />
-                  <Label htmlFor="screen">h-screen</Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </div>
-        </div>
       </SheetContent>
     </Sheet>
   )

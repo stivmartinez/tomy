@@ -303,6 +303,40 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     })
   }
 
+  const extractDefaultValues = (classNames: string) => {
+    const classesArray = classNames.split(" ")
+    const defaultValues: { [key: string]: string } = {}
+
+    classesArray.forEach((className) => {
+      if (className.startsWith("bg-"))
+        defaultValues["bg"] = className.substring(3)
+      else if (
+        className.startsWith("text-") &&
+        !className.startsWith("textSize-")
+      )
+        defaultValues["text"] = className.substring(5)
+      else if (className.startsWith("h-"))
+        defaultValues["h"] = className.substring(2)
+      else if (className.startsWith("w-"))
+        defaultValues["w"] = className.substring(2)
+      else if (className.startsWith("textSize-"))
+        defaultValues["textSize"] = className.substring(9)
+      else if (
+        className.startsWith("block") ||
+        className.startsWith("inline-block")
+      )
+        defaultValues["display"] = className
+      else if (
+        className.startsWith("text-left") ||
+        className.startsWith("text-center") ||
+        className.startsWith("text-right")
+      )
+        defaultValues["textAlign"] = className
+    })
+
+    return defaultValues
+  }
+
   const buttons = (
     <div
       className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-slate-900 p-2"
@@ -345,6 +379,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       <BlockSettingsSheet
         onClassNamesChange={handleClassNamesChange}
         onStylesChange={handleStylesChange}
+        defaultValues={extractDefaultValues(classNames)}
       >
         <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700">
           <Settings2 size="12" />
