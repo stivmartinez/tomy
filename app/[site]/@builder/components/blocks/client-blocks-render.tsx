@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import BlocksRender from "@/app/[site]/@builder/components/blocks/blocks-render"
-import { ArrowDown, ArrowUp, Copy, Edit, Settings2, Trash } from "lucide-react"
+import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Settings2, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BlocksDesign from "@/app/[site]/@builder/components/blocks/options/blocks-design"
@@ -381,18 +381,18 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         onStylesChange={handleStylesChange}
         defaultValues={extractDefaultValues(classNames)}
       >
-        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700">
-          <Settings2 size="12" />
+        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 p-0 text-white focus:ring-0 data-[state=open]:bg-blue-700">
+          <Paintbrush size="12" />
         </Button>
       </BlocksDesign>
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-lime-500 p-0 text-white focus:ring-0 data-[state=open]:bg-lime-700"
         onClick={handleClone}
       >
         <Copy size="12" />
       </Button>
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500 p-0 text-white focus:ring-0 data-[state=open]:bg-red-700"
         onClick={handleRemove}
       >
         <Trash size="12" />
