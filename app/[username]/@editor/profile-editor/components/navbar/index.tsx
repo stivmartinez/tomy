@@ -101,7 +101,7 @@ const ProfileEditorNavbar = ({
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 w-full">
+    <nav className="fixed bottom-0 left-0 w-full px-4">
       <div className="mx-auto mb-4 flex max-w-3xl flex-row justify-around rounded-2xl bg-slate-900 py-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

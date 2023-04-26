@@ -346,25 +346,25 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         onClassNamesChange={handleClassNamesChange}
         onStylesChange={handleStylesChange}
       >
-        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 p-0 text-white">
+        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700">
           <Settings2 size="12" />
         </Button>
       </BlockSettingsSheet>
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
         onClick={handleClone}
       >
         <Copy size="12" />
       </Button>
       <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+        className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
         onClick={handleRemove}
       >
         <Trash size="12" />
       </Button>
       {["image", "paragraph", "heading"].includes(template.type) && (
         <Button
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
           onClick={(event) => {
             event.stopPropagation()
             if (template.type === "image") {

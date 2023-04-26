@@ -49,14 +49,14 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
     <Sheet>
       <SheetTrigger asChild>
         <Button
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
           onClick={stopPropagation}
         >
           <Settings size="12" />
         </Button>
       </SheetTrigger>
       <SheetContent
-        className="m-2 mt-16 h-fit max-h-[60vh] overflow-y-auto rounded-xl border"
+        className="m-2 mt-16 h-fit max-h-[60vh] w-full max-w-[360px] overflow-y-auto rounded-xl border"
         position="right"
         size="sm"
         onClick={stopPropagation}
