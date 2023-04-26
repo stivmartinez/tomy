@@ -2,16 +2,16 @@
 
 import React, { useCallback, useRef, useState } from "react"
 
+import blocks from "@/app/[site]/@builder/components/blocks/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
-import ClientBlocksRender from "@/components/ClientBlocksRender"
-import blockConfigMap from "@/components/blockConfigMap"
-import ProfileEditorNavbar from "./components/navbar"
+import ClientBlocksRender from "@/app/[site]/@builder/components/blocks/client-blocks-render"
+import BuilderNavbar from "./components/navbar"
 
-interface ProfileEditorProps {
+interface BuilderProps {
   initialData?: any[]
 }
 
-const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
+const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
   const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
@@ -58,7 +58,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
 
   const addBlock = useCallback(
     (parentId: string, componentName: string) => {
-      const blockConfig = blockConfigMap[componentName]
+      const blockConfig = blocks[componentName]
 
       if (blockConfig) {
         addChildToStructure(parentId, blockConfig)
@@ -106,7 +106,7 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
           parentLength={structure.length}
         />
       ))}
-      <ProfileEditorNavbar
+      <BuilderNavbar
         setStructure={setStructure}
         structure={structure}
         selectedBlockId={selectedBlockId}
@@ -117,4 +117,4 @@ const ProfileEditor: React.FC<ProfileEditorProps> = ({ initialData = [] }) => {
   )
 }
 
-export default ProfileEditor
+export default Builder

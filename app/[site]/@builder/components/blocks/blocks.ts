@@ -1,6 +1,5 @@
-import { Heading, Image, MoveHorizontal, MoveVertical, Square, Type } from "lucide-react";
+import { Heading, Image, Square, Type } from "lucide-react";
 
-// blockConfigMap.ts
 type BlockConfig = {
   tag: string;
   className?: string;
@@ -11,7 +10,7 @@ type BlockConfig = {
   type?: string;
 };
 
-const blockConfigMap: Record<string, BlockConfig> = {
+const blocks: Record<string, BlockConfig> = {
   container: {
     type: "container",
     tag: "div",
@@ -48,4 +47,4 @@ const blockConfigMap: Record<string, BlockConfig> = {
   },
 };
 
-export default blockConfigMap;
+export default blocks;

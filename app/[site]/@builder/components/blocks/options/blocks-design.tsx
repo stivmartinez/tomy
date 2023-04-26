@@ -1,7 +1,7 @@
 "use client"
 
 import React, { ReactNode } from "react"
-import { Monitor, Settings, Smartphone } from "lucide-react"
+import { Monitor, Smartphone } from "lucide-react"
 
 import { tailwindColors } from "@/lib/tailwindColors"
 import { tailwindDisplayOptions } from "@/lib/tailwindDisplayOptions"
@@ -13,22 +13,22 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion"
-import { Button } from "./ui/button"
-import { Label } from "./ui/label"
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+} from "../../../../../../components/ui/accordion"
+import { Label } from "../../../../../../components/ui/label"
+import { RadioGroup, RadioGroupItem } from "../../../../../../components/ui/radio-group"
 
-interface BlockSettingsSheetProps {
+interface BlocksDesignProps {
   onClassNamesChange: (newStyles: { [key: string]: string }) => void
   onStylesChange: (newStyles: { [key: string]: string | number }) => void
   children: ReactNode
   defaultValues: { [key: string]: string }
 }
 
-const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
+const BlocksDesign: React.FC<BlocksDesignProps> = ({
   onClassNamesChange,
   onStylesChange,
   defaultValues,
+  children,
 }) => {
   const handleClassNameChange = (
     event: React.ChangeEvent<HTMLInputElement> | string,
@@ -52,14 +52,7 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
 
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
-          onClick={stopPropagation}
-        >
-          <Settings size="12" />
-        </Button>
-      </SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent
         className="m-2 mt-16 h-fit max-h-[60vh] w-full max-w-[360px] overflow-y-auto rounded-xl border"
         position="right"
@@ -429,4 +422,4 @@ const BlockSettingsSheet: React.FC<BlockSettingsSheetProps> = ({
   )
 }
 
-export default BlockSettingsSheet
+export default BlocksDesign

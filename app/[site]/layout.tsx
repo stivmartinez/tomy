@@ -1,14 +1,14 @@
-export default async function ProfileLayout({
+export default async function BuilderLayout({
   children,
-  editor,
+  builder,
 }: {
   children: React.ReactNode
-  editor?: any
+  builder?: any
 }) {
   return (
     <>
       {children}
-      {editor}
+      {builder}
     </>
   )
 }

@@ -2,8 +2,8 @@ import React, { ReactElement } from "react"
 import dynamic from "next/dynamic"
 
 import { cn } from "@/lib/utils"
-import ClientBlocksRender from "./ClientBlocksRender"
-import componentsPathMap from "./componentsPathMap"
+import ClientBlocksRender from "./client-blocks-render"
+import advancedBlocks from "./advancedBlocks"
 
 interface Child {
   id: string
@@ -63,8 +63,8 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
     const Tag = tag as keyof JSX.IntrinsicElements
 
     const CustomComponent =
-      componentName && componentsPathMap[componentName]
-        ? dynamic(() => import(`${componentsPathMap[componentName]}`))
+      componentName && advancedBlocks[componentName]
+        ? dynamic(() => import(`${advancedBlocks[componentName]}`))
         : null
 
     return (

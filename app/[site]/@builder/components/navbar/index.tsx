@@ -21,7 +21,7 @@ import {
 } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import blockConfigMap from "@/components/blockConfigMap"
+import blocks from "@/app/[site]/@builder/components/blocks/blocks"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -46,7 +46,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-const ProfileEditorNavbar = ({
+const BuilderPropsNavbar = ({
   structure,
   setStructure,
   selectedBlockId,
@@ -138,8 +138,8 @@ const ProfileEditorNavbar = ({
                 </Button>
               )}
               {selectedBlockId &&
-                Object.keys(blockConfigMap).map((componentName) => {
-                  const Icon = blockConfigMap[componentName].icon
+                Object.keys(blocks).map((componentName) => {
+                  const Icon = blocks[componentName].icon
                   return (
                     <Button
                       key={componentName}
@@ -249,4 +249,4 @@ const ProfileEditorNavbar = ({
   )
 }
 
-export default React.memo(ProfileEditorNavbar)
+export default React.memo(BuilderPropsNavbar)

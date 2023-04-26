@@ -1,12 +1,12 @@
 "use client"
 
 import React, { useState } from "react"
+import BlocksRender from "@/app/[site]/@builder/components/blocks/blocks-render"
 import { ArrowDown, ArrowUp, Copy, Edit, Settings2, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import BlocksRender from "@/components/blocksRender"
-import BlockSettingsSheet from "./BlockSettingsSheet"
-import { Button } from "./ui/button"
+import BlocksDesign from "@/app/[site]/@builder/components/blocks/options/blocks-design"
+import { Button } from "@/components/ui/button"
 
 interface ClientBlocksRenderProps {
   template: any
@@ -376,15 +376,15 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       >
         <ArrowDown size="12" />
       </Button>
-      <BlockSettingsSheet
+      <BlocksDesign
         onClassNamesChange={handleClassNamesChange}
         onStylesChange={handleStylesChange}
         defaultValues={extractDefaultValues(classNames)}
       >
-        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700">
+        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700">
           <Settings2 size="12" />
         </Button>
-      </BlockSettingsSheet>
+      </BlocksDesign>
       <Button
         className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
         onClick={handleClone}

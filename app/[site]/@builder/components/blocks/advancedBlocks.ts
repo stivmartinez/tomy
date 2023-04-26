@@ -1,6 +1,6 @@
-const componentsPathMap: any = {
+const advancedBlocks: any = {
   BlockHeading: "./blocks/heading",
   BlockImage: "./blocks/image",
 };
 
-export default componentsPathMap;
+export default advancedBlocks;
