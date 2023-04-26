@@ -105,7 +105,7 @@ const ProfileEditorNavbar = ({
       <div className="mx-auto mb-4 flex max-w-3xl flex-row justify-around rounded-2xl bg-slate-900 py-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0">
+            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0 focus:ring-0 data-[state=open]:bg-slate-700">
               <Layers size="16" />
             </Button>
           </DropdownMenuTrigger>
@@ -119,26 +119,22 @@ const ProfileEditorNavbar = ({
         </DropdownMenu>
         <Sheet>
           <SheetTrigger asChild>
-            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0">
+            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0 focus:ring-0 data-[state=open]:bg-slate-700">
               <Plus size="16" />
             </Button>
           </SheetTrigger>
           <SheetContent
             position="bottom"
-            className="flex h-auto flex-col gap-4"
+            className="mb-20 flex h-auto flex-col gap-4 bg-transparent"
           >
-            <SheetHeader className="flex w-full items-center justify-center">
-              <SheetTitle className="text-sm">Choose component</SheetTitle>
-            </SheetHeader>
-            <div className="flex w-full flex-row justify-center gap-4">
+            <div className="mx-auto flex w-fit flex-row justify-center gap-4">
               {!selectedBlockId && (
                 <Button
                   variant="outline"
-                  className="flex h-32 w-32 flex-col gap-3 rounded-xl border-2"
+                  className="flex h-16 w-16 flex-col gap-3 rounded-2xl border-2 bg-white ring-0 focus:ring-0"
                   onClick={add}
                 >
-                  <Square size="32" />
-                  <p className="m-0 text-xs">Empty Container</p>
+                  <Square size="20" />
                 </Button>
               )}
               {selectedBlockId &&
@@ -148,13 +144,13 @@ const ProfileEditorNavbar = ({
                     <Button
                       key={componentName}
                       variant="outline"
-                      className="flex h-32 w-32 flex-col gap-3 rounded-xl border-2"
+                      className="flex h-16 w-16 flex-col gap-3 rounded-2xl border-2 bg-white ring-0 focus:ring-0"
                       onClick={(event) => {
                         event.stopPropagation()
                         addBlock(String(selectedBlockId), componentName)
                       }}
                     >
-                      <Icon size="32" />
+                      <Icon size="20" />
                     </Button>
                   )
                 })}
@@ -163,7 +159,7 @@ const ProfileEditorNavbar = ({
         </Sheet>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0">
+            <Button className="h-8 w-8 rounded-full bg-slate-700 p-0 focus:ring-0 data-[state=open]:bg-slate-700">
               <Settings size="16" />
             </Button>
           </DropdownMenuTrigger>
