@@ -11,15 +11,7 @@ module.exports = {
   safelist: [
     {
       pattern: /^/,
-      variants: [
-        "hover",
-        "focus",
-        "focus-within",
-        "after",
-        "before",
-        "hover",
-        "selection",
-      ],
+      variants: ["responsive"],
     },
   ],
   theme: {

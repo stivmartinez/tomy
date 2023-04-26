@@ -102,7 +102,7 @@ const BuilderPropsNavbar = ({
 
   return (
     <nav className="fixed bottom-0 left-0 w-full px-4">
-      <div className="mx-auto mb-4 flex max-w-3xl flex-row justify-around rounded-2xl bg-slate-900 py-2">
+      <div className="mx-auto mb-4 flex max-w-3xl flex-row justify-around rounded-2xl bg-black py-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="h-8 w-8 rounded-full bg-slate-700 p-0 focus:ring-0 data-[state=open]:bg-slate-700">
