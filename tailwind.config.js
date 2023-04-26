@@ -27,6 +27,10 @@ module.exports = {
       pattern: /^bg-/,
       variants: ["responsive"],
     },
+    {
+      pattern: /^text-/,
+      variants: ["responsive"],
+    },
   ],
   theme: {
     container: {

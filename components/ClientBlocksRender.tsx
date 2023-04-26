@@ -199,6 +199,36 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     addChild(template.parentId || null, clonedBlock)
   }
 
+  const handleTextUpdate = () => {
+    const newText = prompt("Please enter the new text:")
+    if (newText) {
+      setStructure((prevStructure: any[]) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
+        const updateTextRecursive = (node: any) => {
+          if (!node) return false
+          if (node.id === template.id) {
+            node.content = newText
+            return true
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              if (updateTextRecursive(child)) {
+                return true
+              }
+            }
+          }
+          return false
+        }
+
+        newStructure.forEach((node: any) => {
+          updateTextRecursive(node)
+        })
+
+        return newStructure
+      })
+    }
+  }
+
   const handleImageSourceUpdate = () => {
     const newSrc = prompt("Please enter the new image source URL:")
     if (newSrc) {
@@ -339,8 +369,8 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
             event.stopPropagation()
             if (template.type === "image") {
               handleImageSourceUpdate()
-            } else {
-              setIsEditing((prev) => !prev)
+            } else if (["paragraph", "heading"].includes(template.type)) {
+              handleTextUpdate()
             }
           }}
         >
