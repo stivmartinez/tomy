@@ -47,9 +47,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
-    if ((event.target as HTMLElement).closest("button")) {
+
+    if ((event.target as HTMLElement).classList.contains("ignore-click")) {
       return
     }
+
     setSelectedBlockId((prevState: any) => {
       if (prevState === template.id) {
         setIsEditing(true)

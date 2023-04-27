@@ -1,4 +1,4 @@
-import { List } from "lucide-react";
+import { Image, List, Plus } from "lucide-react";
 import { FileText, Heading, Square, Type } from "lucide-react";
 
 type BlockConfig = {
@@ -9,6 +9,7 @@ type BlockConfig = {
   props?: any;
   icon?: any;
   type?: string;
+  onClick?: (event: React.MouseEvent) => void;
 };
 
 const blocks: Record<string, BlockConfig> = {
@@ -33,6 +34,28 @@ const blocks: Record<string, BlockConfig> = {
     className: "text-base",
     content: "Example",
     icon: Type
+  },
+  button: {
+    type: "button",
+    tag: "button",
+    className: "bg-blue-500 text-white px-4 py-2 rounded",
+    content: "Click me",
+    icon: Plus,
+    onClick: (event: React.MouseEvent) => {
+      event.stopPropagation();
+    },
+  },
+  image: {
+    type: "image",
+    tag: "img",
+    className: "ignore-click w-fit",
+    content: "",
+    componentName: "Image",
+    props: {
+      src: "https://via.placeholder.com/150",
+      alt: "Example image",
+    },
+    icon: Image,
   },
   list: {
     type: "list",

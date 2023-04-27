@@ -61,6 +61,20 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
 
       const Tag = tag as keyof JSX.IntrinsicElements
 
+      const selfClosing = ["img"].includes(tag)
+
+      if (selfClosing) {
+        return (
+          <Tag
+            key={id}
+            className={cn(className, "relative", classNames)}
+            style={{ ...style, ...styles }}
+            onClick={handleSelect}
+            {...component.props}
+          />
+        )
+      }
+
       return (
         <Tag
           key={id}
