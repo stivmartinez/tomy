@@ -1,6 +1,6 @@
 const OPENAI_API_KEY = "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";
 
-export async function generateText(prompt) {
+export async function generateText(prompt: any) {
   try {
     const response = await fetch("https://api.openai.com/v1/completions", {
       method: "POST",

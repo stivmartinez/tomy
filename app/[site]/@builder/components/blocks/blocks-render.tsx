@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react"
-import dynamic from "next/dynamic"
-
 import { cn } from "@/lib/utils"
-import ClientBlocksRender from "./client-blocks-render"
+import dynamic from "next/dynamic"
+import React, { ReactElement } from "react"
+
 import advancedBlocks from "./advancedBlocks"
+import ClientBlocksRender from "./client-blocks-render"
 
 interface Child {
   id: string
@@ -14,7 +14,7 @@ interface Child {
 
 interface BlocksRenderProps {
   template: any
-  setStructure: (structure: any[]) => void
+  setStructure: (callback: (structure: any[]) => any[]) => void
   addChild: (parentId: string, blockConfiguration: any) => void
   level: number
   addBlock: (parentId: string, type: string) => void
@@ -23,7 +23,9 @@ interface BlocksRenderProps {
   children?: React.ReactNode
   styles: any
   onClick?: any
-  setSelectedBlockId: (id: string | null) => void
+  setSelectedBlockId: (
+    callback: (blockId: string | null) => string | null
+  ) => void
   selectedBlockId: string | null
   contentEditable?: boolean
   onBlur?: any

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import blocks from "@/app/[site]/@builder/components/blocks/blocks"
 import {
   Cloud,
   CreditCard,
@@ -21,7 +22,6 @@ import {
 } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import blocks from "@/app/[site]/@builder/components/blocks/blocks"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -54,9 +54,11 @@ const BuilderPropsNavbar = ({
   addBlock,
 }: {
   structure: any[]
-  setStructure: (structure: any[]) => void
+  setStructure: (callback: (structure: any[]) => any[]) => void
   selectedBlockId: string | null
-  setSelectedBlockId: (blockId: string | null) => void
+  setSelectedBlockId: (
+    callback: (blockId: string | null) => string | null
+  ) => void
   addBlock: (parentId: string, componentName: string) => void
 }) => {
   const newBlock = {

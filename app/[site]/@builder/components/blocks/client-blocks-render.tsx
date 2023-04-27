@@ -2,24 +2,31 @@
 
 import React, { useState } from "react"
 import BlocksRender from "@/app/[site]/@builder/components/blocks/blocks-render"
-import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Settings2, Trash } from "lucide-react"
+import BlocksDesign from "@/app/[site]/@builder/components/blocks/options/blocks-design"
+import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import BlocksDesign from "@/app/[site]/@builder/components/blocks/options/blocks-design"
 import { Button } from "@/components/ui/button"
 
 interface ClientBlocksRenderProps {
   template: any
-  setStructure: (structure: any[]) => void
+  setStructure: (callback: (structure: any[]) => any[]) => void
   level: number
   addChild: (parentId: string, blockConfiguration: any) => void
   addBlock: (parentId: string, type: string) => void
   removeBlock: (blockId: string) => void
   selectedBlockId: string | null
-  setSelectedBlockId: (blockId: string | null) => void
+  setSelectedBlockId: (
+    callback: (blockId: string | null) => string | null
+  ) => void
   blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   index: number
   parentLength: number
+}
+
+interface ParentAndIndex {
+  parent: any
+  index: number
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
@@ -36,7 +43,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   parentLength,
 }) => {
   const [classNames, setClassNames] = useState("")
-  const [styles, setStyles] = useState<Record<string, string | number>>({})
   const [isEditing, setIsEditing] = useState(false)
 
   const handleBlur = (event: React.FocusEvent<HTMLHeadingElement>) => {
@@ -73,7 +79,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
-    if (event.target.closest("button")) {
+    if ((event.target as HTMLElement).closest("button")) {
       return
     }
     setSelectedBlockId((prevState: any) => {
@@ -154,39 +160,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     })
   }
 
-  const handleStylesChange = (newStyles: {
-    [key: string]: string | number
-  }) => {
-    setStyles((prevState) => ({ ...prevState, ...newStyles }))
-
-    // Update the structure with the new styles
-    setStructure((prevStructure: any[]) => {
-      const newStructure = JSON.parse(JSON.stringify(prevStructure))
-      const updateStylesRecursive = (node: any) => {
-        if (!node) return false
-        if (node.id === template.id) {
-          node.style = node.style || {}
-          Object.assign(node.style, newStyles)
-          return true
-        }
-        if (node.children) {
-          for (const child of node.children) {
-            if (updateStylesRecursive(child)) {
-              return true
-            }
-          }
-        }
-        return false
-      }
-
-      newStructure.forEach((node: any) => {
-        updateStylesRecursive(node)
-      })
-
-      return newStructure
-    })
-  }
-
   const handleRemove = (event: React.MouseEvent) => {
     event.stopPropagation()
     removeBlock(template.id)
@@ -259,11 +232,14 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     }
   }
 
-  const moveBlock = (blockId, direction) => {
+  const moveBlock = (blockId: any, direction: any) => {
     setStructure((prevStructure) => {
       const newStructure = JSON.parse(JSON.stringify(prevStructure))
 
-      const findParentAndIndex = (children, blockId) => {
+      const findParentAndIndex = (
+        children: any,
+        blockId: any
+      ): ParentAndIndex | undefined => {
         for (let i = 0; i < children.length; i++) {
           if (children[i].id === blockId) {
             return { parent: children, index: i }
@@ -275,31 +251,36 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
             }
           }
         }
-        return null
+        return undefined
       }
 
-      const { parent, index } = findParentAndIndex(newStructure, blockId)
+      const parentAndIndex = findParentAndIndex(newStructure, blockId)
 
-      if (!parent) {
+      if (parentAndIndex) {
+        const { parent, index } = parentAndIndex
+
+        // Perform operations with parent and index
+
+        const block = parent[index]
+
+        if (direction === "up") {
+          if (index > 0) {
+            parent.splice(index, 1)
+            parent.splice(index - 1, 0, block)
+          }
+        } else if (direction === "down") {
+          if (index < parent.length - 1) {
+            parent.splice(index, 1)
+            parent.splice(index + 1, 0, block)
+          }
+        }
+
+        return newStructure
+      } else {
+        // Handle the case when parentAndIndex is undefined
         console.error("Block not found")
         return prevStructure
       }
-
-      const block = parent[index]
-
-      if (direction === "up") {
-        if (index > 0) {
-          parent.splice(index, 1)
-          parent.splice(index - 1, 0, block)
-        }
-      } else if (direction === "down") {
-        if (index < parent.length - 1) {
-          parent.splice(index, 1)
-          parent.splice(index + 1, 0, block)
-        }
-      }
-
-      return newStructure
     })
   }
 
@@ -378,7 +359,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       </Button>
       <BlocksDesign
         onClassNamesChange={handleClassNamesChange}
-        onStylesChange={handleStylesChange}
         defaultValues={extractDefaultValues(classNames)}
       >
         <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 p-0 text-white focus:ring-0 data-[state=open]:bg-blue-700">
@@ -425,7 +405,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       addChild={addChild}
       level={level}
       addBlock={addBlock}
-      styles={{ ...styles, boxShadow: shadow, cursor: "pointer" }}
+      styles={{ boxShadow: shadow, cursor: "pointer" }}
       classNames={`${classNames}`}
       removeBlock={removeBlock}
       onClick={handleSelect}

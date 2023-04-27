@@ -1,3 +1,9 @@
+type ColorShades = string[]
+
+type TailwindColors = {
+  [colorName: string]: ColorShades;
+}
+
 const colorNames = [
   'slate',
   'gray',
@@ -27,7 +33,7 @@ const createColorShades = (colorName: any) => {
   return Array.from({ length: 10 }, (_, i) => `${colorName}-${(i + 1) * 100}`);
 };
 
-const tailwindColors = colorNames.reduce((acc, colorName) => {
+const tailwindColors = colorNames.reduce<TailwindColors>((acc, colorName) => {
   acc[colorName] = createColorShades(colorName);
   return acc;
 }, {});
