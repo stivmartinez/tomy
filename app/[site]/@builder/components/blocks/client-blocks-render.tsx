@@ -45,38 +45,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const [classNames, setClassNames] = useState("")
   const [isEditing, setIsEditing] = useState(false)
 
-  const handleBlur = (event: React.FocusEvent<HTMLHeadingElement>) => {
-    const newContent = event.target.textContent
-    if (newContent === "E" && !isEditing) {
-      event.target.textContent = template.content
-    } else if (newContent !== template.content) {
-      setStructure((prevStructure: any[]) => {
-        const newStructure = JSON.parse(JSON.stringify(prevStructure))
-        const updateContentRecursive = (node: any) => {
-          if (!node) return false
-          if (node.id === template.id) {
-            node.content = newContent
-            return true
-          }
-          if (node.children) {
-            for (const child of node.children) {
-              if (updateContentRecursive(child)) {
-                return true
-              }
-            }
-          }
-          return false
-        }
-
-        newStructure.forEach((node: any) => {
-          updateContentRecursive(node)
-        })
-
-        return newStructure
-      })
-    }
-  }
-
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
     if ((event.target as HTMLElement).closest("button")) {
@@ -202,36 +170,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     }
   }
 
-  const handleImageSourceUpdate = () => {
-    const newSrc = prompt("Please enter the new image source URL:")
-    if (newSrc) {
-      setStructure((prevStructure: any[]) => {
-        const newStructure = JSON.parse(JSON.stringify(prevStructure))
-        const updateImageSourceRecursive = (node: any) => {
-          if (!node) return false
-          if (node.id === template.id) {
-            node.props.src = newSrc
-            return true
-          }
-          if (node.children) {
-            for (const child of node.children) {
-              if (updateImageSourceRecursive(child)) {
-                return true
-              }
-            }
-          }
-          return false
-        }
-
-        newStructure.forEach((node: any) => {
-          updateImageSourceRecursive(node)
-        })
-
-        return newStructure
-      })
-    }
-  }
-
   const moveBlock = (blockId: any, direction: any) => {
     setStructure((prevStructure) => {
       const newStructure = JSON.parse(JSON.stringify(prevStructure))
@@ -301,7 +239,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       selectedBlockId={selectedBlockId}
       setSelectedBlockId={setSelectedBlockId}
       contentEditable={isEditing && selectedBlockId === template.id}
-      onBlur={isEditing ? handleBlur : undefined}
       blockRef={blockRef}
       suppressContentEditableWarning
       isEditable={isEditable}
@@ -317,7 +254,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
           handleClassNamesChange={handleClassNamesChange}
           classNames={classNames}
           handleTextUpdate={handleTextUpdate}
-          handleImageSourceUpdate={handleImageSourceUpdate}
         />
       )}
     </BlocksRender>,

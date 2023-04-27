@@ -14,7 +14,6 @@ const ClientButtons: React.FC = ({
   handleClassNamesChange,
   classNames,
   handleTextUpdate,
-  handleImageSourceUpdate,
 }: any) => {
   const extractDefaultValues = (classNames: string) => {
     const classesArray = classNames.split(" ")
@@ -109,16 +108,12 @@ const ClientButtons: React.FC = ({
       >
         <Trash size="12" />
       </Button>
-      {["image", "paragraph", "heading"].includes(template.type) && (
+      {["paragraph", "heading", "list", "listItem"].includes(template.type) && (
         <Button
           className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
           onClick={(event) => {
             event.stopPropagation()
-            if (template.type === "image") {
-              handleImageSourceUpdate()
-            } else if (["paragraph", "heading"].includes(template.type)) {
-              handleTextUpdate()
-            }
+            handleTextUpdate()
           }}
         >
           <Edit size="12" />

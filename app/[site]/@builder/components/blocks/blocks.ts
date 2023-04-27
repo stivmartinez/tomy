@@ -34,30 +34,6 @@ const blocks: Record<string, BlockConfig> = {
     content: "Example",
     icon: Type
   },
-  image: {
-    type: "image",
-    tag: "span",
-    componentName: "BlockImage",
-    className: "w-[180px]",
-    icon: Image,
-    props: {
-      src: "/logo.svg",
-      alt: "logo",
-      className: "w-full h-auto",
-    },
-  },
-  button: {
-    type: "button",
-    tag: "button",
-    componentName: "BlockButton",
-    className: "bg-white text-slate-900",
-    icon: Link2,
-    props: {
-      variant: "default",
-      size: "default",
-      children: "Button",
-    },
-  },
   list: {
     type: "list",
     tag: "ul",

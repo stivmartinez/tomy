@@ -1,9 +1,7 @@
 import React, { ReactElement } from "react"
 
 import { cn } from "@/lib/utils"
-import advancedBlocks from "./advancedBlocks"
 import ClientBlocksRender from "./client-blocks-render"
-import CustomComponentWrapper from "./custom-component-wrapper"
 
 interface Child {
   id: string
@@ -28,7 +26,6 @@ interface BlocksRenderProps {
   ) => void
   selectedBlockId?: string | null
   contentEditable?: boolean
-  onBlur?: any
   suppressContentEditableWarning?: boolean
   blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   isEditable: boolean
@@ -49,7 +46,6 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
     setSelectedBlockId,
     selectedBlockId,
     contentEditable,
-    onBlur,
     suppressContentEditableWarning,
     blockRef,
     isEditable,
@@ -61,27 +57,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
         className,
         children: componentChildren,
         style,
-        componentName,
-        props,
       } = component
-
-      if (componentName) {
-        const CustomComponentPath = advancedBlocks[componentName]
-        return (
-          <CustomComponentWrapper
-            key={id}
-            componentName={componentName}
-            componentPath={CustomComponentPath}
-            className={cn(className, "relative", classNames)}
-            style={{ ...style, ...styles }}
-            onWrapperClick={handleSelect}
-            onBlur={onBlur}
-            contentEditable={contentEditable}
-            suppressContentEditableWarning={suppressContentEditableWarning}
-            {...props}
-          />
-        )
-      }
 
       const Tag = tag as keyof JSX.IntrinsicElements
 
@@ -91,7 +67,6 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
           className={cn(className, "relative", classNames)}
           style={{ ...style, ...styles }}
           onClick={handleSelect}
-          onBlur={onBlur}
           contentEditable={contentEditable}
           suppressContentEditableWarning={suppressContentEditableWarning}
         >

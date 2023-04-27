@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import blocks from "@/app/[site]/@builder/components/blocks/blocks"
 import ClientBlocksRender from "@/app/[site]/@builder/components/blocks/client-blocks-render"
 
@@ -14,7 +14,6 @@ interface BuilderProps {
 const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
-  const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
 
   const saveStructure = () => {
     localStorage.setItem("savedStructure", JSON.stringify(structure))
@@ -39,42 +38,44 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
 
   const addChildToStructure = useCallback(
     (parentId: string | null, blockConfiguration: any) => {
-      const newStructure = JSON.parse(JSON.stringify(structure))
+      setStructure((prevStructure) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
 
-      const newBlock = {
-        ...blockConfiguration,
-        id: generateRandomId(),
-        parentId,
-        children: [],
-      }
-
-      const addChildRecursive = (node: any) => {
-        if (!node) return false
-        if (node.id === parentId) {
-          node.children.push(newBlock)
-          return true
+        const newBlock = {
+          ...blockConfiguration,
+          id: generateRandomId(),
+          parentId,
+          children: [],
         }
-        if (node.children) {
-          for (const child of node.children) {
-            if (addChildRecursive(child)) {
-              return true
+
+        const addChildRecursive = (node: any) => {
+          if (!node) return false
+          if (node.id === parentId) {
+            node.children.push(newBlock)
+            return true
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              if (addChildRecursive(child)) {
+                return true
+              }
             }
           }
+          return false
         }
-        return false
-      }
 
-      if (parentId) {
-        newStructure.forEach((node: any) => {
-          addChildRecursive(node)
-        })
-      } else {
-        newStructure.push(newBlock)
-      }
+        if (parentId) {
+          newStructure.forEach((node: any) => {
+            addChildRecursive(node)
+          })
+        } else {
+          newStructure.push(newBlock)
+        }
 
-      setStructure(newStructure)
+        return newStructure
+      })
     },
-    [structure]
+    []
   )
 
   const addBlock = useCallback(
@@ -88,26 +89,23 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
     [addChildToStructure]
   )
 
-  const removeBlock = useCallback(
-    (blockId: string) => {
-      const removeBlockById = (blocks: any[]): any[] => {
-        const result = []
-        for (let i = 0; i < blocks.length; i++) {
-          const block = blocks[i]
-          if (block.id !== blockId) {
-            if (block.children && block.children.length > 0) {
-              block.children = removeBlockById(block.children)
-            }
-            result.push(block)
-          }
-        }
-        return result
-      }
+  const removeBlock = useCallback((blockId: string) => {
+    setStructure((prevStructure) => removeBlockById(prevStructure, blockId))
+  }, [])
 
-      setStructure(removeBlockById(structure))
-    },
-    [structure]
-  )
+  const removeBlockById = (blocks: any[], blockId: string): any[] => {
+    const result = []
+    for (let i = 0; i < blocks.length; i++) {
+      const block = blocks[i]
+      if (block.id !== blockId) {
+        if (block.children && block.children.length > 0) {
+          block.children = removeBlockById(block.children, blockId)
+        }
+        result.push(block)
+      }
+    }
+    return result
+  }
 
   return (
     <>
@@ -122,7 +120,6 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
           removeBlock={removeBlock}
           selectedBlockId={selectedBlockId}
           setSelectedBlockId={setSelectedBlockId}
-          blockRef={blockRef}
           index={index}
           parentLength={structure.length}
           isEditable={true}
