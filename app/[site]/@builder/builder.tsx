@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
-import blocks from "@/lib/blocks"
 import ClientBlocksRender from "@/app/[site]/@builder/client-blocks-render"
 
+import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
 import BuilderNavbar from "./components/navbar"
 
@@ -14,6 +14,7 @@ interface BuilderProps {
 const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
+  const [renderKey, setRenderKey] = useState<number>(0)
 
   const saveStructure = () => {
     localStorage.setItem("savedStructure", JSON.stringify(structure))
@@ -91,6 +92,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
 
   const removeBlock = useCallback((blockId: string) => {
     setStructure((prevStructure) => removeBlockById(prevStructure, blockId))
+    setRenderKey((prevRenderKey) => prevRenderKey + 1)
   }, [])
 
   const removeBlockById = (blocks: any[], blockId: string): any[] => {
@@ -111,7 +113,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
     <>
       {structure.map((block, index) => (
         <ClientBlocksRender
-          key={block.id}
+          key={`${block.id}-${renderKey}`}
           template={block}
           setStructure={setStructure}
           level={0}
