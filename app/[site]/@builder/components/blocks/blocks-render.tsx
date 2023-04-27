@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react"
-import dynamic from "next/dynamic"
 
 import { cn } from "@/lib/utils"
 import advancedBlocks from "./advancedBlocks"
 import ClientBlocksRender from "./client-blocks-render"
+import CustomComponentWrapper from "./custom-component-wrapper"
 
 interface Child {
   id: string
@@ -22,7 +22,7 @@ interface BlocksRenderProps {
   removeBlock?: (blockId: string) => void
   children?: React.ReactNode
   styles?: any
-  onClick?: any
+  handleSelect?: any
   setSelectedBlockId?: (
     callback: (blockId: string | null) => string | null
   ) => void
@@ -34,86 +34,103 @@ interface BlocksRenderProps {
   isEditable: boolean
 }
 
-const BlocksRender: React.FC<BlocksRenderProps> = ({
-  template,
-  setStructure,
-  addChild,
-  level,
-  addBlock,
-  classNames,
-  removeBlock,
-  children,
-  styles,
-  onClick,
-  setSelectedBlockId,
-  selectedBlockId,
-  contentEditable,
-  onBlur,
-  suppressContentEditableWarning,
-  blockRef,
-  isEditable,
-}) => {
-  const blocksRender = (component: any): ReactElement => {
-    const {
-      id,
-      tag,
-      className,
-      children: componentChildren,
-      content,
-      style,
-      componentName,
-      props,
-    } = component
-    const Tag = tag as keyof JSX.IntrinsicElements
+const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
+  ({
+    template,
+    setStructure,
+    addChild,
+    level,
+    addBlock,
+    classNames,
+    removeBlock,
+    children,
+    styles,
+    handleSelect,
+    setSelectedBlockId,
+    selectedBlockId,
+    contentEditable,
+    onBlur,
+    suppressContentEditableWarning,
+    blockRef,
+    isEditable,
+  }) => {
+    const blocksRender = (component: any): ReactElement => {
+      const {
+        id,
+        tag,
+        className,
+        children: componentChildren,
+        style,
+        componentName,
+        props,
+      } = component
 
-    const CustomComponent =
-      componentName && advancedBlocks[componentName]
-        ? dynamic(() => import(`${advancedBlocks[componentName]}`))
-        : null
+      if (componentName) {
+        const CustomComponentPath = advancedBlocks[componentName]
+        return (
+          <CustomComponentWrapper
+            key={id}
+            componentName={componentName}
+            componentPath={CustomComponentPath}
+            className={cn(className, "relative", classNames)}
+            style={{ ...style, ...styles }}
+            onWrapperClick={handleSelect}
+            onBlur={onBlur}
+            contentEditable={contentEditable}
+            suppressContentEditableWarning={suppressContentEditableWarning}
+            {...props}
+          />
+        )
+      }
 
-    return (
-      <Tag
-        key={id}
-        className={cn(className, {
-          relative: isEditable,
-          classNames: isEditable,
-        })}
-        style={{ ...style, ...styles }}
-        onClick={onClick ? (event) => onClick(event) : undefined}
-        onBlur={onBlur}
-        contentEditable={contentEditable}
-        suppressContentEditableWarning={suppressContentEditableWarning}
-      >
-        {CustomComponent ? <CustomComponent {...props} /> : content}
-        {componentChildren?.map((child: Child) => {
-          if (isEditable)
+      const Tag = tag as keyof JSX.IntrinsicElements
+
+      return (
+        <Tag
+          key={id}
+          className={cn(className, "relative", classNames)}
+          style={{ ...style, ...styles }}
+          onClick={handleSelect}
+          onBlur={onBlur}
+          contentEditable={contentEditable}
+          suppressContentEditableWarning={suppressContentEditableWarning}
+        >
+          {component.content}
+          {componentChildren?.map((child: Child) => {
+            if (isEditable)
+              return (
+                <ClientBlocksRender
+                  key={child.id}
+                  template={child}
+                  setStructure={setStructure}
+                  addChild={addChild}
+                  level={level ? level + 1 : null}
+                  addBlock={addBlock}
+                  removeBlock={removeBlock}
+                  selectedBlockId={selectedBlockId}
+                  setSelectedBlockId={setSelectedBlockId}
+                  blockRef={blockRef}
+                  parentLength={componentChildren.length}
+                  index={componentChildren.indexOf(child)}
+                />
+              )
+
             return (
-              <ClientBlocksRender
+              <BlocksRender
                 key={child.id}
                 template={child}
-                setStructure={setStructure}
-                addChild={addChild}
-                level={level ? level + 1 : null}
-                addBlock={addBlock}
-                removeBlock={removeBlock}
-                selectedBlockId={selectedBlockId}
-                setSelectedBlockId={setSelectedBlockId}
-                blockRef={blockRef}
-                parentLength={componentChildren.length}
-                index={componentChildren.indexOf(child)}
+                isEditable={false}
               />
             )
+          })}
+          {children}
+        </Tag>
+      )
+    }
 
-          return (
-            <BlocksRender key={child.id} template={child} isEditable={false} />
-          )
-        })}
-        {children}
-      </Tag>
-    )
+    return blocksRender(template)
   }
+)
 
-  return blocksRender(template)
-}
-
+BlocksRender.displayName = "BlocksRender"
 export default BlocksRender

@@ -1,4 +1,5 @@
-import { Heading, Image, Square, Type } from "lucide-react";
+import { List } from "lucide-react";
+import { FileText, Heading, Image, Link2, Square, Type } from "lucide-react";
 
 type BlockConfig = {
   tag: string;
@@ -44,6 +45,40 @@ const blocks: Record<string, BlockConfig> = {
       alt: "logo",
       className: "w-full h-auto",
     },
+  },
+  button: {
+    type: "button",
+    tag: "button",
+    componentName: "BlockButton",
+    className: "bg-white text-slate-900",
+    icon: Link2,
+    props: {
+      variant: "default",
+      size: "default",
+      children: "Button",
+    },
+  },
+  list: {
+    type: "list",
+    tag: "ul",
+    className: "list-disc list-inside",
+    content: "",
+    icon: List,
+  },
+  listItem: {
+    type: "listItem",
+    tag: "li",
+    className: "",
+    content: "List item",
+    icon: FileText,
+  },
+  blockquote: {
+    type: "blockquote",
+    tag: "blockquote",
+    className:
+      "border-l-4 border-slate-600 px-4 py-2 text-slate-600 italic",
+    content: "Quote",
+    icon: Type,
   },
 };
 

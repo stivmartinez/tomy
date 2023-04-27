@@ -1,6 +1,6 @@
 const advancedBlocks: any = {
-  BlockHeading: "./blocks/heading",
-  BlockImage: "./blocks/image",
+  BlockButton: "./advanced/button",
+  BlockImage: "./advanced/image",
 };
 
 export default advancedBlocks;
