@@ -1,5 +1,5 @@
 import { List } from "lucide-react";
-import { FileText, Heading, Image, Link2, Square, Type } from "lucide-react";
+import { FileText, Heading, Square, Type } from "lucide-react";
 
 type BlockConfig = {
   tag: string;

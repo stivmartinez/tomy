@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 
-import BlocksRender from "../@builder/components/blocks/blocks-render"
+import BlocksRender from "../blocks-render"
 
 interface SiteProps {
   initialData?: any[]

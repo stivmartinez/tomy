@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react"
 
 import { cn } from "@/lib/utils"
-import ClientBlocksRender from "./client-blocks-render"
+import ClientBlocksRender from "./@builder/client-blocks-render"
 
 interface Child {
   id: string

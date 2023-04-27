@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import blocks from "@/app/[site]/@builder/components/blocks/blocks"
+import blocks from "@/lib/blocks"
 import { Layers, LogOut, Plus, Save, Settings, Square } from "lucide-react"
 
 import { generateRandomId } from "@/lib/generateRandomId"

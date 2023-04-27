@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
-import blocks from "@/app/[site]/@builder/components/blocks/blocks"
-import ClientBlocksRender from "@/app/[site]/@builder/components/blocks/client-blocks-render"
+import blocks from "@/lib/blocks"
+import ClientBlocksRender from "@/app/[site]/@builder/client-blocks-render"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import BuilderNavbar from "./components/navbar"
