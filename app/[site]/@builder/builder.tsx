@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useCallback, useRef, useState } from "react"
-
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import blocks from "@/app/[site]/@builder/components/blocks/blocks"
-import { generateRandomId } from "@/lib/generateRandomId"
 import ClientBlocksRender from "@/app/[site]/@builder/components/blocks/client-blocks-render"
+
+import { generateRandomId } from "@/lib/generateRandomId"
 import BuilderNavbar from "./components/navbar"
 
 interface BuilderProps {
@@ -15,6 +15,27 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
   const blockRef = useRef<{ [key: string]: HTMLDivElement | null }>({})
+
+  const saveStructure = () => {
+    localStorage.setItem("savedStructure", JSON.stringify(structure))
+  }
+
+  const resetSavedStructure = () => {
+    localStorage.removeItem("savedStructure")
+  }
+
+  const loadSavedStructure = () => {
+    const savedStructure = localStorage.getItem("savedStructure")
+    if (savedStructure) {
+      setStructure(JSON.parse(savedStructure))
+    } else {
+      setStructure(initialData)
+    }
+  }
+
+  useEffect(() => {
+    loadSavedStructure()
+  }, [])
 
   const addChildToStructure = useCallback(
     (parentId: string | null, blockConfiguration: any) => {
@@ -104,6 +125,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
           blockRef={blockRef}
           index={index}
           parentLength={structure.length}
+          isEditable={true}
         />
       ))}
       <BuilderNavbar
@@ -112,6 +134,8 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
         selectedBlockId={selectedBlockId}
         setSelectedBlockId={setSelectedBlockId}
         addBlock={addBlock}
+        saveStructure={saveStructure}
+        resetSavedStructure={resetSavedStructure}
       />
     </>
   )

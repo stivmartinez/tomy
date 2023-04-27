@@ -10,18 +10,19 @@ import { Button } from "@/components/ui/button"
 
 interface ClientBlocksRenderProps {
   template: any
-  setStructure: (callback: (structure: any[]) => any[]) => void
-  level: number
-  addChild: (parentId: string, blockConfiguration: any) => void
-  addBlock: (parentId: string, type: string) => void
-  removeBlock: (blockId: string) => void
-  selectedBlockId: string | null
-  setSelectedBlockId: (
+  setStructure?: (callback: (structure: any[]) => any[]) => void
+  level?: number | null | undefined
+  addChild?: (parentId: string, blockConfiguration: any) => void
+  addBlock?: (parentId: string, type: string) => void
+  removeBlock?: (blockId: string) => void
+  selectedBlockId?: string | null
+  setSelectedBlockId?: (
     callback: (blockId: string | null) => string | null
   ) => void
-  blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
-  index: number
-  parentLength: number
+  blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
+  index?: number
+  parentLength?: number
+  isEditable?: boolean
 }
 
 interface ParentAndIndex {
@@ -41,6 +42,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   blockRef,
   index,
   parentLength,
+  isEditable = true,
 }) => {
   const [classNames, setClassNames] = useState("")
   const [isEditing, setIsEditing] = useState(false)
@@ -415,6 +417,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       onBlur={isEditing ? handleBlur : undefined}
       blockRef={blockRef}
       suppressContentEditableWarning
+      isEditable={isEditable}
     >
       {selectedBlockId === template.id && buttons}
     </BlocksRender>,

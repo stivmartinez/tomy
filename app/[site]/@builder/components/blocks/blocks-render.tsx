@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils"
-import dynamic from "next/dynamic"
 import React, { ReactElement } from "react"
+import dynamic from "next/dynamic"
 
+import { cn } from "@/lib/utils"
 import advancedBlocks from "./advancedBlocks"
 import ClientBlocksRender from "./client-blocks-render"
 
@@ -14,23 +14,24 @@ interface Child {
 
 interface BlocksRenderProps {
   template: any
-  setStructure: (callback: (structure: any[]) => any[]) => void
-  addChild: (parentId: string, blockConfiguration: any) => void
-  level: number
-  addBlock: (parentId: string, type: string) => void
-  classNames: string
-  removeBlock: (blockId: string) => void
+  setStructure?: (callback: (structure: any[]) => any[]) => void
+  addChild?: (parentId: string, blockConfiguration: any) => void
+  level?: number
+  addBlock?: (parentId: string, type: string) => void
+  classNames?: string
+  removeBlock?: (blockId: string) => void
   children?: React.ReactNode
-  styles: any
+  styles?: any
   onClick?: any
-  setSelectedBlockId: (
+  setSelectedBlockId?: (
     callback: (blockId: string | null) => string | null
   ) => void
-  selectedBlockId: string | null
+  selectedBlockId?: string | null
   contentEditable?: boolean
   onBlur?: any
   suppressContentEditableWarning?: boolean
-  blockRef: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
+  blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
+  isEditable: boolean
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = ({
@@ -50,6 +51,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
   onBlur,
   suppressContentEditableWarning,
   blockRef,
+  isEditable,
 }) => {
   const blocksRender = (component: any): ReactElement => {
     const {
@@ -72,7 +74,10 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
     return (
       <Tag
         key={id}
-        className={cn(className, "relative", classNames)}
+        className={cn(className, {
+          relative: isEditable,
+          classNames: isEditable,
+        })}
         style={{ ...style, ...styles }}
         onClick={onClick ? (event) => onClick(event) : undefined}
         onBlur={onBlur}
@@ -80,22 +85,29 @@ const BlocksRender: React.FC<BlocksRenderProps> = ({
         suppressContentEditableWarning={suppressContentEditableWarning}
       >
         {CustomComponent ? <CustomComponent {...props} /> : content}
-        {componentChildren?.map((child: Child) => (
-          <ClientBlocksRender
-            key={child.id}
-            template={child}
-            setStructure={setStructure}
-            addChild={addChild}
-            level={level + 1}
-            addBlock={addBlock}
-            removeBlock={removeBlock}
-            selectedBlockId={selectedBlockId}
-            setSelectedBlockId={setSelectedBlockId}
-            blockRef={blockRef}
-            parentLength={componentChildren.length}
-            index={componentChildren.indexOf(child)}
-          />
-        ))}
+        {componentChildren?.map((child: Child) => {
+          if (isEditable)
+            return (
+              <ClientBlocksRender
+                key={child.id}
+                template={child}
+                setStructure={setStructure}
+                addChild={addChild}
+                level={level ? level + 1 : null}
+                addBlock={addBlock}
+                removeBlock={removeBlock}
+                selectedBlockId={selectedBlockId}
+                setSelectedBlockId={setSelectedBlockId}
+                blockRef={blockRef}
+                parentLength={componentChildren.length}
+                index={componentChildren.indexOf(child)}
+              />
+            )
+
+          return (
+            <BlocksRender key={child.id} template={child} isEditable={false} />
+          )
+        })}
         {children}
       </Tag>
     )
