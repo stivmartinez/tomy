@@ -1,6 +1,6 @@
 import React from "react"
 import { Layers, LogOut, Plus, Save, Settings, Square } from "lucide-react"
-import { DndProvider, useDrag, useDrop } from "react-dnd"
+import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
 import blocks from "@/lib/blocks"
@@ -70,15 +70,21 @@ const BuilderNavbar = ({
 
     // Update the structure
     setStructure([...structure])
+
+    // Force a re-render by updating the selectedBlockId state
+    setSelectedBlockId((prevState) =>
+      prevState === draggedId ? null : prevState
+    )
   }
 
-  const renderLayerItems = (blocks: any, level = 0) => {
-    return blocks.map((block: any, index: number) => (
+  const renderLayerItems = (blocksList: any, level = 0) => {
+    return blocksList.map((block: any, index: number) => (
       <React.Fragment key={block.id}>
         {block.children && block.children.length > 0 ? (
           <>
             <LayerItem
               block={block}
+              blockIcon={blocks[block.type]?.icon || null}
               selectedBlockId={selectedBlockId}
               setSelectedBlockId={setSelectedBlockId}
               level={level}
@@ -89,6 +95,7 @@ const BuilderNavbar = ({
         ) : (
           <LayerItem
             block={block}
+            blockIcon={blocks[block.type]?.icon || null}
             selectedBlockId={selectedBlockId}
             setSelectedBlockId={setSelectedBlockId}
             level={level}
