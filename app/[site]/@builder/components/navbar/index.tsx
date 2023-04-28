@@ -1,7 +1,7 @@
-"use client"
-
 import React from "react"
 import { Layers, LogOut, Plus, Save, Settings, Square } from "lucide-react"
+import { DndProvider, useDrag, useDrop } from "react-dnd"
+import { HTML5Backend } from "react-dnd-html5-backend"
 
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
@@ -18,8 +18,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { LayerItem } from "./layer-item"
 
-const BuilderPropsNavbar = ({
+const BuilderNavbar = ({
   structure,
   setStructure,
   selectedBlockId,
@@ -38,30 +39,61 @@ const BuilderPropsNavbar = ({
   saveStructure: any
   resetSavedStructure: any
 }) => {
+  const moveBlock = (draggedId: string, droppedId: string) => {
+    if (draggedId === droppedId) return
+
+    const findBlock = (blocks, id) => {
+      for (const block of blocks) {
+        if (block.id === id) return { block, parent: blocks }
+        if (block.children) {
+          const result = findBlock(block.children, id)
+          if (result) return result
+        }
+      }
+    }
+
+    const { block: draggedBlock, parent: oldParent } = findBlock(
+      structure,
+      draggedId
+    )
+    const { block: droppedBlock, parent: newParent } = findBlock(
+      structure,
+      droppedId
+    )
+
+    // Remove dragged block from old parent
+    oldParent.splice(oldParent.indexOf(draggedBlock), 1)
+
+    // Add dragged block as a child of the dropped block
+    if (!droppedBlock.children) droppedBlock.children = []
+    droppedBlock.children.push(draggedBlock)
+
+    // Update the structure
+    setStructure([...structure])
+  }
+
   const renderLayerItems = (blocks: any, level = 0) => {
     return blocks.map((block: any, index: number) => (
       <React.Fragment key={block.id}>
         {block.children && block.children.length > 0 ? (
           <>
-            <DropdownMenuItem
-              className={`font-semibold ${
-                selectedBlockId === block.id ? "text-red-500" : ""
-              }`}
-              style={{ marginLeft: `${level * 8}px` }}
-              onClick={() => setSelectedBlockId(block.id)}
-            >
-              {block.type}: {block.id}
-            </DropdownMenuItem>
+            <LayerItem
+              block={block}
+              selectedBlockId={selectedBlockId}
+              setSelectedBlockId={setSelectedBlockId}
+              level={level}
+              moveBlock={moveBlock}
+            />
             {renderLayerItems(block.children, level + 1)}
           </>
         ) : (
-          <DropdownMenuItem
-            className={selectedBlockId === block.id ? "text-red-500" : ""}
-            style={{ marginLeft: `${level * 8}px` }}
-            onClick={() => setSelectedBlockId(block.id)}
-          >
-            {block.type}: {block.id}
-          </DropdownMenuItem>
+          <LayerItem
+            block={block}
+            selectedBlockId={selectedBlockId}
+            setSelectedBlockId={setSelectedBlockId}
+            level={level}
+            moveBlock={moveBlock}
+          />
         )}
       </React.Fragment>
     ))
@@ -80,7 +112,9 @@ const BuilderPropsNavbar = ({
           <DropdownMenuLabel>Layers</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <ScrollArea className="h-[320px] w-full">
-            {renderLayerItems(structure, 0)}
+            <DndProvider backend={HTML5Backend}>
+              {renderLayerItems(structure, 0)}
+            </DndProvider>
           </ScrollArea>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -167,4 +201,4 @@ const BuilderPropsNavbar = ({
   )
 }
 
-export default React.memo(BuilderPropsNavbar)
+export default React.memo(BuilderNavbar)

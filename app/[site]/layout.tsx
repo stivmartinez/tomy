@@ -10,7 +10,7 @@ export default async function BuilderLayout({
   return (
     <>
       {children}
-      {site}
+      {builder}
     </>
   )
 }
