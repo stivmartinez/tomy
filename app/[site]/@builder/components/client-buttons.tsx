@@ -46,6 +46,14 @@ const ClientButtons: React.FC = ({
         icon: Edit,
       },
     ],
+    anchorLink: [
+      {
+        propertyName: "href",
+        propertyPath: ["props", "href"],
+        promptMessage: "Please enter the new anchorLink URL:",
+        icon: Edit,
+      },
+    ],
     image: [
       {
         propertyName: "src",

@@ -1,4 +1,4 @@
-import { Link2 } from "lucide-react";
+import { Link, Link2 } from "lucide-react";
 import { Image, List, Plus } from "lucide-react";
 import { FileText, Heading, Square, Type } from "lucide-react";
 
@@ -94,6 +94,19 @@ const blocks: Record<string, BlockConfig> = {
       "border-l-4 border-slate-600 px-4 py-2 text-slate-600 italic",
     content: "Quote",
     icon: Type,
+  },
+  anchorLink: {
+    type: "anchorLink",
+    tag: "a",
+    className: "",
+    content: "",
+    props: {
+      href: "#",
+    },
+    icon: Link,
+    onClick: (event: React.MouseEvent) => {
+      event.stopPropagation();
+    },
   },
 };
 
