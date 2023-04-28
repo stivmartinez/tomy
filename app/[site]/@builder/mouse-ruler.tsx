@@ -18,11 +18,11 @@ const MouseRuler = () => {
   return (
     <>
       <div
-        className="pointer-events-none fixed h-[1px] w-full border-b border-dashed border-neutral-400/40"
+        className="pointer-events-none fixed h-[1px] w-full bg-neutral-400/40"
         style={{ top: `${mousePosition.y}px` }}
       />
       <div
-        className="pointer-events-none fixed h-full w-[1px] border-r border-dashed border-neutral-400/40"
+        className="pointer-events-none fixed h-full w-[1px] bg-neutral-400/40"
         style={{ left: `${mousePosition.x}px` }}
       />
     </>

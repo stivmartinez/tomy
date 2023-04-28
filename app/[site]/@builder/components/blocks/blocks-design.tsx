@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import React, { ReactNode } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
@@ -24,21 +23,21 @@ import ColorPicker from "./options/colorpicker"
 import Picker from "./options/picker"
 
 interface BlocksDesignProps {
-  onClassNamesChange: (newStyles: { [key: string]: string }) => void
+  classNames: string[]
+  handleClassNameChange: any
   children: ReactNode
-  defaultValues: { [key: string]: string }
 }
 
 const colorSettings = [
   {
     id: "bg-color",
     title: "Background color",
-    settingPrefix: ["bg", "md:bg"],
+    settingPrefix: ["bg-", "md:bg-"],
   },
   {
     id: "text-color",
     title: "Text color",
-    settingPrefix: ["text", "md:text"],
+    settingPrefix: ["text-", "md:text-"],
   },
 ]
 
@@ -46,19 +45,19 @@ const sizeSettings = [
   {
     id: "height",
     title: "Height",
-    settingPrefix: ["h", "md:h"],
+    settingPrefix: ["h-", "md:h-"],
     options: tailwindSizes,
   },
   {
     id: "width",
     title: "Width",
-    settingPrefix: ["w", "md:w"],
+    settingPrefix: ["w-", "md:w-"],
     options: tailwindSizes,
   },
   {
     id: "font-size",
     title: "Font size",
-    settingPrefix: ["text", "md:text"],
+    settingPrefix: ["text-", "md:text-"],
     options: tailwindSizesTwo,
   },
 ]
@@ -76,25 +75,25 @@ const alignmentSettings = [
   {
     id: "justify",
     title: "Justify",
-    settingPrefix: ["justify", "md:justify"],
+    settingPrefix: ["justify-", "md:justify-"],
     options: tailwindAlign,
   },
   {
     id: "content",
     title: "Content",
-    settingPrefix: ["content", "md:content"],
+    settingPrefix: ["content-", "md:content-"],
     options: tailwindAlign,
   },
   {
     id: "items",
     title: "Items",
-    settingPrefix: ["items", "md:items"],
+    settingPrefix: ["items-", "md:items-"],
     options: tailwindAlignItems,
   },
   {
     id: "text-align",
     title: "Text align",
-    settingPrefix: ["text", "md:text"],
+    settingPrefix: ["text-", "md:text-"],
     options: tailwindTextAlign,
   },
 ]
@@ -103,7 +102,7 @@ const fontWeightSettings = [
   {
     id: "font-weight",
     title: "Font weight",
-    settingPrefix: ["font", "md:font"],
+    settingPrefix: ["font-", "md:font-"],
     options: tailwindFontWeights,
   },
 ]
@@ -133,7 +132,7 @@ const paddingSettings = [
   {
     id: "padding",
     title: "Padding",
-    settingPrefix: ["p", "md:p"],
+    settingPrefix: ["p-", "md:p-"],
     options: tailwindSpacing,
   },
 ]
@@ -142,7 +141,7 @@ const marginSettings = [
   {
     id: "margin",
     title: "Margin",
-    settingPrefix: ["m", "md:m"],
+    settingPrefix: ["m-", "md:m-"],
     options: tailwindSpacing,
   },
 ]
@@ -153,13 +152,13 @@ const borderSettings = [
   {
     id: "border",
     title: "Border",
-    settingPrefix: ["border", "md:border"],
+    settingPrefix: ["border-", "md:border-"],
     options: tailwindBorderWidths,
   },
   {
     id: "border-color",
     title: "Border color",
-    settingPrefix: ["border", "md:border"],
+    settingPrefix: ["border-", "md:border-"],
   },
 ]
 
@@ -169,7 +168,7 @@ const borderRadiusSettings = [
   {
     id: "border-radius",
     title: "Border radius",
-    settingPrefix: ["rounded", "md:rounded"],
+    settingPrefix: ["rounded-", "md:rounded-"],
     options: tailwindBorderRadius,
   },
 ]
@@ -180,7 +179,7 @@ const flexDirectionSettings = [
   {
     id: "flex-direction",
     title: "Flex direction",
-    settingPrefix: ["flex", "md:flex"],
+    settingPrefix: ["flex-", "md:flex-"],
     options: tailwindFlexDirections,
   },
 ]
@@ -191,7 +190,7 @@ const flexWrapSettings = [
   {
     id: "flex-wrap",
     title: "Flex wrap",
-    settingPrefix: ["flex", "md:flex"],
+    settingPrefix: ["flex-", "md:flex-"],
     options: tailwindFlexWrap,
   },
 ]
@@ -202,13 +201,13 @@ const flexGrowShrinkSettings = [
   {
     id: "flex-grow",
     title: "Flex grow",
-    settingPrefix: ["flex-grow", "md:flex-grow"],
+    settingPrefix: ["flex-grow-", "md:flex-grow-"],
     options: tailwindFlexGrowShrink,
   },
   {
     id: "flex-shrink",
     title: "Flex shrink",
-    settingPrefix: ["flex-shrink", "md:flex-shrink"],
+    settingPrefix: ["flex-shrink-", "md:flex-shrink-"],
     options: tailwindFlexGrowShrink,
   },
 ]
@@ -254,32 +253,16 @@ const gapSettings = [
   {
     id: "gap",
     title: "Gap",
-    settingPrefix: ["gap", "md:gap"],
+    settingPrefix: ["gap-", "md:gap-"],
     options: tailwindGaps,
   },
 ]
 
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
-  onClassNamesChange,
-  defaultValues,
+  handleClassNameChange,
+  classNames,
   children,
 }) => {
-  const handleClassNameChange = (value: any, prefix: string = "") => {
-    if (prefix) {
-      // Find the current class with the same prefix and remove it
-      const currentClass = Object.keys(defaultValues).find((key) =>
-        key.startsWith(prefix)
-      )
-      if (currentClass) {
-        delete defaultValues[currentClass]
-      }
-      // Add the new class
-      onClassNamesChange({ ...defaultValues, [prefix]: value })
-    } else {
-      onClassNamesChange({ [value]: "" })
-    }
-  }
-
   const renderSetting = (
     setting: any,
     defaultValues: any,
@@ -295,7 +278,9 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             prefix={prefix}
             icon={icon}
             defaultValues={defaultValues}
-            handleClassNameChange={handleClassNameChange}
+            handleClassNameChange={(value) =>
+              handleClassNameChange(value, prefix)
+            }
             options={tailwindColors}
           />
         )
@@ -306,7 +291,9 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             prefix={prefix}
             icon={icon}
             defaultValues={defaultValues}
-            handleClassNameChange={handleClassNameChange}
+            handleClassNameChange={(value) =>
+              handleClassNameChange(value, prefix)
+            }
             options={setting.options}
           />
         )
@@ -346,7 +333,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             <AccordionItem key={setting.id} value={setting.id}>
               <AccordionTrigger>{setting.title}</AccordionTrigger>
               <AccordionContent>
-                {renderSetting(setting, defaultValues, handleClassNameChange)}
+                {renderSetting(setting, classNames, handleClassNameChange)}
               </AccordionContent>
             </AccordionItem>
           ))}

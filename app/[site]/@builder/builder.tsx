@@ -110,6 +110,9 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
     return result
   }
 
+
+  //console.log(structure)
+
   return (
     <>
       <MouseRuler />

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import BlocksRender from "@/app/[site]/blocks-render"
+import { twMerge } from "tailwind-merge"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import ClientButtons from "./components/client-buttons"
@@ -42,8 +43,41 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   parentLength,
   isEditable = true,
 }) => {
-  const [classNames, setClassNames] = useState("")
+  const [classNames, setClassNames] = useState<string[]>(
+    template?.className || []
+  )
   const [isEditing, setIsEditing] = useState(false)
+
+  const handleClassNameChange = (value: any, prefix: string = "") => {
+    setClassNames((classNames) => {
+      const newClass = `${prefix}${value}`
+      const newClassNames = twMerge(classNames, newClass).split(" ")
+      return newClassNames
+    })
+
+    // Now update the structure with the new class names
+    setStructure((prevStructure: any[]) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure))
+
+      const updateClassNameRecursive = (node: any) => {
+        if (!node) return
+        if (node.id === template.id) {
+          node.className = classNames
+        }
+        if (node.children) {
+          for (const child of node.children) {
+            updateClassNameRecursive(child)
+          }
+        }
+      }
+
+      newStructure.forEach((node: any) => {
+        updateClassNameRecursive(node)
+      })
+
+      return newStructure
+    })
+  }
 
   const handleSelect = (event: React.MouseEvent) => {
     event.stopPropagation()
@@ -60,73 +94,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         setIsEditing(false)
         return template.id
       }
-    })
-  }
-
-  const filterConflictingClassNames = (
-    classNames: string[],
-    newClassName: string
-  ) => {
-    const newClassNamePrefix = newClassName.split("-")[0]
-    return classNames.filter(
-      (className) => className.split("-")[0] !== newClassNamePrefix
-    )
-  }
-
-  const handleClassNamesChange = (newStyles: { [key: string]: string }) => {
-    const updatedClassNames = Object.entries(newStyles)
-      .map(([key, value]) => {
-        if (value) {
-          return `${key}-${value}`
-        } else {
-          return key
-        }
-      })
-      .join(" ")
-
-    setClassNames((prevClassNames) => {
-      const existingClassNames = prevClassNames.split(" ")
-      const newClassNames = updatedClassNames.split(" ")
-      const filteredClassNames = filterConflictingClassNames(
-        existingClassNames,
-        newClassNames[0]
-      )
-      const combinedClassNames = Array.from(
-        new Set([...filteredClassNames, ...newClassNames])
-      )
-      const finalClassNames = combinedClassNames.join(" ")
-
-      // Update the structure with the new classNames
-      setStructure((prevStructure: any[]) => {
-        const newStructure = JSON.parse(JSON.stringify(prevStructure))
-        const updateClassNamesRecursive = (node: any) => {
-          if (!node) return false
-          if (node.id === template.id) {
-            const defaultClassNames = node.className.split(" ")
-            const mergedClassNames = Array.from(
-              new Set([...defaultClassNames, ...combinedClassNames])
-            )
-            node.className = mergedClassNames.join(" ")
-            return true
-          }
-          if (node.children) {
-            for (const child of node.children) {
-              if (updateClassNamesRecursive(child)) {
-                return true
-              }
-            }
-          }
-          return false
-        }
-
-        newStructure.forEach((node: any) => {
-          updateClassNamesRecursive(node)
-        })
-
-        return newStructure
-      })
-
-      return finalClassNames
     })
   }
 
@@ -251,7 +218,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       level={level || undefined}
       addBlock={addBlock}
       styles={{ boxShadow: shadow, cursor: "pointer" }}
-      classNames={`${classNames}`}
+      classNames={classNames}
       removeBlock={removeBlock}
       handleSelect={handleSelect}
       selectedBlockId={selectedBlockId}
@@ -269,7 +236,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
           moveBlock={moveBlock}
           handleClone={handleClone}
           handleRemove={handleRemove}
-          handleClassNamesChange={handleClassNamesChange}
+          handleClassNameChange={handleClassNameChange}
           classNames={classNames}
           handlePropertyUpdate={handlePropertyUpdate}
         />

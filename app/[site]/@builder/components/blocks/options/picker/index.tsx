@@ -19,7 +19,7 @@ const Picker = ({
         {options.map((option: any) => {
           return (
             <div key={option} className={`snap-center`}>
-              <div className="flex items-center space-x-2">
+              <div className="mt-2 flex items-center space-x-2 whitespace-nowrap">
                 <RadioGroupItem value={option} id={option} />
                 <Label htmlFor={option}>{option}</Label>
               </div>

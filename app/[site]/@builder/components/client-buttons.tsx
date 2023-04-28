@@ -11,7 +11,7 @@ const ClientButtons: React.FC = ({
   moveBlock,
   handleClone,
   handleRemove,
-  handleClassNamesChange,
+  handleClassNameChange,
   classNames,
   handlePropertyUpdate,
 }: any) => {
@@ -145,8 +145,8 @@ const ClientButtons: React.FC = ({
         <ArrowDown size="12" />
       </Button>
       <BlocksDesign
-        onClassNamesChange={handleClassNamesChange}
-        defaultValues={classNames}
+        handleClassNameChange={handleClassNameChange}
+        classNames={classNames}
       >
         <Button
           onClick={(event) => event.stopPropagation()}

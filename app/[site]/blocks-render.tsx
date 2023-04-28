@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react"
+import { twMerge } from "tailwind-merge"
 
-import { cn } from "@/lib/utils"
 import ClientBlocksRender from "./@builder/client-blocks-render"
 
 interface Child {
@@ -16,7 +16,7 @@ interface BlocksRenderProps {
   addChild?: (parentId: string, blockConfiguration: any) => void
   level?: number
   addBlock?: (parentId: string, type: string) => void
-  classNames?: string
+  classNames?: string[]
   removeBlock?: (blockId: string) => void
   children?: React.ReactNode
   styles?: any
@@ -67,7 +67,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
           <>
             <Tag
               key={id}
-              className={cn(className, "relative", classNames)}
+              className={twMerge(className)}
               style={{ ...style, ...styles }}
               onClick={handleSelect}
               {...component.props}
@@ -80,7 +80,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
       return (
         <Tag
           key={id}
-          className={cn(className, "relative", classNames)}
+          className={twMerge(className)}
           style={{ ...style, ...styles }}
           onClick={handleSelect}
           contentEditable={contentEditable}
