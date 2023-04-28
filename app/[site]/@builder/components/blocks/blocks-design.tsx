@@ -29,6 +29,242 @@ interface BlocksDesignProps {
   defaultValues: { [key: string]: string }
 }
 
+const colorSettings = [
+  {
+    id: "bg-color",
+    title: "Background color",
+    settingPrefix: ["bg", "md:bg"],
+  },
+  {
+    id: "text-color",
+    title: "Text color",
+    settingPrefix: ["text", "md:text"],
+  },
+]
+
+const sizeSettings = [
+  {
+    id: "height",
+    title: "Height",
+    settingPrefix: ["h", "md:h"],
+    options: tailwindSizes,
+  },
+  {
+    id: "width",
+    title: "Width",
+    settingPrefix: ["w", "md:w"],
+    options: tailwindSizes,
+  },
+  {
+    id: "font-size",
+    title: "Font size",
+    settingPrefix: ["text", "md:text"],
+    options: tailwindSizesTwo,
+  },
+]
+
+const displaySettings = [
+  {
+    id: "display",
+    title: "Display",
+    settingPrefix: ["", "md:"],
+    options: tailwindDisplayOptions,
+  },
+]
+
+const alignmentSettings = [
+  {
+    id: "justify",
+    title: "Justify",
+    settingPrefix: ["justify", "md:justify"],
+    options: tailwindAlign,
+  },
+  {
+    id: "content",
+    title: "Content",
+    settingPrefix: ["content", "md:content"],
+    options: tailwindAlign,
+  },
+  {
+    id: "items",
+    title: "Items",
+    settingPrefix: ["items", "md:items"],
+    options: tailwindAlignItems,
+  },
+  {
+    id: "text-align",
+    title: "Text align",
+    settingPrefix: ["text", "md:text"],
+    options: tailwindTextAlign,
+  },
+]
+
+const fontWeightSettings = [
+  {
+    id: "font-weight",
+    title: "Font weight",
+    settingPrefix: ["font", "md:font"],
+    options: tailwindFontWeights,
+  },
+]
+
+const tailwindSpacing = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "8",
+  "10",
+  "12",
+  "16",
+  "20",
+  "24",
+  "32",
+  "40",
+  "48",
+  "56",
+  "64",
+]
+
+const paddingSettings = [
+  {
+    id: "padding",
+    title: "Padding",
+    settingPrefix: ["p", "md:p"],
+    options: tailwindSpacing,
+  },
+]
+
+const marginSettings = [
+  {
+    id: "margin",
+    title: "Margin",
+    settingPrefix: ["m", "md:m"],
+    options: tailwindSpacing,
+  },
+]
+
+const tailwindBorderWidths = ["0", "2", "4", "8"]
+
+const borderSettings = [
+  {
+    id: "border",
+    title: "Border",
+    settingPrefix: ["border", "md:border"],
+    options: tailwindBorderWidths,
+  },
+  {
+    id: "border-color",
+    title: "Border color",
+    settingPrefix: ["border", "md:border"],
+  },
+]
+
+const tailwindBorderRadius = ["0", "1", "2", "3", "4", "full"]
+
+const borderRadiusSettings = [
+  {
+    id: "border-radius",
+    title: "Border radius",
+    settingPrefix: ["rounded", "md:rounded"],
+    options: tailwindBorderRadius,
+  },
+]
+
+const tailwindFlexDirections = ["row", "row-reverse", "col", "col-reverse"]
+
+const flexDirectionSettings = [
+  {
+    id: "flex-direction",
+    title: "Flex direction",
+    settingPrefix: ["flex", "md:flex"],
+    options: tailwindFlexDirections,
+  },
+]
+
+const tailwindFlexWrap = ["wrap", "wrap-reverse", "nowrap"]
+
+const flexWrapSettings = [
+  {
+    id: "flex-wrap",
+    title: "Flex wrap",
+    settingPrefix: ["flex", "md:flex"],
+    options: tailwindFlexWrap,
+  },
+]
+
+const tailwindFlexGrowShrink = ["0", "1"]
+
+const flexGrowShrinkSettings = [
+  {
+    id: "flex-grow",
+    title: "Flex grow",
+    settingPrefix: ["flex-grow", "md:flex-grow"],
+    options: tailwindFlexGrowShrink,
+  },
+  {
+    id: "flex-shrink",
+    title: "Flex shrink",
+    settingPrefix: ["flex-shrink", "md:flex-shrink"],
+    options: tailwindFlexGrowShrink,
+  },
+]
+
+const tailwindGaps = [
+  "0",
+  "0.5",
+  "1",
+  "1.5",
+  "2",
+  "2.5",
+  "3",
+  "3.5",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "14",
+  "16",
+  "20",
+  "24",
+  "28",
+  "32",
+  "36",
+  "40",
+  "44",
+  "48",
+  "52",
+  "56",
+  "60",
+  "64",
+  "72",
+  "80",
+  "96",
+]
+
+const gapSettings = [
+  {
+    id: "row-gap",
+    title: "Row gap",
+    settingPrefix: ["gap-x", "md:gap-x"],
+    options: tailwindGaps,
+  },
+  {
+    id: "col-gap",
+    title: "Column gap",
+    settingPrefix: ["gap-y", "md:gap-y"],
+    options: tailwindGaps,
+  },
+]
+
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   onClassNamesChange,
   defaultValues,
@@ -40,6 +276,40 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
     } else {
       onClassNamesChange({ [value]: "" })
     }
+  }
+
+  const renderSetting = (
+    setting: any,
+    defaultValues: any,
+    handleClassNameChange: any
+  ) => {
+    return setting.settingPrefix.map((prefix: any, index: any) => {
+      const icon =
+        index === 0 ? <Monitor size="16" /> : <Smartphone size="16" />
+      if (setting.id === "bg-color" || setting.id === "text-color") {
+        return (
+          <ColorPicker
+            key={prefix}
+            prefix={prefix}
+            icon={icon}
+            defaultValues={defaultValues}
+            handleClassNameChange={handleClassNameChange}
+            options={tailwindColors}
+          />
+        )
+      } else {
+        return (
+          <Picker
+            key={prefix}
+            prefix={prefix}
+            icon={icon}
+            defaultValues={defaultValues}
+            handleClassNameChange={handleClassNameChange}
+            options={setting.options}
+          />
+        )
+      }
+    })
   }
 
   return (
@@ -56,215 +326,28 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
       >
         <h3>Settings for block</h3>
         <Accordion type="single" collapsible>
-          <AccordionItem value="bg-color">
-            <AccordionTrigger>Background color</AccordionTrigger>
-            <AccordionContent>
-              <ColorPicker
-                prefix="bg"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindColors}
-              />
-              <ColorPicker
-                prefix="md:bg"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindColors}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="text-color">
-            <AccordionTrigger>Text color</AccordionTrigger>
-            <AccordionContent>
-              <ColorPicker
-                prefix="text"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindColors}
-              />
-              <ColorPicker
-                prefix="md:text"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindColors}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="height">
-            <AccordionTrigger>Height</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="h"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizes}
-              />
-              <Picker
-                prefix="md:h"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizes}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="width">
-            <AccordionTrigger>Width</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="w"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizes}
-              />
-              <Picker
-                prefix="md:w"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizes}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="font-size">
-            <AccordionTrigger>Font size</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="text"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizesTwo}
-              />
-              <Picker
-                prefix="md:text"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindSizesTwo}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="display">
-            <AccordionTrigger>Display</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix=""
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindDisplayOptions}
-              />
-              <Picker
-                prefix="md:"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindDisplayOptions}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="justify">
-            <AccordionTrigger>Justify</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="justify"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlign}
-              />
-              <Picker
-                prefix="md:justify"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlign}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="content">
-            <AccordionTrigger>Content</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="content"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlign}
-              />
-              <Picker
-                prefix="md:content"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlign}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="items">
-            <AccordionTrigger>Items</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="items"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlignItems}
-              />
-              <Picker
-                prefix="md:items"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindAlignItems}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="text-align">
-            <AccordionTrigger>Text align</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="text"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindTextAlign}
-              />
-              <Picker
-                prefix="md:text"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindTextAlign}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="font-weight">
-            <AccordionTrigger>Font weight</AccordionTrigger>
-            <AccordionContent>
-              <Picker
-                prefix="font"
-                icon={<Monitor size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindFontWeights}
-              />
-              <Picker
-                prefix="md:font"
-                icon={<Smartphone size="16" />}
-                defaultValues={defaultValues}
-                handleClassNameChange={handleClassNameChange}
-                options={tailwindFontWeights}
-              />
-            </AccordionContent>
-          </AccordionItem>
+          {[
+            ...displaySettings,
+            ...flexDirectionSettings,
+            ...flexWrapSettings,
+            ...alignmentSettings,
+            ...gapSettings,
+            ...sizeSettings,
+            ...paddingSettings,
+            ...marginSettings,
+            ...colorSettings,
+            ...fontWeightSettings,
+            ...borderSettings,
+            ...borderRadiusSettings,
+            ...flexGrowShrinkSettings,
+          ].map((setting) => (
+            <AccordionItem key={setting.id} value={setting.id}>
+              <AccordionTrigger>{setting.title}</AccordionTrigger>
+              <AccordionContent>
+                {renderSetting(setting, defaultValues, handleClassNameChange)}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </SheetContent>
     </Sheet>

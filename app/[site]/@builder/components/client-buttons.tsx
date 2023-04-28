@@ -1,6 +1,6 @@
 import React from "react"
 import BlocksDesign from "@/app/[site]/@builder/components/blocks/blocks-design"
-import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react";
+import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
@@ -15,38 +15,6 @@ const ClientButtons: React.FC = ({
   classNames,
   handlePropertyUpdate,
 }: any) => {
-  const extractDefaultValues = (classNames: string) => {
-    const classesArray = classNames.split(" ")
-    const defaultValues: { [key: string]: string } = {}
-
-    const rules = [
-      {
-        match: (className: string) => className.startsWith("bg-"),
-        process: (className: string) => ({ bg: className.substring(3) }),
-      },
-      {
-        match: (className: string) =>
-          className.startsWith("text-") && !className.startsWith("textSize-"),
-        process: (className: string) => ({ text: className.substring(5) }),
-      },
-      {
-        match: (className: string) => className.startsWith("h-"),
-        process: (className: string) => ({ h: className.substring(2) }),
-      },
-    ]
-
-    classesArray.forEach((className) => {
-      rules.forEach((rule) => {
-        if (rule.match(className)) {
-          const values = rule.process(className)
-          Object.assign(defaultValues, values)
-        }
-      })
-    })
-
-    return defaultValues
-  }
-
   const blockPropertyMapping = {
     heading: [
       {
@@ -114,7 +82,7 @@ const ClientButtons: React.FC = ({
     const blockProperties = blockPropertyMapping[template.type]
 
     if (blockProperties) {
-      return blockProperties.map((property) => (
+      return blockProperties.map((property: any) => (
         <Button
           key={property.propertyName}
           className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
@@ -178,7 +146,7 @@ const ClientButtons: React.FC = ({
       </Button>
       <BlocksDesign
         onClassNamesChange={handleClassNamesChange}
-        defaultValues={extractDefaultValues(classNames)}
+        defaultValues={classNames}
       >
         <Button
           onClick={(event) => event.stopPropagation()}

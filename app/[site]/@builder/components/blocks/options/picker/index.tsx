@@ -12,18 +12,20 @@ const Picker = ({
     <div className="relative flex w-full flex-row items-start gap-4">
       <Label className="relative top-2 text-sm">{icon}</Label>
       <RadioGroup
-        defaultValue={defaultValues[prefix]}
+        defaultValue={defaultValues}
         onValueChange={(event) => handleClassNameChange(event, prefix)}
         className="flex w-full snap-x gap-4 overflow-x-auto pb-4"
       >
-        {options.map((option: any) => (
-          <div key={option} className={`snap-center`}>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value={option} id={option} />
-              <Label htmlFor={option}>{option}</Label>
+        {options.map((option: any) => {
+          return (
+            <div key={option} className={`snap-center`}>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value={option} id={option} />
+                <Label htmlFor={option}>{option}</Label>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </RadioGroup>
     </div>
   )
