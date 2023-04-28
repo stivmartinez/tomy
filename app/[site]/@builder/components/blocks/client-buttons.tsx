@@ -1,14 +1,6 @@
 import React from "react"
 import BlocksDesign from "@/app/[site]/@builder/components/blocks/options/blocks-design"
-import {
-  ArrowDown,
-  ArrowUp,
-  Camera,
-  Copy,
-  Edit,
-  Paintbrush,
-  Trash,
-} from "lucide-react"
+import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 

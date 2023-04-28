@@ -6,7 +6,6 @@ type BlockConfig = {
   tag: string;
   className?: string;
   content?: string;
-  componentName?: string;
   props?: any;
   icon?: any;
   type?: string;
@@ -50,18 +49,14 @@ const blocks: Record<string, BlockConfig> = {
   image: {
     type: "image",
     tag: "img",
-    className: "ignore-click w-fit",
+    className: "w-fit block",
     content: "",
-    componentName: "Image",
     props: {
       src: "https://via.placeholder.com/150",
       alt: "Example image",
     },
     icon: Image,
     selfClosing: true,
-    onClick: (event: React.MouseEvent) => {
-      event.stopPropagation();
-    },
   },
   link: {
     type: "link",
