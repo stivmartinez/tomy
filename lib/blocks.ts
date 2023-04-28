@@ -10,6 +10,7 @@ type BlockConfig = {
   icon?: any;
   type?: string;
   onClick?: (event: React.MouseEvent) => void;
+  selfClosing?: boolean;
 };
 
 const blocks: Record<string, BlockConfig> = {
@@ -56,6 +57,10 @@ const blocks: Record<string, BlockConfig> = {
       alt: "Example image",
     },
     icon: Image,
+    selfClosing: true,
+    onClick: (event: React.MouseEvent) => {
+      event.stopPropagation();
+    },
   },
   list: {
     type: "list",
