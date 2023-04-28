@@ -1,3 +1,4 @@
+import { Link2 } from "lucide-react";
 import { Image, List, Plus } from "lucide-react";
 import { FileText, Heading, Square, Type } from "lucide-react";
 
@@ -58,6 +59,21 @@ const blocks: Record<string, BlockConfig> = {
     },
     icon: Image,
     selfClosing: true,
+    onClick: (event: React.MouseEvent) => {
+      event.stopPropagation();
+    },
+  },
+  link: {
+    type: "link",
+    tag: "a",
+    className: "text-blue-500 hover:text-blue-700",
+    content: "Example Link",
+    props: {
+      href: "#",
+      target: "_blank",
+      rel: "noopener noreferrer",
+    },
+    icon: Link2,
     onClick: (event: React.MouseEvent) => {
       event.stopPropagation();
     },

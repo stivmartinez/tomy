@@ -142,20 +142,36 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     addChild(template.parentId || null, clonedBlock)
   }
 
-  const handleTextUpdate = () => {
-    const newText = prompt("Please enter the new text:")
-    if (newText) {
+  const handlePropertyUpdate = (
+    propertyName: string,
+    propertyPath: string[],
+    promptMessage: string
+  ) => {
+    const newValue = prompt(promptMessage)
+    if (newValue) {
       setStructure((prevStructure: any[]) => {
         const newStructure = JSON.parse(JSON.stringify(prevStructure))
-        const updateTextRecursive = (node: any) => {
+
+        const updatePropertyRecursive = (node: any) => {
           if (!node) return false
           if (node.id === template.id) {
-            node.content = newText
+            let target = node
+            if (propertyPath.length === 0) {
+              target[propertyName] = newValue
+            } else {
+              propertyPath.forEach((path, index) => {
+                if (index < propertyPath.length - 1) {
+                  target = target[path]
+                } else {
+                  target[path] = newValue
+                }
+              })
+            }
             return true
           }
           if (node.children) {
             for (const child of node.children) {
-              if (updateTextRecursive(child)) {
+              if (updatePropertyRecursive(child)) {
                 return true
               }
             }
@@ -164,7 +180,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         }
 
         newStructure.forEach((node: any) => {
-          updateTextRecursive(node)
+          updatePropertyRecursive(node)
         })
 
         return newStructure
@@ -255,7 +271,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
           handleRemove={handleRemove}
           handleClassNamesChange={handleClassNamesChange}
           classNames={classNames}
-          handleTextUpdate={handleTextUpdate}
+          handlePropertyUpdate={handlePropertyUpdate}
         />
       )}
     </BlocksRender>,
