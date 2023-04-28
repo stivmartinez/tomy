@@ -20,8 +20,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import ColorPicker from "./colorpicker"
-import Picker from "./picker"
+import ColorPicker from "./options/colorpicker"
+import Picker from "./options/picker"
 
 interface BlocksDesignProps {
   onClassNamesChange: (newStyles: { [key: string]: string }) => void

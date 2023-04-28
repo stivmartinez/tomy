@@ -1,9 +1,9 @@
 "use client"
 
 import React from "react"
-import blocks from "@/lib/blocks"
 import { Layers, LogOut, Plus, Save, Settings, Square } from "lucide-react"
 
+import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
 import { Button } from "@/components/ui/button"
 import {
@@ -38,18 +38,6 @@ const BuilderPropsNavbar = ({
   saveStructure: any
   resetSavedStructure: any
 }) => {
-  const newBlock = {
-    id: generateRandomId(),
-    tag: "section",
-    type: "container",
-    className: "w-full min-h-[24px]",
-    children: [],
-  }
-
-  function add() {
-    setStructure((prevStructure: any[]) => [...prevStructure, newBlock])
-  }
-
   const renderLayerItems = (blocks: any, level = 0) => {
     return blocks.map((block: any, index: number) => (
       <React.Fragment key={block.id}>
@@ -111,7 +99,20 @@ const BuilderPropsNavbar = ({
               <Button
                 variant="outline"
                 className="flex h-16 w-16 flex-col gap-3 rounded-2xl border-2 bg-white ring-0 focus:ring-0"
-                onClick={add}
+                onClick={() => {
+                  {
+                    setStructure((prevStructure: any[]) => [
+                      ...prevStructure,
+                      {
+                        id: generateRandomId(),
+                        tag: "section",
+                        type: "container",
+                        className: "w-full min-h-[24px]",
+                        children: [],
+                      },
+                    ])
+                  }
+                }}
               >
                 <Square size="20" />
               </Button>

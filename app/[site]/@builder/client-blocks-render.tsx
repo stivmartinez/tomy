@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import BlocksRender from "@/app/[site]/blocks-render"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import ClientButtons from "./components/blocks/client-buttons"
+import ClientButtons from "./components/client-buttons"
 
 interface ClientBlocksRenderProps {
   template: any
