@@ -17,6 +17,21 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [structure, setStructure] = useState<any[]>(initialData)
   const [renderKey, setRenderKey] = useState<number>(0)
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedBlockId(null)
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [])
+
   const saveStructure = () => {
     localStorage.setItem("savedStructure", JSON.stringify(structure))
   }
@@ -109,9 +124,6 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
     }
     return result
   }
-
-
-  //console.log(structure)
 
   return (
     <>
