@@ -252,15 +252,9 @@ const tailwindGaps = [
 
 const gapSettings = [
   {
-    id: "row-gap",
-    title: "Row gap",
-    settingPrefix: ["gap-x", "md:gap-x"],
-    options: tailwindGaps,
-  },
-  {
-    id: "col-gap",
-    title: "Column gap",
-    settingPrefix: ["gap-y", "md:gap-y"],
+    id: "gap",
+    title: "Gap",
+    settingPrefix: ["gap", "md:gap"],
     options: tailwindGaps,
   },
 ]
@@ -272,7 +266,15 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
 }) => {
   const handleClassNameChange = (value: any, prefix: string = "") => {
     if (prefix) {
-      onClassNamesChange({ [prefix]: value })
+      // Find the current class with the same prefix and remove it
+      const currentClass = Object.keys(defaultValues).find((key) =>
+        key.startsWith(prefix)
+      )
+      if (currentClass) {
+        delete defaultValues[currentClass]
+      }
+      // Add the new class
+      onClassNamesChange({ ...defaultValues, [prefix]: value })
     } else {
       onClassNamesChange({ [value]: "" })
     }

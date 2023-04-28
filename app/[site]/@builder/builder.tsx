@@ -6,6 +6,7 @@ import ClientBlocksRender from "@/app/[site]/@builder/client-blocks-render"
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
 import BuilderNavbar from "./components/navbar"
+import MouseRuler from "./mouse-ruler"
 
 interface BuilderProps {
   initialData?: any[]
@@ -111,6 +112,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
 
   return (
     <>
+      <MouseRuler />
       {structure.map((block, index) => (
         <ClientBlocksRender
           key={`${block.id}-${renderKey}`}
