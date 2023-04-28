@@ -1,5 +1,5 @@
-import { Link, Link2 } from "lucide-react";
-import { Image, List, Plus } from "lucide-react";
+import { CircleEllipsis, ExternalLink, Link } from "lucide-react";
+import { Image, List } from "lucide-react";
 import { FileText, Heading, Square, Type } from "lucide-react";
 
 type BlockConfig = {
@@ -41,7 +41,7 @@ const blocks: Record<string, BlockConfig> = {
     tag: "button",
     className: "bg-blue-500 text-white px-4 py-2 rounded",
     content: "Click me",
-    icon: Plus,
+    icon: CircleEllipsis,
     onClick: (event: React.MouseEvent) => {
       event.stopPropagation();
     },
@@ -68,7 +68,7 @@ const blocks: Record<string, BlockConfig> = {
       target: "_blank",
       rel: "noopener noreferrer",
     },
-    icon: Link2,
+    icon: ExternalLink,
     onClick: (event: React.MouseEvent) => {
       event.stopPropagation();
     },

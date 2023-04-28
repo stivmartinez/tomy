@@ -51,31 +51,33 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const handleClassNameChange = (value: any, prefix: string = "") => {
     setClassNames((classNames) => {
       const newClass = `${prefix}${value}`
-      const newClassNames = twMerge(classNames, newClass).split(" ")
-      return newClassNames
-    })
+      const oldClass = JSON.parse(JSON.stringify(classNames))
+      const newClassNames = twMerge(oldClass, newClass).split(" ")
 
-    // Now update the structure with the new class names
-    setStructure((prevStructure: any[]) => {
-      const newStructure = JSON.parse(JSON.stringify(prevStructure))
+      // Now update the structure with the new class names
+      setStructure((prevStructure: any[]) => {
+        const newStructure = JSON.parse(JSON.stringify(prevStructure))
 
-      const updateClassNameRecursive = (node: any) => {
-        if (!node) return
-        if (node.id === template.id) {
-          node.className = classNames
-        }
-        if (node.children) {
-          for (const child of node.children) {
-            updateClassNameRecursive(child)
+        const updateClassNameRecursive = (node: any) => {
+          if (!node) return
+          if (node.id === template.id) {
+            node.className = newClassNames // Use the new class names here
+          }
+          if (node.children) {
+            for (const child of node.children) {
+              updateClassNameRecursive(child)
+            }
           }
         }
-      }
 
-      newStructure.forEach((node: any) => {
-        updateClassNameRecursive(node)
+        newStructure.forEach((node: any) => {
+          updateClassNameRecursive(node)
+        })
+
+        return newStructure
       })
 
-      return newStructure
+      return newClassNames
     })
   }
 

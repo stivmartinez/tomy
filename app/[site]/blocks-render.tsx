@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import React, { ReactElement } from "react"
 import { twMerge } from "tailwind-merge"
 
@@ -67,7 +68,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
           <>
             <Tag
               key={id}
-              className={twMerge(className)}
+              className={cn(className)}
               style={{ ...style, ...styles }}
               onClick={handleSelect}
               {...component.props}
@@ -80,7 +81,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
       return (
         <Tag
           key={id}
-          className={twMerge(className)}
+          className={cn(className)}
           style={{ ...style, ...styles }}
           onClick={handleSelect}
           contentEditable={contentEditable}
