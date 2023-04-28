@@ -66,7 +66,8 @@ const ClientButtons: React.FC = ({
         className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
           index === 0 ? "cursor-not-allowed opacity-50" : ""
         }`}
-        onClick={(e) => {
+        onClick={(event) => {
+          event.stopPropagation()
           if (index > 0) {
             moveBlock(template.id, "up")
           }
@@ -79,7 +80,8 @@ const ClientButtons: React.FC = ({
         className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
           index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
         }`}
-        onClick={(e) => {
+        onClick={(event) => {
+          event.stopPropagation()
           if (index < parentLength - 1) {
             moveBlock(template.id, "down")
           }
@@ -92,7 +94,10 @@ const ClientButtons: React.FC = ({
         onClassNamesChange={handleClassNamesChange}
         defaultValues={extractDefaultValues(classNames)}
       >
-        <Button className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 p-0 text-white focus:ring-0 data-[state=open]:bg-blue-700">
+        <Button
+          onClick={(event) => event.stopPropagation()}
+          className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 p-0 text-white focus:ring-0 data-[state=open]:bg-blue-700"
+        >
           <Paintbrush size="12" />
         </Button>
       </BlocksDesign>
