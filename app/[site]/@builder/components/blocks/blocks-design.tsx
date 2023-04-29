@@ -295,6 +295,17 @@ const marginYSettings = [
   },
 ]
 
+const tailwindWhitespace = ["normal", "nowrap", "pre", "pre-line", "pre-wrap"]
+
+const whitespaceSettings = [
+  {
+    id: "whitespace",
+    title: "Whitespace",
+    settingPrefix: ["whitespace-", "md:whitespace-"],
+    options: tailwindWhitespace,
+  },
+]
+
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   handleClassNameChange,
   classNames,
@@ -370,6 +381,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             ...paddingYSettings,
             ...marginXSettings,
             ...marginYSettings,
+            ...whitespaceSettings,
           ].map((setting) => (
             <AccordionItem key={setting.id} value={setting.id}>
               <AccordionTrigger>{setting.title}</AccordionTrigger>

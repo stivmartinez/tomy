@@ -1,13 +1,13 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 
-import { cn } from "@/lib/utils"
 import "./globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 })
+
 export async function generateMetadata(): Promise<Metadata> {
   const title = {
     default: "Viralike",
@@ -32,8 +32,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={cn`${inter.className} text-slate-900`}>{children}</body>
+    <html lang="en" className={inter.className}>
+      <body className="text-slate-900">{children}</body>
     </html>
   )
 }

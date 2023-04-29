@@ -18,7 +18,7 @@ const blocks: Record<string, BlockConfig> = {
     type: "container",
     tag: "div",
     className:
-      "w-full max-w-6xl mx-auto flex flex-col min-h-[24px]",
+      "w-full max-w-6xl flex flex-col min-h-[24px]",
     content: "",
     icon: Square
   },
@@ -32,7 +32,7 @@ const blocks: Record<string, BlockConfig> = {
   paragraph: {
     type: "paragraph",
     tag: "p",
-    className: "text-base",
+    className: "text-md",
     content: "Example",
     icon: Type
   },
