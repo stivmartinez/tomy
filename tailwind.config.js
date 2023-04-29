@@ -8,12 +8,14 @@ module.exports = {
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./components/**/**/*.{js,ts,jsx,tsx}",
   ],
+  /*
   safelist: [
     {
       pattern: /^/,
       variants: ["responsive"],
     },
   ],
+  */
   theme: {
     container: {
       center: true,

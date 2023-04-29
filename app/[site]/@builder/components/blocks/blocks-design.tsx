@@ -345,11 +345,29 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
     setSheetOpacity(1)
   }
 
+  const findDefaultValues = (classNames, settingPrefixes) => {
+    const defaultValues = {
+      desktop: "",
+      mobile: "",
+    }
+    settingPrefixes.forEach((prefix, index) => {
+      const value = classNames.find((className) => className.startsWith(prefix))
+      if (index === 0) {
+        defaultValues.desktop = value ? value.replace(prefix, "") : ""
+      } else {
+        defaultValues.mobile = value ? value.replace(prefix, "") : ""
+      }
+    })
+    return defaultValues
+  }
+
   const renderSetting = (
     setting: any,
-    defaultValues: any,
+    classNames: any,
     handleClassNameChange: any
   ) => {
+    const defaultValues = findDefaultValues(classNames, setting.settingPrefix)
+
     return setting.settingPrefix.map((prefix: any, index: any) => {
       const icon =
         index === 0 ? <Monitor size="16" /> : <Smartphone size="16" />
@@ -359,7 +377,9 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             key={prefix}
             prefix={prefix}
             icon={icon}
-            defaultValues={defaultValues}
+            defaultValues={
+              index === 0 ? defaultValues.desktop : defaultValues.mobile
+            }
             handleClassNameChange={(value) =>
               handleClassNameChange(value, prefix)
             }
@@ -372,7 +392,9 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             key={prefix}
             prefix={prefix}
             icon={icon}
-            defaultValues={defaultValues}
+            defaultValues={
+              index === 0 ? defaultValues.desktop : defaultValues.mobile
+            }
             handleClassNameChange={(value) =>
               handleClassNameChange(value, prefix)
             }
