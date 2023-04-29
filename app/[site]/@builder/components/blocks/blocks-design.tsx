@@ -3,16 +3,38 @@
 import React, { ReactNode, useState } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
+import { tailwindColors } from "@/lib/tailwind-classes"
 import {
-  tailwindAlign,
-  tailwindAlignItems,
-  tailwindColors,
-  tailwindDisplayOptions,
-  tailwindFontWeights,
-  tailwindSizes,
-  tailwindSizesTwo,
-} from "@/lib/tailwind-classes"
-import { tailwindTextAlign } from "@/lib/tailwind-classes/textAlign"
+  alignItemsSettings,
+  backgroundColorSettings,
+  borderRadiusSettings,
+  boxShadowSettings,
+  displaySettings,
+  flexboxSettings,
+  fontFamilySettings,
+  fontSizeSettings,
+  fontWeightSettings,
+  gapSettings,
+  gridTemplateColumnsSettings,
+  gridTemplateRowsSettings,
+  heightSettings,
+  justifyContentSettings,
+  letterSpacingSettings,
+  lineHeightSettings,
+  marginSettings,
+  objectPositionSettings,
+  opacitySettings,
+  paddingSettings,
+  placeholderColorSettings,
+  positionSettings,
+  rotateSettings,
+  scaleSettings,
+  skewSettings,
+  textColorSettings,
+  translateSettings,
+  widthSettings,
+  zIndexSettings,
+} from "@/lib/tailwindClasess"
 import {
   Accordion,
   AccordionContent,
@@ -28,307 +50,6 @@ interface BlocksDesignProps {
   handleClassNameChange: any
   children: ReactNode
 }
-
-const colorSettings = [
-  {
-    id: "bg-color",
-    title: "Background color",
-    settingPrefix: ["bg-", "md:bg-"],
-  },
-  {
-    id: "text-color",
-    title: "Text color",
-    settingPrefix: ["text-", "md:text-"],
-  },
-]
-
-const sizeSettings = [
-  {
-    id: "height",
-    title: "Height",
-    settingPrefix: ["h-", "md:h-"],
-    options: tailwindSizes,
-  },
-  {
-    id: "width",
-    title: "Width",
-    settingPrefix: ["w-", "md:w-"],
-    options: tailwindSizes,
-  },
-  {
-    id: "font-size",
-    title: "Font size",
-    settingPrefix: ["text-", "md:text-"],
-    options: tailwindSizesTwo,
-  },
-]
-
-const displaySettings = [
-  {
-    id: "display",
-    title: "Display",
-    settingPrefix: ["", "md:"],
-    options: tailwindDisplayOptions,
-  },
-]
-
-const alignmentSettings = [
-  {
-    id: "justify",
-    title: "Justify",
-    settingPrefix: ["justify-", "md:justify-"],
-    options: tailwindAlign,
-  },
-  {
-    id: "content",
-    title: "Content",
-    settingPrefix: ["content-", "md:content-"],
-    options: tailwindAlign,
-  },
-  {
-    id: "items",
-    title: "Items",
-    settingPrefix: ["items-", "md:items-"],
-    options: tailwindAlignItems,
-  },
-  {
-    id: "text-align",
-    title: "Text align",
-    settingPrefix: ["text-", "md:text-"],
-    options: tailwindTextAlign,
-  },
-]
-
-const fontWeightSettings = [
-  {
-    id: "font-weight",
-    title: "Font weight",
-    settingPrefix: ["font-", "md:font-"],
-    options: tailwindFontWeights,
-  },
-]
-
-const tailwindSpacing = [
-  "0",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "8",
-  "10",
-  "12",
-  "16",
-  "20",
-  "24",
-  "32",
-  "40",
-  "48",
-  "56",
-  "64",
-  "auto",
-]
-
-const paddingSettings = [
-  {
-    id: "padding",
-    title: "Padding",
-    settingPrefix: ["p-", "md:p-"],
-    options: tailwindSpacing,
-  },
-]
-
-const marginSettings = [
-  {
-    id: "margin",
-    title: "Margin",
-    settingPrefix: ["m-", "md:m-"],
-    options: tailwindSpacing,
-  },
-]
-
-const tailwindBorderWidths = ["0", "2", "4", "8"]
-
-const borderSettings = [
-  {
-    id: "border",
-    title: "Border",
-    settingPrefix: ["border-", "md:border-"],
-    options: tailwindBorderWidths,
-  },
-  {
-    id: "border-color",
-    title: "Border color",
-    settingPrefix: ["border-", "md:border-"],
-  },
-]
-
-const tailwindBorderRadius = ["0", "1", "2", "3", "4", "full"]
-
-const borderRadiusSettings = [
-  {
-    id: "border-radius",
-    title: "Border radius",
-    settingPrefix: ["rounded-", "md:rounded-"],
-    options: tailwindBorderRadius,
-  },
-]
-
-const tailwindFlexDirections = ["row", "row-reverse", "col", "col-reverse"]
-
-const flexDirectionSettings = [
-  {
-    id: "flex-direction",
-    title: "Flex direction",
-    settingPrefix: ["flex-", "md:flex-"],
-    options: tailwindFlexDirections,
-  },
-]
-
-const tailwindFlexWrap = ["wrap", "wrap-reverse", "nowrap"]
-
-const flexWrapSettings = [
-  {
-    id: "flex-wrap",
-    title: "Flex wrap",
-    settingPrefix: ["flex-", "md:flex-"],
-    options: tailwindFlexWrap,
-  },
-]
-
-const tailwindFlexGrowShrink = ["0", "1"]
-
-const flexGrowShrinkSettings = [
-  {
-    id: "flex-grow",
-    title: "Flex grow",
-    settingPrefix: ["flex-grow-", "md:flex-grow-"],
-    options: tailwindFlexGrowShrink,
-  },
-  {
-    id: "flex-shrink",
-    title: "Flex shrink",
-    settingPrefix: ["flex-shrink-", "md:flex-shrink-"],
-    options: tailwindFlexGrowShrink,
-  },
-]
-
-const tailwindGaps = [
-  "0",
-  "0.5",
-  "1",
-  "1.5",
-  "2",
-  "2.5",
-  "3",
-  "3.5",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-  "14",
-  "16",
-  "20",
-  "24",
-  "28",
-  "32",
-  "36",
-  "40",
-  "44",
-  "48",
-  "52",
-  "56",
-  "60",
-  "64",
-  "72",
-  "80",
-  "96",
-]
-
-const gapSettings = [
-  {
-    id: "gap",
-    title: "Gap",
-    settingPrefix: ["gap-", "md:gap-"],
-    options: tailwindGaps,
-  },
-]
-
-const paddingXSettings = [
-  {
-    id: "padding-x",
-    title: "Padding X",
-    settingPrefix: ["px-", "md:px-"],
-    options: tailwindSpacing,
-  },
-]
-
-const paddingYSettings = [
-  {
-    id: "padding-y",
-    title: "Padding Y",
-    settingPrefix: ["py-", "md:py-"],
-    options: tailwindSpacing,
-  },
-]
-
-const marginXSettings = [
-  {
-    id: "margin-x",
-    title: "Margin X",
-    settingPrefix: ["mx-", "md:mx-"],
-    options: tailwindSpacing,
-  },
-]
-
-const marginYSettings = [
-  {
-    id: "margin-y",
-    title: "Margin Y",
-    settingPrefix: ["my-", "md:my-"],
-    options: tailwindSpacing,
-  },
-]
-
-const tailwindWhitespace = ["normal", "nowrap", "pre", "pre-line", "pre-wrap"]
-
-const whitespaceSettings = [
-  {
-    id: "whitespace",
-    title: "Whitespace",
-    settingPrefix: ["whitespace-", "md:whitespace-"],
-    options: tailwindWhitespace,
-  },
-]
-
-const tailwindOverflow = ["auto", "hidden", "visible", "scroll"]
-
-const overflowSettings = [
-  {
-    id: "overflow",
-    title: "Overflow",
-    settingPrefix: ["overflow-", "md:overflow-"],
-    options: tailwindOverflow,
-  },
-  {
-    id: "overflow-x",
-    title: "Overflow X",
-    settingPrefix: ["overflow-x-", "md:overflow-x-"],
-    options: tailwindOverflow,
-  },
-  {
-    id: "overflow-y",
-    title: "Overflow Y",
-    settingPrefix: ["overflow-y-", "md:overflow-y-"],
-    options: tailwindOverflow,
-  },
-]
 
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   handleClassNameChange,
@@ -415,6 +136,38 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
     })
   }
 
+  const allSettings = [
+    ...rotateSettings,
+    ...scaleSettings,
+    ...skewSettings,
+    ...translateSettings,
+    ...boxShadowSettings,
+    ...gridTemplateRowsSettings,
+    ...gapSettings,
+    ...gridTemplateColumnsSettings,
+    ...objectPositionSettings,
+    ...opacitySettings,
+    ...placeholderColorSettings,
+    ...displaySettings,
+    ...positionSettings,
+    ...justifyContentSettings,
+    ...alignItemsSettings,
+    ...fontFamilySettings,
+    ...letterSpacingSettings,
+    ...fontSizeSettings,
+    ...fontWeightSettings,
+    ...lineHeightSettings,
+    ...textColorSettings,
+    ...zIndexSettings,
+    ...borderRadiusSettings,
+    ...backgroundColorSettings,
+    ...paddingSettings,
+    ...marginSettings,
+    ...widthSettings,
+    ...heightSettings,
+    ...flexboxSettings,
+  ]
+
   return (
     <Sheet>
       <SheetTrigger asChild>{children}</SheetTrigger>
@@ -432,27 +185,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
       >
         <h3>Settings for block</h3>
         <Accordion type="single" collapsible>
-          {[
-            ...displaySettings,
-            ...flexDirectionSettings,
-            ...flexWrapSettings,
-            ...alignmentSettings,
-            ...gapSettings,
-            ...sizeSettings,
-            ...paddingSettings,
-            ...marginSettings,
-            ...colorSettings,
-            ...fontWeightSettings,
-            ...borderSettings,
-            ...borderRadiusSettings,
-            ...flexGrowShrinkSettings,
-            ...paddingXSettings,
-            ...paddingYSettings,
-            ...marginXSettings,
-            ...marginYSettings,
-            ...whitespaceSettings,
-            ...overflowSettings,
-          ].map((setting) => (
+          {allSettings.map((setting) => (
             <AccordionItem key={setting.id} value={setting.id}>
               <AccordionTrigger>{setting.title}</AccordionTrigger>
               <AccordionContent>
