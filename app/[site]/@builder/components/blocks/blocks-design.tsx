@@ -3,7 +3,7 @@
 import React, { ReactNode, useState } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
-import { tailwindColors } from "@/lib/tailwind-classes"
+import { tailwindColors } from "@/lib/colors"
 import {
   alignItemsSettings,
   backgroundColorSettings,
