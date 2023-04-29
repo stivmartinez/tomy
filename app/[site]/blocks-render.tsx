@@ -30,6 +30,7 @@ interface BlocksRenderProps {
   suppressContentEditableWarning?: boolean
   blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   isEditable: boolean
+  showShadow?: boolean
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
@@ -50,6 +51,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
     suppressContentEditableWarning,
     blockRef,
     isEditable,
+    showShadow
   }) => {
     const blocksRender = (component: any): ReactElement => {
       const {
@@ -104,6 +106,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
                   blockRef={blockRef}
                   parentLength={componentChildren.length}
                   index={componentChildren.indexOf(child)}
+                  showShadow={showShadow}
                 />
               )
 

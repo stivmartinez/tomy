@@ -5,6 +5,7 @@ import BlocksRender from "@/app/[site]/blocks-render"
 import { twMerge } from "tailwind-merge"
 
 import { generateRandomId } from "@/lib/generateRandomId"
+import { Button } from "@/components/ui/button"
 import ClientButtons from "./components/client-buttons"
 
 interface ClientBlocksRenderProps {
@@ -22,6 +23,7 @@ interface ClientBlocksRenderProps {
   index?: number
   parentLength?: number
   isEditable?: boolean
+  showShadow?: boolean
 }
 
 interface ParentAndIndex {
@@ -42,6 +44,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   index,
   parentLength,
   isEditable = true,
+  showShadow,
 }) => {
   const [classNames, setClassNames] = useState<string[]>(
     template?.className || []
@@ -210,7 +213,11 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   }
 
   const shadow =
-    selectedBlockId === template.id ? "0 0 0 2px red" : "inset 0 0 0 1px blue"
+    selectedBlockId === template.id
+      ? "0 0 0 2px red"
+      : showShadow
+      ? "inset 0 0 0 1px blue"
+      : "inset 0 0 0 1px transparent"
 
   return React.cloneElement(
     <BlocksRender
@@ -229,6 +236,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       blockRef={blockRef}
       suppressContentEditableWarning
       isEditable={isEditable}
+      showShadow={showShadow}
     >
       {selectedBlockId === template.id && (
         <ClientButtons

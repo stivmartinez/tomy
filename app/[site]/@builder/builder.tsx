@@ -5,6 +5,7 @@ import ClientBlocksRender from "@/app/[site]/@builder/client-blocks-render"
 
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
+import { Button } from "@/components/ui/button"
 import BuilderNavbar from "./components/navbar"
 import MouseRuler from "./mouse-ruler"
 
@@ -16,6 +17,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialData)
   const [renderKey, setRenderKey] = useState<number>(0)
+  const [showShadow, setShowShadow] = useState(true)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -142,6 +144,7 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
           index={index}
           parentLength={structure.length}
           isEditable={true}
+          showShadow={showShadow}
         />
       ))}
       <BuilderNavbar
@@ -152,6 +155,8 @@ const Builder: React.FC<BuilderProps> = ({ initialData = [] }) => {
         addBlock={addBlock}
         saveStructure={saveStructure}
         resetSavedStructure={resetSavedStructure}
+        showShadow={showShadow}
+        setShowShadow={setShowShadow}
       />
     </>
   )

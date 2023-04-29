@@ -28,6 +28,8 @@ const BuilderNavbar = ({
   addBlock,
   saveStructure,
   resetSavedStructure,
+  setShowShadow,
+  showShadow,
 }: {
   structure: any[]
   setStructure: (callback: (structure: any[]) => any[]) => void
@@ -38,6 +40,8 @@ const BuilderNavbar = ({
   addBlock: (parentId: string, componentName: string) => void
   saveStructure: any
   resetSavedStructure: any
+  setShowShadow: any
+  showShadow: any
 }) => {
   const moveBlock = (draggedId: string, droppedId: string) => {
     if (draggedId === droppedId) return
@@ -188,6 +192,20 @@ const BuilderNavbar = ({
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={() => {
+                setShowShadow(!showShadow)
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={showShadow}
+                className="mr-2 h-4 w-4"
+                readOnly
+              />
+              <span>Show Borders</span>
+            </DropdownMenuItem>
+
             <DropdownMenuItem onClick={saveStructure}>
               <Save className="mr-2 h-4 w-4" />
               <span>Save</span>
