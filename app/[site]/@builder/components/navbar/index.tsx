@@ -118,7 +118,7 @@ const BuilderNavbar = ({
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>Layers</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <ScrollArea className="h-[320px] w-full">
+          <ScrollArea className="h-[620px] w-full">
             <DndProvider backend={HTML5Backend}>
               {renderLayerItems(structure, 0)}
             </DndProvider>

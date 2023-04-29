@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ReactNode } from "react"
+import React, { ReactNode, useState } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
 import {
@@ -127,6 +127,7 @@ const tailwindSpacing = [
   "48",
   "56",
   "64",
+  "auto",
 ]
 
 const paddingSettings = [
@@ -306,11 +307,44 @@ const whitespaceSettings = [
   },
 ]
 
+const tailwindOverflow = ["auto", "hidden", "visible", "scroll"]
+
+const overflowSettings = [
+  {
+    id: "overflow",
+    title: "Overflow",
+    settingPrefix: ["overflow-", "md:overflow-"],
+    options: tailwindOverflow,
+  },
+  {
+    id: "overflow-x",
+    title: "Overflow X",
+    settingPrefix: ["overflow-x-", "md:overflow-x-"],
+    options: tailwindOverflow,
+  },
+  {
+    id: "overflow-y",
+    title: "Overflow Y",
+    settingPrefix: ["overflow-y-", "md:overflow-y-"],
+    options: tailwindOverflow,
+  },
+]
+
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   handleClassNameChange,
   classNames,
   children,
 }) => {
+  const [sheetOpacity, setSheetOpacity] = useState(1)
+
+  const handleMouseOut = () => {
+    setSheetOpacity(0.5)
+  }
+
+  const handleMouseOver = () => {
+    setSheetOpacity(1)
+  }
+
   const renderSetting = (
     setting: any,
     defaultValues: any,
@@ -357,8 +391,11 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
         position="right"
         size="sm"
         onClick={(e) => e.stopPropagation()}
+        onMouseOut={handleMouseOut}
+        onMouseOver={handleMouseOver}
         style={{
           zIndex: 9999,
+          opacity: sheetOpacity,
         }}
       >
         <h3>Settings for block</h3>
@@ -382,6 +419,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             ...marginXSettings,
             ...marginYSettings,
             ...whitespaceSettings,
+            ...overflowSettings,
           ].map((setting) => (
             <AccordionItem key={setting.id} value={setting.id}>
               <AccordionTrigger>{setting.title}</AccordionTrigger>
