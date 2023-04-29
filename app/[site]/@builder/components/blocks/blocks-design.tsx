@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import React, { ReactNode } from "react"
 import { Monitor, Smartphone } from "lucide-react"
 
@@ -258,6 +259,42 @@ const gapSettings = [
   },
 ]
 
+const paddingXSettings = [
+  {
+    id: "padding-x",
+    title: "Padding X",
+    settingPrefix: ["px-", "md:px-"],
+    options: tailwindSpacing,
+  },
+]
+
+const paddingYSettings = [
+  {
+    id: "padding-y",
+    title: "Padding Y",
+    settingPrefix: ["py-", "md:py-"],
+    options: tailwindSpacing,
+  },
+]
+
+const marginXSettings = [
+  {
+    id: "margin-x",
+    title: "Margin X",
+    settingPrefix: ["mx-", "md:mx-"],
+    options: tailwindSpacing,
+  },
+]
+
+const marginYSettings = [
+  {
+    id: "margin-y",
+    title: "Margin Y",
+    settingPrefix: ["my-", "md:my-"],
+    options: tailwindSpacing,
+  },
+]
+
 const BlocksDesign: React.FC<BlocksDesignProps> = ({
   handleClassNameChange,
   classNames,
@@ -329,6 +366,10 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
             ...borderSettings,
             ...borderRadiusSettings,
             ...flexGrowShrinkSettings,
+            ...paddingXSettings,
+            ...paddingYSettings,
+            ...marginXSettings,
+            ...marginYSettings,
           ].map((setting) => (
             <AccordionItem key={setting.id} value={setting.id}>
               <AccordionTrigger>{setting.title}</AccordionTrigger>
