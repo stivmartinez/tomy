@@ -345,11 +345,20 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
     setSheetOpacity(1)
   }
 
-  const findDefaultValues = (classNames, settingPrefixes) => {
-    const defaultValues = {
+  const findDefaultValues = (
+    classNames: string[],
+    settingPrefixes: string[]
+  ) => {
+    const defaultValues: { desktop: string; mobile: string } = {
       desktop: "",
       mobile: "",
     }
+
+    if (!Array.isArray(classNames)) {
+      console.warn("Expected classNames to be an array.")
+      return defaultValues
+    }
+
     settingPrefixes.forEach((prefix, index) => {
       const value = classNames.find((className) => className.startsWith(prefix))
       if (index === 0) {
@@ -358,6 +367,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
         defaultValues.mobile = value ? value.replace(prefix, "") : ""
       }
     })
+
     return defaultValues
   }
 
