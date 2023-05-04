@@ -1,13 +1,13 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from "react"
-import ClientBlocksRender from "@/app/[site]/@builder/client-blocks-render"
+import ClientBlocksRender from "@/app/[site]/@builder/components/client-blocks-render"
 
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
 import { Button } from "@/components/ui/button"
 import BuilderNavbar from "./components/navbar"
-import MouseRuler from "./mouse-ruler"
+import MouseRuler from "./components/utils/mouse-ruler"
 
 interface BuilderProps {
   initialData?: any[]

@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge"
 
 import { generateRandomId } from "@/lib/generateRandomId"
 import { Button } from "@/components/ui/button"
-import ClientButtons from "./components/client-buttons"
+import ClientButtons from "./buttons"
 
 interface ClientBlocksRenderProps {
   template: any

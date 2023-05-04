@@ -112,7 +112,7 @@ const BuilderNavbar = ({
 
   return (
     // eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values
-    <nav className="fixed bottom-0 left-[50%] -ml-[80px] mb-4 flex w-[160px] flex-row justify-around gap-2 rounded-2xl bg-black p-2">
+    <nav className="fixed top-2/4 -mt-[65px] flex h-[130px] flex-col items-center justify-center gap-2 rounded-r-3xl bg-slate-900 px-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button className="h-8 w-8 rounded-full bg-slate-700 p-0 focus:ring-0 data-[state=open]:bg-slate-700">

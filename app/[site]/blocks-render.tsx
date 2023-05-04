@@ -1,8 +1,7 @@
 import { cn } from "@/lib/utils"
 import React, { ReactElement } from "react"
-import { twMerge } from "tailwind-merge"
 
-import ClientBlocksRender from "./@builder/client-blocks-render"
+import ClientBlocksRender from "./@builder/components/client-blocks-render"
 
 interface Child {
   id: string
@@ -51,7 +50,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
     suppressContentEditableWarning,
     blockRef,
     isEditable,
-    showShadow
+    showShadow,
   }) => {
     const blocksRender = (component: any): ReactElement => {
       const {
