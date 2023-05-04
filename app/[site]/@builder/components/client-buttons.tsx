@@ -1,5 +1,5 @@
 import React from "react"
-import BlocksDesign from "@/app/[site]/@builder/components/blocks/blocks-design"
+import BlocksDesign from "@/app/[site]/@builder/components/blocks-design"
 import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react"
 
 import { Button } from "@/components/ui/button"

@@ -51,12 +51,8 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   )
   const [isEditing, setIsEditing] = useState(false)
 
-  const handleClassNameChange = (value: any, prefix: string = "") => {
-    setClassNames((classNames) => {
-      const newClass = `${prefix}${value}`
-      const oldClass = JSON.parse(JSON.stringify(classNames))
-      const newClassNames = twMerge(oldClass, newClass).split(" ")
-
+  const handleClassNameChange = (value: any) => {
+    setClassNames(() => {
       // Now update the structure with the new class names
       setStructure((prevStructure: any[]) => {
         const newStructure = JSON.parse(JSON.stringify(prevStructure))
@@ -64,7 +60,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         const updateClassNameRecursive = (node: any) => {
           if (!node) return
           if (node.id === template.id) {
-            node.className = newClassNames // Use the new class names here
+            node.className = value // Use the new class names here
           }
           if (node.children) {
             for (const child of node.children) {
@@ -80,7 +76,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
         return newStructure
       })
 
-      return newClassNames
+      return value
     })
   }
 
