@@ -31,14 +31,17 @@ interface BuilderContextValues {
   setShowShadow: React.Dispatch<React.SetStateAction<boolean>>
   saveStructure: () => void
   resetSavedStructure: () => void
-  addChildToStructure: (
-    parentId: string | null,
-    blockConfiguration: any
-  ) => void
+  addChild: (parentId: string | null, blockConfiguration: any) => void
+  moveBlock: (blockId: string, newParentId: string | null) => void
 }
 
 interface BuilderContextProviderProps {
   children: React.ReactNode
+}
+
+interface ParentAndIndex {
+  parent: any
+  index: number
 }
 
 const BuilderContext = createContext<BuilderContextValues>(
@@ -89,7 +92,7 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
     loadSavedStructure()
   }, [])
 
-  const addChildToStructure = useCallback(
+  const addChild = useCallback(
     (parentId: string | null, blockConfiguration: any) => {
       setStructure((prevStructure) => {
         const newStructure = JSON.parse(JSON.stringify(prevStructure))
@@ -136,10 +139,10 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
       const blockConfig = blocks[componentName]
 
       if (blockConfig) {
-        addChildToStructure(parentId, blockConfig)
+        addChild(parentId, blockConfig)
       }
     },
-    [addChildToStructure]
+    [addChild]
   )
 
   const removeBlock = useCallback((blockId: string) => {
@@ -161,6 +164,58 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
     return result
   }
 
+  const moveBlock = (blockId: any, direction: any) => {
+    setStructure((prevStructure) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure))
+
+      const findParentAndIndex = (
+        children: any,
+        blockId: any
+      ): ParentAndIndex | undefined => {
+        for (let i = 0; i < children.length; i++) {
+          if (children[i].id === blockId) {
+            return { parent: children, index: i }
+          }
+          if (children[i].children) {
+            const result = findParentAndIndex(children[i].children, blockId)
+            if (result) {
+              return result
+            }
+          }
+        }
+        return undefined
+      }
+
+      const parentAndIndex = findParentAndIndex(newStructure, blockId)
+
+      if (parentAndIndex) {
+        const { parent, index } = parentAndIndex
+
+        // Perform operations with parent and index
+
+        const block = parent[index]
+
+        if (direction === "up") {
+          if (index > 0) {
+            parent.splice(index, 1)
+            parent.splice(index - 1, 0, block)
+          }
+        } else if (direction === "down") {
+          if (index < parent.length - 1) {
+            parent.splice(index, 1)
+            parent.splice(index + 1, 0, block)
+          }
+        }
+
+        return newStructure
+      } else {
+        // Handle the case when parentAndIndex is undefined
+        console.error("Block not found")
+        return prevStructure
+      }
+    })
+  }
+
   return (
     <BuilderContext.Provider
       value={{
@@ -176,7 +231,8 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
         setShowShadow,
         saveStructure,
         resetSavedStructure,
-        addChildToStructure,
+        addChild,
+        moveBlock,
       }}
     >
       {children}

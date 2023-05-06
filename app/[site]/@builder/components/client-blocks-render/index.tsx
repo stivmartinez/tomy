@@ -2,50 +2,41 @@
 
 import React, { useState } from "react"
 import BlocksRender from "@/app/[site]/blocks-render"
-import { twMerge } from "tailwind-merge"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import { Button } from "@/components/ui/button"
+import { useBuilderContext } from "../../context"
 import ClientButtons from "./buttons"
 
 interface ClientBlocksRenderProps {
   template: any
-  setStructure?: (callback: (structure: any[]) => any[]) => void
-  level?: number | null | undefined
-  addChild?: (parentId: string, blockConfiguration: any) => void
-  addBlock?: (parentId: string, type: string) => void
-  removeBlock?: (blockId: string) => void
-  selectedBlockId?: string | null
-  setSelectedBlockId?: (
-    callback: (blockId: string | null) => string | null
-  ) => void
   blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   index?: number
   parentLength?: number
+  level?: number
   isEditable?: boolean
-  showShadow?: boolean
-}
-
-interface ParentAndIndex {
-  parent: any
-  index: number
 }
 
 const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   template,
-  setStructure,
-  level,
-  addChild,
-  addBlock,
-  removeBlock,
-  selectedBlockId,
-  setSelectedBlockId,
   blockRef,
   index,
   parentLength,
+  level = 0,
   isEditable = true,
-  showShadow,
 }) => {
+  const defaultRef = React.useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const currentBlockRef = blockRef || defaultRef
+  const {
+    setStructure,
+    addChild,
+    addBlock,
+    removeBlock,
+    selectedBlockId,
+    setSelectedBlockId,
+    showShadow,
+    moveBlock,
+  } = useBuilderContext()
+
   const [classNames, setClassNames] = useState<string[]>(
     template?.className || []
   )
@@ -156,58 +147,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     }
   }
 
-  const moveBlock = (blockId: any, direction: any) => {
-    setStructure((prevStructure) => {
-      const newStructure = JSON.parse(JSON.stringify(prevStructure))
-
-      const findParentAndIndex = (
-        children: any,
-        blockId: any
-      ): ParentAndIndex | undefined => {
-        for (let i = 0; i < children.length; i++) {
-          if (children[i].id === blockId) {
-            return { parent: children, index: i }
-          }
-          if (children[i].children) {
-            const result = findParentAndIndex(children[i].children, blockId)
-            if (result) {
-              return result
-            }
-          }
-        }
-        return undefined
-      }
-
-      const parentAndIndex = findParentAndIndex(newStructure, blockId)
-
-      if (parentAndIndex) {
-        const { parent, index } = parentAndIndex
-
-        // Perform operations with parent and index
-
-        const block = parent[index]
-
-        if (direction === "up") {
-          if (index > 0) {
-            parent.splice(index, 1)
-            parent.splice(index - 1, 0, block)
-          }
-        } else if (direction === "down") {
-          if (index < parent.length - 1) {
-            parent.splice(index, 1)
-            parent.splice(index + 1, 0, block)
-          }
-        }
-
-        return newStructure
-      } else {
-        // Handle the case when parentAndIndex is undefined
-        console.error("Block not found")
-        return prevStructure
-      }
-    })
-  }
-
   const shadow =
     selectedBlockId === template.id
       ? "0 0 0 2px red"
@@ -229,7 +168,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       selectedBlockId={selectedBlockId}
       setSelectedBlockId={setSelectedBlockId}
       contentEditable={isEditing && selectedBlockId === template.id}
-      blockRef={blockRef}
+      blockRef={currentBlockRef}
       suppressContentEditableWarning
       isEditable={isEditable}
       showShadow={showShadow}
@@ -250,7 +189,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
     </BlocksRender>,
     {
       ref: (el: HTMLDivElement) => {
-        blockRef.current[template.id] = el
+        currentBlockRef.current[template.id] = el
       },
     }
   )

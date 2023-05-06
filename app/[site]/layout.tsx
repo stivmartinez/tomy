@@ -1,3 +1,5 @@
+import { BuilderContextProvider } from "./@builder/context"
+
 export default async function BuilderLayout({
   children,
   builder,
@@ -8,9 +10,9 @@ export default async function BuilderLayout({
   site?: any
 }) {
   return (
-    <>
+    <BuilderContextProvider>
       {children}
       {builder}
-    </>
+    </BuilderContextProvider>
   )
 }
