@@ -47,32 +47,20 @@ export const LayerItem = ({
   const Icon = blockIcon
 
   return (
-    <div className="relative">
-      {level > 0 && (
-        <div
-          className="absolute left-0 top-0 h-full bg-gray-300"
-          style={{
-            width: "1px",
-            marginLeft: `${level * 8 - 4}px`,
-          }}
-        ></div>
+    <div
+      ref={(node) => drop(applyDrag(node))}
+      style={{ opacity: isDragging ? 0.5 : 1, paddingLeft: level * 16 }}
+      onClick={handleClick}
+      className={cn(
+        "w-full p-2 text-sm font-normal text-slate-600",
+        isSelected && "font-bold text-slate-900",
+        isOver && "bg-slate-200"
       )}
-      <div
-        ref={(node) => drop(applyDrag(node))}
-        // eslint-disable-next-line tailwindcss/classnames-order
-        className={cn(
-          "flex items-center h-8 gap-2 cursor-pointer text-slate-900 text-md whitespace-nowrap rounded-md px-2 hover:bg-slate-50",
-          isSelected && "bg-slate-100 font-semibold",
-          isOver && "bg-gray-100"
-        )}
-        style={{ marginLeft: `${level * 8}px`, opacity: isDragging ? 0.5 : 1 }}
-        onClick={handleClick}
-      >
-        <div className="flex flex-row items-center gap-2">
-          {Icon && <Icon size="16" />}
-          <span>{block.type}:</span>
-        </div>
-        <div className="flex rounded-full bg-slate-200 px-1 text-xs text-slate-500">
+    >
+      <div className="flex flex-row items-center gap-2">
+        {Icon && <Icon size="16" />}
+        <span>{block.type}:</span>
+        <div className="flex rounded-full bg-slate-100 px-1 text-xs font-normal text-slate-400">
           {block.id}
         </div>
       </div>
