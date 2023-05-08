@@ -1,6 +1,13 @@
 import React from "react"
 import BlocksDesign from "@/app/[site]/@builder/components/client-blocks-render/buttons/settings"
-import { ChevronDown, ChevronUp, Copy, Edit, Paintbrush, Trash } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Copy,
+  Edit,
+  Paintbrush,
+  Trash,
+} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { clientBlocksButton } from "../styles"
@@ -114,13 +121,13 @@ const ClientButtons: React.FC = ({
 
   return (
     <div
-      className="fixed bottom-2 right-2 flex w-fit flex-row items-center gap-1 rounded-full bg-slate-900 px-4 py-2"
+      className="fixed bottom-2 right-2 flex w-fit flex-row items-center gap-1 rounded-full border border-white/10 bg-black px-4 py-2"
       style={{ zIndex: 1 }}
     >
       {template.type && (
-        <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-slate-300">
+        <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-white">
           {template.type}
-          <span className="inline-flex rounded-full bg-slate-800 px-2 py-1 text-xs">
+          <span className="inline-flex rounded-full bg-white/10 px-2 py-1 text-xs">
             {template.id}
           </span>
         </span>

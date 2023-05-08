@@ -51,7 +51,7 @@ export const LayerItem = ({
       style={{ opacity: isDragging ? 0.5 : 1, paddingLeft: level * 16 }}
       onClick={handleClick}
       className={cn(
-        "w-full p-2 text-sm font-normal text-slate-300",
+        "w-full cursor-pointer p-2 text-sm font-normal text-white/60 transition-colors duration-200",
         isSelected && "font-bold text-white",
         isOver && "bg-slate-500 px-4"
       )}
@@ -59,7 +59,7 @@ export const LayerItem = ({
       <div className="flex flex-row items-center gap-2">
         {Icon && <Icon size="16" />}
         <span>{block.type}:</span>
-        <div className="flex rounded-full bg-slate-700 px-1 text-xs font-normal text-slate-400">
+        <div className="flex rounded-full bg-black px-1 text-xs font-normal text-white/30">
           {block.id}
         </div>
       </div>

@@ -79,14 +79,14 @@ export default function SidebarLayers() {
       <React.Fragment key={block.id}>
         <AccordionItem
           value={`item-${block.id}`}
-          className="h-auto border-0 border-t border-slate-700 p-0"
+          className="h-auto border-0 border-t border-white/10 p-0"
         >
           <AccordionTrigger
             asChild
             className={`px-4 py-0 ${
               block.children && block.children.length > 0
-                ? "[&[data-state=open]]:bg-slate-800"
-                : "[&>svg]:hidden [&[data-state=open]]:bg-slate-800"
+                ? "[&[data-state=open]]:bg-black"
+                : "[&>svg]:hidden [&[data-state=open]]:bg-black"
             }`}
           >
             <div role="button">
