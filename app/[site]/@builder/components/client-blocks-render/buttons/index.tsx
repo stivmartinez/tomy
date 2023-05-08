@@ -1,8 +1,9 @@
 import React from "react"
 import BlocksDesign from "@/app/[site]/@builder/components/client-blocks-render/buttons/settings"
-import { ArrowDown, ArrowUp, Copy, Edit, Paintbrush, Trash } from "lucide-react"
+import { ChevronDown, ChevronUp, Copy, Edit, Paintbrush, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
+import { clientBlocksButton } from "../styles"
 
 const ClientButtons: React.FC = ({
   template,
@@ -113,7 +114,7 @@ const ClientButtons: React.FC = ({
 
   return (
     <div
-      className="fixed right-0 top-0 flex w-fit flex-row items-center gap-1 rounded-bl-xl bg-black p-2"
+      className="fixed bottom-2 right-2 flex w-fit flex-row items-center gap-1 rounded-full bg-slate-900 px-4 py-2"
       style={{ zIndex: 1 }}
     >
       {template.type && (
@@ -125,7 +126,7 @@ const ClientButtons: React.FC = ({
         </span>
       )}
       <Button
-        className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
+        className={`${clientBlocksButton} ${
           index === 0 ? "cursor-not-allowed opacity-50" : ""
         }`}
         onClick={(event) => {
@@ -136,10 +137,10 @@ const ClientButtons: React.FC = ({
         }}
         disabled={index === 0}
       >
-        <ArrowUp size="12" />
+        <ChevronUp size="16" />
       </Button>
       <Button
-        className={`flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white ${
+        className={`${clientBlocksButton} ${
           index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
         }`}
         onClick={(event) => {
@@ -150,7 +151,7 @@ const ClientButtons: React.FC = ({
         }}
         disabled={index === parentLength - 1}
       >
-        <ArrowDown size="12" />
+        <ChevronDown size="16" />
       </Button>
       <BlocksDesign
         handleClassNameChange={handleClassNameChange}
@@ -158,21 +159,15 @@ const ClientButtons: React.FC = ({
       >
         <Button
           onClick={(event) => event.stopPropagation()}
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500 p-0 text-white focus:ring-0 data-[state=open]:bg-blue-700"
+          className={clientBlocksButton}
         >
           <Paintbrush size="12" />
         </Button>
       </BlocksDesign>
-      <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-lime-500 p-0 text-white focus:ring-0 data-[state=open]:bg-lime-700"
-        onClick={handleClone}
-      >
+      <Button className={clientBlocksButton} onClick={handleClone}>
         <Copy size="12" />
       </Button>
-      <Button
-        className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-500 p-0 text-white focus:ring-0 data-[state=open]:bg-red-700"
-        onClick={handleRemove}
-      >
+      <Button className={clientBlocksButton} onClick={handleRemove}>
         <Trash size="12" />
       </Button>
       {renderPropertyButtons()}

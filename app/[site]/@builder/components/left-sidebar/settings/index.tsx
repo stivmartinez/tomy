@@ -1,5 +1,5 @@
 import { ScrollArea } from "@radix-ui/react-scroll-area"
-import { RotateCcwIcon, SaveIcon, SettingsIcon } from "lucide-react";
+import { RotateCcwIcon, SaveIcon, SettingsIcon } from "lucide-react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarInternalButton } from "../styles"
+import { sidebarButton, sidebarContent, sidebarInternalButton } from "../styles"
 
 export default function SidebarSettings() {
   const { saveStructure, resetSavedStructure, showShadow, setShowShadow } =
@@ -24,10 +24,7 @@ export default function SidebarSettings() {
           <SettingsIcon size="16" />
         </Button>
       </SheetTrigger>
-      <SheetContent
-        position="left"
-        className="z-0 ml-12 w-full max-w-xs border-x border-slate-200 bg-white p-0"
-      >
+      <SheetContent position="left" className={sidebarContent}>
         <SheetHeader className="p-4 font-semibold">Settings</SheetHeader>
         <ScrollArea className="h-[620px] w-full">
           <DndProvider backend={HTML5Backend}>

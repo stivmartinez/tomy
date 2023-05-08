@@ -1,6 +1,5 @@
 "use client"
 
-import React from "react"
 import { useDrag, useDrop } from "react-dnd"
 
 import { cn } from "@/lib/utils"
@@ -25,7 +24,7 @@ export const LayerItem = ({
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "layerItem",
-    drop: (item) => moveBlock(item.id, block.id),
+    drop: (item: any) => moveBlock(item.id, block.id),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -37,7 +36,7 @@ export const LayerItem = ({
     }
   }
 
-  const applyDrag = (node) => {
+  const applyDrag = (node: any) => {
     if (isSelected) {
       return drag(node)
     }
@@ -52,15 +51,15 @@ export const LayerItem = ({
       style={{ opacity: isDragging ? 0.5 : 1, paddingLeft: level * 16 }}
       onClick={handleClick}
       className={cn(
-        "w-full p-2 text-sm font-normal text-slate-600",
-        isSelected && "font-bold text-slate-900",
-        isOver && "bg-slate-200"
+        "w-full p-2 text-sm font-normal text-slate-300",
+        isSelected && "font-bold text-white",
+        isOver && "bg-slate-500 px-4"
       )}
     >
       <div className="flex flex-row items-center gap-2">
         {Icon && <Icon size="16" />}
         <span>{block.type}:</span>
-        <div className="flex rounded-full bg-slate-100 px-1 text-xs font-normal text-slate-400">
+        <div className="flex rounded-full bg-slate-700 px-1 text-xs font-normal text-slate-400">
           {block.id}
         </div>
       </div>

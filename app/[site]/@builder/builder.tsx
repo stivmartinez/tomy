@@ -4,26 +4,11 @@ import React from "react"
 import ClientBlocksRender from "@/app/[site]/@builder/components/client-blocks-render"
 
 import BuilderLeftSidebar from "./components/left-sidebar"
-import MouseRuler from "./components/utils/mouse-ruler"
+import MouseRuler from "./components/mouse-ruler"
 import { useBuilderContext } from "./context"
 
-interface BuilderProps {
-  initialData?: any[]
-}
-
-const Builder: React.FC<BuilderProps> = () => {
-  const {
-    structure,
-    setStructure,
-    addBlock,
-    selectedBlockId,
-    setSelectedBlockId,
-    renderKey,
-    saveStructure,
-    resetSavedStructure,
-    showShadow,
-    setShowShadow,
-  } = useBuilderContext()
+const Builder = () => {
+  const { structure, renderKey } = useBuilderContext()
 
   return (
     <div className="pl-12">
@@ -36,17 +21,7 @@ const Builder: React.FC<BuilderProps> = () => {
           parentLength={structure.length}
         />
       ))}
-      <BuilderLeftSidebar
-        setStructure={setStructure}
-        structure={structure}
-        selectedBlockId={selectedBlockId}
-        setSelectedBlockId={setSelectedBlockId}
-        addBlock={addBlock}
-        saveStructure={saveStructure}
-        resetSavedStructure={resetSavedStructure}
-        showShadow={showShadow}
-        setShowShadow={setShowShadow}
-      />
+      <BuilderLeftSidebar />
     </div>
   )
 }
