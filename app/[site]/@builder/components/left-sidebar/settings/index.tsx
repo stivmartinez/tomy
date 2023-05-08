@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarContent, sidebarInternalButton } from "../styles"
+import { sidebarButton, sidebarContent, sidebarInternalButton, sidebarTitle } from "../styles"
 
 export default function SidebarSettings() {
   const { saveStructure, resetSavedStructure, showShadow, setShowShadow } =
@@ -25,7 +25,7 @@ export default function SidebarSettings() {
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>
-        <SheetHeader className="p-4 font-semibold">Settings</SheetHeader>
+        <SheetHeader className={sidebarTitle}>Settings</SheetHeader>
         <ScrollArea className="h-[620px] w-full">
           <DndProvider backend={HTML5Backend}>
             <div

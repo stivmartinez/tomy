@@ -1,4 +1,4 @@
-import { LayoutTemplateIcon, Square } from "lucide-react"
+import { PlusCircleIcon, Square } from "lucide-react";
 
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarContent, sidebarInternalButton } from "../styles"
+import { sidebarButton, sidebarContent, sidebarInternalButton, sidebarTitle } from "../styles"
 
 export default function SidebarBlocks() {
   const { selectedBlockId, setStructure, addBlock } = useBuilderContext()
@@ -20,11 +20,11 @@ export default function SidebarBlocks() {
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
         <Button className={sidebarButton} variant="subtle">
-          <LayoutTemplateIcon size="16" />
+          <PlusCircleIcon size="16" />
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>
-        <SheetHeader className="p-4 font-semibold">Blocks</SheetHeader>
+        <SheetHeader className={sidebarTitle}>Blocks</SheetHeader>
         <div className="mx-auto flex w-full flex-row flex-wrap justify-center">
           {!selectedBlockId && (
             <Button

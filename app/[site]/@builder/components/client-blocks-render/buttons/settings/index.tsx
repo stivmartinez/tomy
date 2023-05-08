@@ -45,6 +45,7 @@ const BlocksDesign: React.FC<BlocksDesignProps> = ({
           id="classNames"
           defaultValue={classNames}
           onChange={(e) => handleClassNameChange(e.target.value)}
+          autoComplete="off"
         />
       </SheetContent>
     </Sheet>

@@ -19,7 +19,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarContent } from "../styles"
+import { sidebarButton, sidebarContent, sidebarTitle } from "../styles"
 import { LayerItem } from "./layer-item"
 
 interface BlockObject {
@@ -122,13 +122,13 @@ export default function SidebarLayers() {
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>
-        <SheetHeader className="p-4 font-semibold">Layers</SheetHeader>
+        <SheetHeader className={sidebarTitle}>Layers</SheetHeader>
         {structure.length === 0 ? (
           <div className="p-4">
             <div className="flex flex-col items-center gap-2 rounded-xl text-center">
-              <CopyXIcon className="text-slate-500" />
-              <h3 className="mt-2 text-sm text-slate-500">No layers yet</h3>
-              <p className="px-12 text-sm text-slate-500">
+              <CopyXIcon className="text-white/60" />
+              <h3 className="mt-2 text-sm text-white/60">No layers yet</h3>
+              <p className="px-12 text-sm text-white/60">
                 Add some layers and after that come back here.
               </p>
             </div>
