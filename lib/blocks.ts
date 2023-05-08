@@ -73,20 +73,6 @@ const blocks: Record<string, BlockConfig> = {
       event.stopPropagation();
     },
   },
-  list: {
-    type: "list",
-    tag: "ul",
-    className: "list-disc list-inside",
-    content: "",
-    icon: List,
-  },
-  listItem: {
-    type: "listItem",
-    tag: "li",
-    className: "",
-    content: "List item",
-    icon: FileText,
-  },
   blockquote: {
     type: "blockquote",
     tag: "blockquote",

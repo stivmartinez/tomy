@@ -118,7 +118,7 @@ export default function SidebarLayers() {
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
         <Button className={sidebarButton} variant="subtle">
-          <Layers size="16" />
+          <Layers size="18" />
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>

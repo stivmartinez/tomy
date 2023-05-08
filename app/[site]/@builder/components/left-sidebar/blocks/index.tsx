@@ -1,8 +1,7 @@
-import { PlusCircleIcon, Square } from "lucide-react";
+import { PlusCircleIcon, Square } from "lucide-react"
 
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -11,7 +10,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarContent, sidebarInternalButton, sidebarTitle } from "../styles"
+import {
+  sidebarButton,
+  sidebarContent,
+  sidebarInternalButtonSquare,
+  sidebarTitle,
+} from "../styles"
 
 export default function SidebarBlocks() {
   const { selectedBlockId, setStructure, addBlock } = useBuilderContext()
@@ -20,16 +24,17 @@ export default function SidebarBlocks() {
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
         <Button className={sidebarButton} variant="subtle">
-          <PlusCircleIcon size="16" />
+          <PlusCircleIcon size="18" />
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>
         <SheetHeader className={sidebarTitle}>Blocks</SheetHeader>
-        <div className="mx-auto flex w-full flex-row flex-wrap justify-center">
+        <p className={sidebarTitle}>Common used</p>
+        <div className="mx-auto flex w-full flex-wrap px-4">
           {!selectedBlockId && (
             <Button
               variant="subtle"
-              className={cn(sidebarInternalButton, "justify-start")}
+              className={sidebarInternalButtonSquare}
               onClick={() => {
                 {
                   setStructure((prevStructure: any[]) => [
@@ -56,14 +61,14 @@ export default function SidebarBlocks() {
                 <Button
                   key={componentName}
                   variant="subtle"
-                  className={cn(sidebarInternalButton, "justify-start")}
+                  className={sidebarInternalButtonSquare}
                   onClick={(event) => {
                     event.stopPropagation()
                     addBlock(String(selectedBlockId), componentName)
                   }}
                 >
-                  <Icon size="16" />
-                  <span>{componentName}</span>
+                  <Icon size="20" />
+                  <span className="text-xs text-white/50">{componentName}</span>
                 </Button>
               )
             })}

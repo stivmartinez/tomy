@@ -15,10 +15,10 @@ export default function SidebarPages() {
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
         <Button className={sidebarButton} variant="subtle">
-          <LayoutTemplateIcon size="16" />
+          <LayoutTemplateIcon size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" className={cn(sidebarContent, "w-full")}>
+      <SheetContent position="left" size="full" className={cn(sidebarContent, "max-w-full animate-none")}>
         <SheetHeader className={sidebarTitle}>Pages</SheetHeader>
       </SheetContent>
     </Sheet>

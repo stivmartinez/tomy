@@ -21,7 +21,7 @@ export default function SidebarSettings() {
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
         <Button className={sidebarButton} variant="subtle">
-          <SettingsIcon size="16" />
+          <SettingsIcon size="18" />
         </Button>
       </SheetTrigger>
       <SheetContent position="left" className={sidebarContent}>
