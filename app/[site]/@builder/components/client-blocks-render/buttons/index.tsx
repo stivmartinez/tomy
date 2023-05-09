@@ -12,7 +12,34 @@ import {
 import { Button } from "@/components/ui/button"
 import { clientBlocksButton } from "../styles"
 
-const ClientButtons: React.FC = ({
+type BlockProperty = {
+  propertyName: string
+  propertyPath: (string | number)[]
+  promptMessage: string
+  icon: React.ComponentType<{ size: string | number }>
+}
+
+type BlockPropertyMapping = {
+  [key: string]: BlockProperty[]
+}
+
+interface ClientButtonsProps {
+  template: any
+  index: number | undefined
+  parentLength: number | undefined
+  moveBlock: (blockId: string, newParentId: string | null) => void
+  handleClone: (event: React.MouseEvent) => void
+  handleRemove: (event: React.MouseEvent) => void
+  handleClassNameChange: (value: any) => void
+  classNames: string[]
+  handlePropertyUpdate: (
+    propertyName: string,
+    propertyPath: string[],
+    promptMessage: string
+  ) => void
+}
+
+const ClientButtons: React.FC<ClientButtonsProps> = ({
   template,
   index,
   parentLength,
@@ -23,7 +50,7 @@ const ClientButtons: React.FC = ({
   classNames,
   handlePropertyUpdate,
 }: any) => {
-  const blockPropertyMapping = {
+  const blockPropertyMapping: BlockPropertyMapping = {
     heading: [
       {
         propertyName: "content",
@@ -95,7 +122,8 @@ const ClientButtons: React.FC = ({
   }
 
   const renderPropertyButtons = () => {
-    const blockProperties = blockPropertyMapping[template.type]
+    const blockProperties =
+      blockPropertyMapping[template.type as keyof BlockPropertyMapping]
 
     if (blockProperties) {
       return blockProperties.map((property: any) => (

@@ -157,21 +157,13 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   return React.cloneElement(
     <BlocksRender
       template={template}
-      setStructure={setStructure}
-      addChild={addChild}
       level={level || undefined}
-      addBlock={addBlock}
       styles={{ boxShadow: shadow, cursor: "pointer" }}
-      classNames={classNames}
-      removeBlock={removeBlock}
       handleSelect={handleSelect}
-      selectedBlockId={selectedBlockId}
-      setSelectedBlockId={setSelectedBlockId}
       contentEditable={isEditing && selectedBlockId === template.id}
       blockRef={currentBlockRef}
       suppressContentEditableWarning
       isEditable={isEditable}
-      showShadow={showShadow}
     >
       {selectedBlockId === template.id && (
         <ClientButtons

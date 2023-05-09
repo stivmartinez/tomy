@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils"
 import React, { ReactElement } from "react"
 
+import { cn } from "@/lib/utils"
 import ClientBlocksRender from "./@builder/components/client-blocks-render"
 
 interface Child {
@@ -12,45 +12,27 @@ interface Child {
 
 interface BlocksRenderProps {
   template: any
-  setStructure?: (callback: (structure: any[]) => any[]) => void
-  addChild?: (parentId: string, blockConfiguration: any) => void
   level?: number
-  addBlock?: (parentId: string, type: string) => void
-  classNames?: string[]
-  removeBlock?: (blockId: string) => void
   children?: React.ReactNode
   styles?: any
   handleSelect?: any
-  setSelectedBlockId?: (
-    callback: (blockId: string | null) => string | null
-  ) => void
-  selectedBlockId?: string | null
   contentEditable?: boolean
   suppressContentEditableWarning?: boolean
   blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   isEditable: boolean
-  showShadow?: boolean
 }
 
 const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
   ({
     template,
-    setStructure,
-    addChild,
     level,
-    addBlock,
-    classNames,
-    removeBlock,
     children,
     styles,
     handleSelect,
-    setSelectedBlockId,
-    selectedBlockId,
     contentEditable,
     suppressContentEditableWarning,
     blockRef,
     isEditable,
-    showShadow,
   }) => {
     const blocksRender = (component: any): ReactElement => {
       const {
@@ -95,17 +77,10 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
                 <ClientBlocksRender
                   key={child.id}
                   template={child}
-                  setStructure={setStructure}
-                  addChild={addChild}
-                  level={level ? level + 1 : null}
-                  addBlock={addBlock}
-                  removeBlock={removeBlock}
-                  selectedBlockId={selectedBlockId}
-                  setSelectedBlockId={setSelectedBlockId}
+                  level={level ? level + 1 : undefined}
                   blockRef={blockRef}
                   parentLength={componentChildren.length}
                   index={componentChildren.indexOf(child)}
-                  showShadow={showShadow}
                 />
               )
 
