@@ -1,6 +1,8 @@
-import { Separator } from "@/components/ui/separator"
+/* eslint-disable @next/next/no-img-element */
+
 import React from "react"
 
+import { Separator } from "@/components/ui/separator"
 import SidebarBlocks from "./blocks"
 import SidebarLayers from "./layers"
 import SidebarPages from "./pages"
