@@ -51,8 +51,24 @@ const BuilderContext = createContext<BuilderContextValues>(
 export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
   children,
 }) => {
+  const initialStructure = [
+    {
+      id: "1",
+      tag: "div",
+      type: "body",
+      className: "w-full h-screen bg-slate-100 overflow-y-auto",
+      children: [{
+        id: "2",
+        tag: "main",
+        type: "main",
+        className: "w-full h-screen bg-black max-w-3xl bg-white mx-auto px-4",
+        children: []
+      }],
+    },
+  ]
+
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
-  const [structure, setStructure] = useState<any[]>([])
+  const [structure, setStructure] = useState<any[]>(initialStructure)
   const [renderKey, setRenderKey] = useState<number>(0)
   const [showShadow, setShowShadow] = useState(true)
 
@@ -83,8 +99,6 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
     const savedStructure = localStorage.getItem("savedStructure")
     if (savedStructure) {
       setStructure(JSON.parse(savedStructure))
-    } else {
-      setStructure([])
     }
   }
 

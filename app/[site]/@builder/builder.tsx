@@ -3,16 +3,14 @@
 import React from "react"
 import ClientBlocksRender from "@/app/[site]/@builder/components/client-blocks-render"
 
-import BuilderLeftSidebar from "./components/left-sidebar"
-import MouseRuler from "./components/mouse-ruler"
+import BuilderNavbar from "./components/navbar"
 import { useBuilderContext } from "./context"
 
 const Builder = () => {
   const { structure, renderKey } = useBuilderContext()
 
   return (
-    <div className="pl-12">
-      <MouseRuler />
+    <>
       {structure.map((block, index) => (
         <ClientBlocksRender
           key={`${block.id}-${renderKey}`}
@@ -21,8 +19,8 @@ const Builder = () => {
           parentLength={structure.length}
         />
       ))}
-      <BuilderLeftSidebar />
-    </div>
+      <BuilderNavbar />
+    </>
   )
 }
 

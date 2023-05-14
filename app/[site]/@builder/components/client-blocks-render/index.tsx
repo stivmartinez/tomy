@@ -149,7 +149,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
 
   const shadow =
     selectedBlockId === template.id
-      ? "0 0 0 2px red"
+      ? "inset 0 0 0 1px red"
       : showShadow
       ? "inset 0 0 0 1px blue"
       : "inset 0 0 0 1px transparent"

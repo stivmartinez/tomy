@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
-import { sidebarButton, sidebarContent, sidebarInternalButton, sidebarTitle } from "../styles"
+import { navbarButton, navbarContent, navbarInternalButton, navbarTitle } from "../styles"
 
 export default function SidebarSettings() {
   const { saveStructure, resetSavedStructure, showShadow, setShowShadow } =
@@ -20,16 +20,16 @@ export default function SidebarSettings() {
   return (
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
-        <Button className={sidebarButton} variant="subtle">
+        <Button className={navbarButton} variant="subtle">
           <SettingsIcon size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" className={sidebarContent}>
-        <SheetHeader className={sidebarTitle}>Settings</SheetHeader>
+      <SheetContent position="left" className={navbarContent}>
+        <SheetHeader className={navbarTitle}>Settings</SheetHeader>
         <ScrollArea className="h-[620px] w-full">
           <DndProvider backend={HTML5Backend}>
             <div
-              className={sidebarInternalButton}
+              className={navbarInternalButton}
               role="button"
               onClick={() => {
                 setShowShadow(!showShadow)
@@ -46,14 +46,14 @@ export default function SidebarSettings() {
             <Button
               onClick={saveStructure}
               variant="subtle"
-              className={sidebarInternalButton}
+              className={navbarInternalButton}
             >
               <span>Save</span>
               <SaveIcon className="h-4 w-4 text-slate-400" />
             </Button>
             <Button
               onClick={resetSavedStructure}
-              className={sidebarInternalButton}
+              className={navbarInternalButton}
             >
               <span>Reset</span>
               <RotateCcwIcon className="h-4 w-4 text-slate-400" />

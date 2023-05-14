@@ -149,63 +149,65 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
 
   return (
     <div
-      className="fixed bottom-2 right-2 flex w-fit flex-row items-center gap-1 rounded-full border border-white/10 bg-black px-4 py-2"
+      className="fixed bottom-0 left-0 mb-16 flex w-full justify-center"
       style={{ zIndex: 1 }}
     >
-      {template.type && (
-        <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-white">
-          {template.type}
-          <span className="inline-flex rounded-full bg-white/10 px-2 py-1 text-xs">
-            {template.id}
+      <div className="flex w-fit flex-row justify-center rounded-lg bg-black p-2">
+        {template.type && (
+          <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-white">
+            {template.type}
+            <span className="inline-flex rounded-full bg-white/10 px-2 py-1 text-xs">
+              {template.id}
+            </span>
           </span>
-        </span>
-      )}
-      <Button
-        className={`${clientBlocksButton} ${
-          index === 0 ? "cursor-not-allowed opacity-50" : ""
-        }`}
-        onClick={(event) => {
-          event.stopPropagation()
-          if (index > 0) {
-            moveBlock(template.id, "up")
-          }
-        }}
-        disabled={index === 0}
-      >
-        <ChevronUp size="16" />
-      </Button>
-      <Button
-        className={`${clientBlocksButton} ${
-          index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
-        }`}
-        onClick={(event) => {
-          event.stopPropagation()
-          if (index < parentLength - 1) {
-            moveBlock(template.id, "down")
-          }
-        }}
-        disabled={index === parentLength - 1}
-      >
-        <ChevronDown size="16" />
-      </Button>
-      <BlocksDesign
-        handleClassNameChange={handleClassNameChange}
-        classNames={classNames}
-      >
+        )}
         <Button
-          onClick={(event) => event.stopPropagation()}
-          className={clientBlocksButton}
+          className={`${clientBlocksButton} ${
+            index === 0 ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={(event) => {
+            event.stopPropagation()
+            if (index > 0) {
+              moveBlock(template.id, "up")
+            }
+          }}
+          disabled={index === 0}
         >
-          <Paintbrush size="12" />
+          <ChevronUp size="16" />
         </Button>
-      </BlocksDesign>
-      <Button className={clientBlocksButton} onClick={handleClone}>
-        <Copy size="12" />
-      </Button>
-      <Button className={clientBlocksButton} onClick={handleRemove}>
-        <Trash size="12" />
-      </Button>
-      {renderPropertyButtons()}
+        <Button
+          className={`${clientBlocksButton} ${
+            index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          onClick={(event) => {
+            event.stopPropagation()
+            if (index < parentLength - 1) {
+              moveBlock(template.id, "down")
+            }
+          }}
+          disabled={index === parentLength - 1}
+        >
+          <ChevronDown size="16" />
+        </Button>
+        <BlocksDesign
+          handleClassNameChange={handleClassNameChange}
+          classNames={classNames}
+        >
+          <Button
+            onClick={(event) => event.stopPropagation()}
+            className={clientBlocksButton}
+          >
+            <Paintbrush size="12" />
+          </Button>
+        </BlocksDesign>
+        <Button className={clientBlocksButton} onClick={handleClone}>
+          <Copy size="12" />
+        </Button>
+        <Button className={clientBlocksButton} onClick={handleRemove}>
+          <Trash size="12" />
+        </Button>
+        {renderPropertyButtons()}
+      </div>
     </div>
   )
 }

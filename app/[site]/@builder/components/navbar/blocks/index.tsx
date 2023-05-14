@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/sheet"
 import { useBuilderContext } from "../../../context"
 import {
-  sidebarButton,
-  sidebarContent,
-  sidebarInternalButtonSquare,
-  sidebarTitle,
+  navbarButton,
+  navbarContent,
+  navbarInternalButtonSquare,
+  navbarTitle,
 } from "../styles"
 
 export default function SidebarBlocks() {
@@ -23,18 +23,18 @@ export default function SidebarBlocks() {
   return (
     <Sheet>
       <SheetTrigger asChild className="relative z-50">
-        <Button className={sidebarButton} variant="subtle">
+        <Button className={navbarButton} variant="subtle">
           <PlusCircleIcon size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" className={sidebarContent}>
-        <SheetHeader className={sidebarTitle}>Blocks</SheetHeader>
-        <p className={sidebarTitle}>Common used</p>
+      <SheetContent position="left" className={navbarContent}>
+        <SheetHeader className={navbarTitle}>Blocks</SheetHeader>
+        <p className={navbarTitle}>Common used</p>
         <div className="mx-auto flex w-full flex-wrap px-4">
           {!selectedBlockId && (
             <Button
               variant="subtle"
-              className={sidebarInternalButtonSquare}
+              className={navbarInternalButtonSquare}
               onClick={() => {
                 {
                   setStructure((prevStructure: any[]) => [
@@ -61,7 +61,7 @@ export default function SidebarBlocks() {
                 <Button
                   key={componentName}
                   variant="subtle"
-                  className={sidebarInternalButtonSquare}
+                  className={navbarInternalButtonSquare}
                   onClick={(event) => {
                     event.stopPropagation()
                     addBlock(String(selectedBlockId), componentName)
