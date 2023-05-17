@@ -70,7 +70,7 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialStructure)
   const [renderKey, setRenderKey] = useState<number>(0)
-  const [showShadow, setShowShadow] = useState(false)
+  const [showShadow, setShowShadow] = useState(true)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
