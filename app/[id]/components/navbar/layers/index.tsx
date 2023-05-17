@@ -116,7 +116,7 @@ export default function SidebarLayers() {
             </div>
           </div>
         ) : (
-          <ScrollArea className="h-[620px] w-full">
+          <ScrollArea className="h-96 w-full overflow-y-auto">
             <DndProvider backend={HTML5Backend}>
               <div>{renderLayerItems(structure, 0)}</div>
             </DndProvider>

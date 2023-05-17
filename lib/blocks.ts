@@ -1,4 +1,4 @@
-import { CircleEllipsis, ExternalLink, Link } from "lucide-react";
+import { CircleEllipsis, Columns, ExternalLink, Link, Rows } from "lucide-react";
 import { Image, List } from "lucide-react";
 import { FileText, Heading, Square, Type } from "lucide-react";
 
@@ -14,32 +14,40 @@ type BlockConfig = {
 };
 
 const blocks: Record<string, BlockConfig> = {
-  container: {
-    type: "container",
+  columns: {
+    type: "columns",
     tag: "div",
     className:
-      "w-full flex flex-col min-h-[24px]",
+      "w-full flex flex-row min-h-[24px] gap-2",
     content: "",
-    icon: Square
+    icon: Columns
+  },
+  rows: {
+    type: "rows",
+    tag: "div",
+    className:
+      "w-full flex flex-col min-h-[24px] gap-2",
+    content: "",
+    icon: Rows
   },
   heading: {
     type: "heading",
     tag: "h1",
-    className: "text-4xl font-bold",
+    className: "text-4xl font-bold w-full",
     content: "Example",
     icon: Heading
   },
   paragraph: {
     type: "paragraph",
     tag: "p",
-    className: "text-md",
+    className: "text-md w-full",
     content: "Example",
     icon: Type
   },
   button: {
     type: "button",
     tag: "button",
-    className: "bg-blue-500 text-white px-4 py-2 rounded",
+    className: "bg-blue-500 text-white px-4 py-2 rounded w-full",
     content: "Click me",
     icon: CircleEllipsis,
     onClick: (event: React.MouseEvent) => {
@@ -49,7 +57,7 @@ const blocks: Record<string, BlockConfig> = {
   image: {
     type: "image",
     tag: "img",
-    className: "w-fit block",
+    className: "w-full block",
     content: "",
     props: {
       src: "https://via.placeholder.com/150",
@@ -61,7 +69,7 @@ const blocks: Record<string, BlockConfig> = {
   link: {
     type: "link",
     tag: "a",
-    className: "text-blue-500 hover:text-blue-700",
+    className: "text-blue-500 w-full",
     content: "Example Link",
     props: {
       href: "#",
@@ -72,14 +80,6 @@ const blocks: Record<string, BlockConfig> = {
     onClick: (event: React.MouseEvent) => {
       event.stopPropagation();
     },
-  },
-  blockquote: {
-    type: "blockquote",
-    tag: "blockquote",
-    className:
-      "border-l-4 border-slate-600 px-4 py-2 text-slate-600 italic",
-    content: "Quote",
-    icon: Type,
   },
   anchorLink: {
     type: "anchorLink",

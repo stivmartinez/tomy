@@ -170,55 +170,61 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
       className="fixed bottom-12 left-0 flex w-full flex-col justify-center"
       style={{ zIndex: 1 }}
     >
-      <div className="z-10 flex w-full flex-row items-center justify-between gap-2 border-y border-white/10 bg-black px-4 py-2">
+      <div className="z-10 flex h-12 w-full flex-row items-center justify-between gap-2 border-y border-white/10 bg-black px-4">
         <div className="mx-auto flex w-full max-w-3xl flex-row items-center justify-between gap-4">
           {template.type && (
             <span className="flex flex-row items-center gap-2 text-sm font-normal text-white/60">
               {template.type}
-              <span className="text-xs text-white/40">
-                {template.id}
-              </span>
+              <span className="text-xs text-white/40">{template.id}</span>
             </span>
           )}
-          <div className="h-6 w-1 border-l border-white/10"></div>
-          <Button
-            className={`${clientBlocksButton} ${
-              index === 0 ? "cursor-not-allowed opacity-50" : ""
-            }`}
-            onClick={(event) => {
-              event.stopPropagation()
-              if (index > 0) {
-                moveBlock(template.id, "up")
-              }
-            }}
-            disabled={index === 0}
-          >
-            <ChevronUp size="16" />
-          </Button>
-          <Button
-            className={`${clientBlocksButton} ${
-              index === parentLength - 1 ? "cursor-not-allowed opacity-50" : ""
-            }`}
-            onClick={(event) => {
-              event.stopPropagation()
-              if (index < parentLength - 1) {
-                moveBlock(template.id, "down")
-              }
-            }}
-            disabled={index === parentLength - 1}
-          >
-            <ChevronDown size="16" />
-          </Button>
-          <Button className={clientBlocksButton} onClick={handleClone}>
-            <Copy size="16" />
-          </Button>
-          <Button className={clientBlocksButton} onClick={handleRemove}>
-            <Trash size="16" />
-          </Button>
+          {template.id !== "1" &&
+            template.id !== "2" &&
+            template.id !== "3" && (
+              <>
+                <div className="h-6 w-1 border-l border-white/10"></div>
+                <Button
+                  className={`${clientBlocksButton} ${
+                    index === 0 ? "cursor-not-allowed opacity-50" : ""
+                  }`}
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (index > 0) {
+                      moveBlock(template.id, "up")
+                    }
+                  }}
+                  disabled={index === 0}
+                >
+                  <ChevronUp size="16" />
+                </Button>
+                <Button
+                  className={`${clientBlocksButton} ${
+                    index === parentLength - 1
+                      ? "cursor-not-allowed opacity-50"
+                      : ""
+                  }`}
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    if (index < parentLength - 1) {
+                      moveBlock(template.id, "down")
+                    }
+                  }}
+                  disabled={index === parentLength - 1}
+                >
+                  <ChevronDown size="16" />
+                </Button>
+                <Button className={clientBlocksButton} onClick={handleClone}>
+                  <Copy size="16" />
+                </Button>
+                <Button className={clientBlocksButton} onClick={handleRemove}>
+                  <Trash size="16" />
+                </Button>
+              </>
+            )}
         </div>
       </div>
       <div
-        className="w-full border-b border-white/10 bg-black px-4 pb-2 pt-4 font-normal"
+        className="w-full border-b border-white/10 bg-black p-4 font-normal"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mx-auto flex max-w-3xl flex-col gap-4">

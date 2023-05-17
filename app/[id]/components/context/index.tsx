@@ -54,16 +54,26 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
   const initialStructure = [
     {
       id: "1",
-      tag: "div",
-      type: "body",
-      className: "w-full h-screen bg-gray-50 overflow-y-auto",
-      children: [{
-        id: "2",
-        tag: "main",
-        type: "main",
-        className: "w-full h-screen bg-black max-w-3xl bg-white mx-auto px-4",
-        children: []
-      }],
+      tag: "main",
+      type: "main",
+      className: "flex-grow overflow-auto",
+      children: [
+        {
+          id: "2",
+          tag: "div",
+          type: "container",
+          className: "w-full max-w-3xl mx-auto px-4 min-h-screen",
+          children: [
+            {
+              id: "3",
+              tag: "section",
+              type: "rows",
+              className: "min-h-screen w-full flex flex-col gap-2",
+              children: [],
+            },
+          ],
+        },
+      ],
     },
   ]
 

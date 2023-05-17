@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import React, { useState } from "react"
 import BlocksRender from "@/app/blocks-render"
 
@@ -146,9 +145,9 @@ const BuilderBlocksRender: React.FC<BuilderBlocksRenderProps> = ({
 
   const shadow =
     selectedBlockId === template.id
-      ? "0 0 0 2px red"
+      ? "inset 0 0 0 2px red"
       : showShadow
-      ? "inset 0 0 0 1px blue"
+      ? "inset 0 0 0 1px rgba(0, 0, 0, 0.2)"
       : "inset 0 0 0 1px transparent"
 
   return React.cloneElement(

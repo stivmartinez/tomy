@@ -10,7 +10,7 @@ const BuilderPage = () => {
   const { structure, renderKey } = useBuilderContext()
 
   return (
-    <>
+    <div className="flex min-h-screen flex-col overflow-y-auto">
       {structure.map((block, index) => (
         <BuilderBlocksRender
           key={`${block.id}-${renderKey}`}
@@ -20,7 +20,7 @@ const BuilderPage = () => {
         />
       ))}
       <BuilderNavbar />
-    </>
+    </div>
   )
 }
 
