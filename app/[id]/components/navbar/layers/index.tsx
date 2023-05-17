@@ -6,7 +6,7 @@ import { CopyXIcon, Layers } from "lucide-react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
-import { useBuilderContext } from "../../../context"
+import { useBuilderContext } from "../../context"
 import { navbarButton, navbarContent, navbarTitle } from "../styles"
 import { LayerItem } from "./layer-item"
 

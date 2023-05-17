@@ -1,16 +1,19 @@
-import React from "react"
-import BlocksDesign from "@/app/[site]/@builder/components/client-blocks-render/buttons/settings"
+import React, { useState } from "react"
+import BlocksDesign from "@/app/[id]/components/block-options/settings"
 import {
   ChevronDown,
   ChevronUp,
   Copy,
   Edit,
   Paintbrush,
+  Settings,
   Trash,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { clientBlocksButton } from "../styles"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { clientBlocksButton } from "../blocks-render/styles"
 
 type BlockProperty = {
   propertyName: string
@@ -23,7 +26,7 @@ type BlockPropertyMapping = {
   [key: string]: BlockProperty[]
 }
 
-interface ClientButtonsProps {
+interface BlockOptionsProps {
   template: any
   index: number | undefined
   parentLength: number | undefined
@@ -35,11 +38,12 @@ interface ClientButtonsProps {
   handlePropertyUpdate: (
     propertyName: string,
     propertyPath: string[],
-    promptMessage: string
+    promptMessage: string,
+    value?: any
   ) => void
 }
 
-const ClientButtons: React.FC<ClientButtonsProps> = ({
+const BlockOptions: React.FC<BlockOptionsProps> = ({
   template,
   index,
   parentLength,
@@ -55,7 +59,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "content",
         propertyPath: [],
-        promptMessage: "Please enter the new heading text:",
+        promptMessage: "Heading:",
         icon: Edit,
       },
     ],
@@ -63,7 +67,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "content",
         propertyPath: [],
-        promptMessage: "Please enter the new paragraph text:",
+        promptMessage: "Paragraph:",
         icon: Edit,
       },
     ],
@@ -71,13 +75,13 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "content",
         propertyPath: [],
-        promptMessage: "Please enter the new link text:",
+        promptMessage: "Link text:",
         icon: Edit,
       },
       {
         propertyName: "href",
         propertyPath: ["props", "href"],
-        promptMessage: "Please enter the new link URL:",
+        promptMessage: "Link URL:",
         icon: Edit,
       },
     ],
@@ -85,7 +89,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "href",
         propertyPath: ["props", "href"],
-        promptMessage: "Please enter the new anchorLink URL:",
+        promptMessage: "anchorLink URL:",
         icon: Edit,
       },
     ],
@@ -93,13 +97,13 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "src",
         propertyPath: ["props", "src"],
-        promptMessage: "Please enter the new image URL:",
+        promptMessage: "Image URL:",
         icon: Edit,
       },
       {
         propertyName: "alt",
         propertyPath: ["props", "alt"],
-        promptMessage: "Please enter the new alt text:",
+        promptMessage: "Alt text:",
         icon: Edit,
       },
     ],
@@ -107,7 +111,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "content",
         propertyPath: [],
-        promptMessage: "Please enter the new text:",
+        promptMessage: "New text:",
         icon: Edit,
       },
     ],
@@ -115,7 +119,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
       {
         propertyName: "content",
         propertyPath: [],
-        promptMessage: "Please enter the new button text:",
+        promptMessage: "New button text:",
         icon: Edit,
       },
     ],
@@ -127,20 +131,27 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
 
     if (blockProperties) {
       return blockProperties.map((property: any) => (
-        <Button
-          key={property.propertyName}
-          className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-500 p-0 text-white focus:ring-0 data-[state=open]:bg-slate-700"
-          onClick={(event) => {
-            event.stopPropagation()
-            handlePropertyUpdate(
-              property.propertyName,
-              property.propertyPath,
-              property.promptMessage
-            )
-          }}
-        >
-          <property.icon size="12" />
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Label className="text-xs text-white" htmlFor={property.propertyName}>
+            {property.promptMessage}
+          </Label>
+          <Input
+            id={property.propertyName}
+            key={property.propertyName}
+            onChange={(event) => {
+              event.stopPropagation()
+              handlePropertyUpdate(
+                property.propertyName,
+                property.propertyPath,
+                property.promptMessage,
+                event.target.value
+              )
+            }}
+            defaultValue={template[property.propertyName]}
+            autoComplete="off"
+            className="border-white/30 text-white focus:shadow-none focus:outline-none focus:ring-0 focus-visible:ring-0"
+          />
+        </div>
       ))
     }
 
@@ -149,10 +160,10 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
 
   return (
     <div
-      className="fixed bottom-0 left-0 mb-16 flex w-full justify-center"
+      className="fixed bottom-6 left-0 flex w-full justify-center"
       style={{ zIndex: 1 }}
     >
-      <div className="flex w-fit flex-row justify-center rounded-lg bg-black p-2">
+      <div className="z-10 flex w-fit flex-row items-center justify-center gap-2 rounded-xl border border-white/20 bg-black px-4 py-2">
         {template.type && (
           <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-white">
             {template.type}
@@ -161,6 +172,7 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
             </span>
           </span>
         )}
+        <div className="h-6 w-1 border-l border-white/10"></div>
         <Button
           className={`${clientBlocksButton} ${
             index === 0 ? "cursor-not-allowed opacity-50" : ""
@@ -189,27 +201,30 @@ const ClientButtons: React.FC<ClientButtonsProps> = ({
         >
           <ChevronDown size="16" />
         </Button>
+
         <BlocksDesign
           handleClassNameChange={handleClassNameChange}
           classNames={classNames}
+          renderPropertyButtons={renderPropertyButtons}
         >
           <Button
             onClick={(event) => event.stopPropagation()}
             className={clientBlocksButton}
           >
-            <Paintbrush size="12" />
+            <Settings size="16" />
           </Button>
         </BlocksDesign>
-        <Button className={clientBlocksButton} onClick={handleClone}>
-          <Copy size="12" />
-        </Button>
+        {index !== 0 && (
+          <Button className={clientBlocksButton} onClick={handleClone}>
+            <Copy size="16" />
+          </Button>
+        )}
         <Button className={clientBlocksButton} onClick={handleRemove}>
-          <Trash size="12" />
+          <Trash size="16" />
         </Button>
-        {renderPropertyButtons()}
       </div>
     </div>
   )
 }
 
-export default ClientButtons
+export default BlockOptions

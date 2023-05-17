@@ -1,13 +1,13 @@
 "use client"
 
 import React, { useState } from "react"
-import BlocksRender from "@/app/[site]/blocks-render"
+import BlocksRender from "@/app/blocks-render"
 
 import { generateRandomId } from "@/lib/generateRandomId"
-import { useBuilderContext } from "../../context"
-import ClientButtons from "./buttons"
+import BlockOptions from "../block-options"
+import { useBuilderContext } from "../context"
 
-interface ClientBlocksRenderProps {
+interface BuilderBlocksRenderProps {
   template: any
   blockRef?: React.MutableRefObject<{ [key: string]: HTMLDivElement | null }>
   index?: number
@@ -16,7 +16,7 @@ interface ClientBlocksRenderProps {
   isEditable?: boolean
 }
 
-const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
+const BuilderBlocksRender: React.FC<BuilderBlocksRenderProps> = ({
   template,
   blockRef,
   index,
@@ -29,7 +29,6 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const {
     setStructure,
     addChild,
-    addBlock,
     removeBlock,
     selectedBlockId,
     setSelectedBlockId,
@@ -104,47 +103,45 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   const handlePropertyUpdate = (
     propertyName: string,
     propertyPath: string[],
-    promptMessage: string
+    promptMessage: string,
+    value: any
   ) => {
-    const newValue = prompt(promptMessage)
-    if (newValue) {
-      setStructure((prevStructure: any[]) => {
-        const newStructure = JSON.parse(JSON.stringify(prevStructure))
+    setStructure((prevStructure: any[]) => {
+      const newStructure = JSON.parse(JSON.stringify(prevStructure))
 
-        const updatePropertyRecursive = (node: any) => {
-          if (!node) return false
-          if (node.id === template.id) {
-            let target = node
-            if (propertyPath.length === 0) {
-              target[propertyName] = newValue
-            } else {
-              propertyPath.forEach((path, index) => {
-                if (index < propertyPath.length - 1) {
-                  target = target[path]
-                } else {
-                  target[path] = newValue
-                }
-              })
-            }
-            return true
-          }
-          if (node.children) {
-            for (const child of node.children) {
-              if (updatePropertyRecursive(child)) {
-                return true
+      const updatePropertyRecursive = (node: any) => {
+        if (!node) return false
+        if (node.id === template.id) {
+          let target = node
+          if (propertyPath.length === 0) {
+            target[propertyName] = value
+          } else {
+            propertyPath.forEach((path, index) => {
+              if (index < propertyPath.length - 1) {
+                target = target[path]
+              } else {
+                target[path] = value
               }
+            })
+          }
+          return true
+        }
+        if (node.children) {
+          for (const child of node.children) {
+            if (updatePropertyRecursive(child)) {
+              return true
             }
           }
-          return false
         }
+        return false
+      }
 
-        newStructure.forEach((node: any) => {
-          updatePropertyRecursive(node)
-        })
-
-        return newStructure
+      newStructure.forEach((node: any) => {
+        updatePropertyRecursive(node)
       })
-    }
+
+      return newStructure
+    })
   }
 
   const shadow =
@@ -166,7 +163,7 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
       isEditable={isEditable}
     >
       {selectedBlockId === template.id && (
-        <ClientButtons
+        <BlockOptions
           template={template}
           index={index}
           parentLength={parentLength}
@@ -187,4 +184,4 @@ const ClientBlocksRender: React.FC<ClientBlocksRenderProps> = ({
   )
 }
 
-export default React.memo(ClientBlocksRender)
+export default React.memo(BuilderBlocksRender)

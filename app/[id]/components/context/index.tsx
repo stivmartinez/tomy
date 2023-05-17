@@ -56,7 +56,7 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
       id: "1",
       tag: "div",
       type: "body",
-      className: "w-full h-screen bg-slate-100 overflow-y-auto",
+      className: "w-full h-screen bg-gray-50 overflow-y-auto",
       children: [{
         id: "2",
         tag: "main",
@@ -70,7 +70,7 @@ export const BuilderContextProvider: React.FC<BuilderContextProviderProps> = ({
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [structure, setStructure] = useState<any[]>(initialStructure)
   const [renderKey, setRenderKey] = useState<number>(0)
-  const [showShadow, setShowShadow] = useState(true)
+  const [showShadow, setShowShadow] = useState(false)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

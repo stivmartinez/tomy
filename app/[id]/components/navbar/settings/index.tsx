@@ -10,7 +10,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { useBuilderContext } from "../../../context"
+import { useBuilderContext } from "../../context"
 import { navbarButton, navbarContent, navbarInternalButton, navbarTitle } from "../styles"
 
 export default function SidebarSettings() {

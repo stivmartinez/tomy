@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react"
 
 import { cn } from "@/lib/utils"
-import ClientBlocksRender from "./@builder/components/client-blocks-render"
+import BuilderBlocksRender from "./[id]/components/blocks-render"
 
 interface Child {
   id: string
@@ -74,7 +74,7 @@ const BlocksRender: React.FC<BlocksRenderProps> = React.memo(
           {componentChildren?.map((child: Child) => {
             if (isEditable)
               return (
-                <ClientBlocksRender
+                <BuilderBlocksRender
                   key={child.id}
                   template={child}
                   level={level ? level + 1 : undefined}

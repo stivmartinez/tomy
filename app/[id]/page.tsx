@@ -1,18 +1,18 @@
 "use client"
 
 import React from "react"
-import ClientBlocksRender from "@/app/[site]/@builder/components/client-blocks-render"
+import BuilderBlocksRender from "@/app/[id]/components/blocks-render"
 
+import { useBuilderContext } from "./components/context"
 import BuilderNavbar from "./components/navbar"
-import { useBuilderContext } from "./context"
 
-const Builder = () => {
+const BuilderPage = () => {
   const { structure, renderKey } = useBuilderContext()
 
   return (
     <>
       {structure.map((block, index) => (
-        <ClientBlocksRender
+        <BuilderBlocksRender
           key={`${block.id}-${renderKey}`}
           template={block}
           index={index}
@@ -24,4 +24,4 @@ const Builder = () => {
   )
 }
 
-export default Builder
+export default BuilderPage
