@@ -1,11 +1,15 @@
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet"
-import blocks from "@/lib/blocks"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 import { CopyXIcon, Layers } from "lucide-react"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
+import blocks from "@/lib/blocks"
+import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { useBuilderContext } from "../../context"
 import { navbarButton, navbarContent, navbarTitle } from "../styles"
 import { LayerItem } from "./layer-item"
@@ -105,23 +109,23 @@ export default function SidebarLayers() {
       </SheetTrigger>
       <SheetContent position="bottom" className={navbarContent}>
         <SheetHeader className={navbarTitle}>Layers</SheetHeader>
-        {structure.length === 0 ? (
-          <div className="p-4">
-            <div className="flex flex-col items-center gap-2 rounded-xl text-center">
-              <CopyXIcon className="text-white/60" />
-              <h3 className="mt-2 text-sm text-white/60">No layers yet</h3>
-              <p className="px-12 text-sm text-white/60">
-                Add some layers and after that come back here.
-              </p>
+        <div className="mx-auto flex w-full max-w-3xl flex-col items-center justify-between">
+          {structure.length === 0 ? (
+            <div className="p-4">
+              <div className="flex flex-col items-center gap-2 rounded-xl text-center">
+                <CopyXIcon className="text-white/60" />
+                <h3 className="mt-2 text-sm text-white/60">No layers yet</h3>
+                <p className="px-12 text-sm text-white/60">
+                  Add some layers and after that come back here.
+                </p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <ScrollArea className="h-96 w-full overflow-y-auto">
+          ) : (
             <DndProvider backend={HTML5Backend}>
-              <div>{renderLayerItems(structure, 0)}</div>
+              <div className="w-full">{renderLayerItems(structure, 0)}</div>
             </DndProvider>
-          </ScrollArea>
-        )}
+          )}
+        </div>
       </SheetContent>
     </Sheet>
   )
