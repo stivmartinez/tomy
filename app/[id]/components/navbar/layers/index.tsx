@@ -103,7 +103,7 @@ export default function SidebarLayers() {
           <Layers size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" size="full" className={navbarContent}>
+      <SheetContent position="bottom" className={navbarContent}>
         <SheetHeader className={navbarTitle}>Layers</SheetHeader>
         {structure.length === 0 ? (
           <div className="p-4">

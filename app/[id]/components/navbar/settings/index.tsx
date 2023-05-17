@@ -24,7 +24,7 @@ export default function SidebarSettings() {
           <SettingsIcon size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" className={navbarContent}>
+      <SheetContent position="bottom" className={navbarContent}>
         <SheetHeader className={navbarTitle}>Settings</SheetHeader>
         <ScrollArea className="h-[620px] w-full">
           <DndProvider backend={HTML5Backend}>

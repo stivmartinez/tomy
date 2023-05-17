@@ -5,15 +5,14 @@ import React from "react"
 import SidebarBlocks from "./blocks"
 import SidebarLayers from "./layers"
 import SidebarSettings from "./settings"
-import { navbarContainer } from "./styles"
 
 const BuilderNavbar = () => {
   return (
-    <nav className={navbarContainer}>
+    <div className="fixed bottom-0 left-0 flex h-12 w-full items-center justify-around bg-black">
       <SidebarBlocks />
       <SidebarLayers />
       <SidebarSettings />
-    </nav>
+    </div>
   )
 }
 

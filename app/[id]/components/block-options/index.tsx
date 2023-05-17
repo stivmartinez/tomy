@@ -1,11 +1,9 @@
-import React, { useState } from "react"
-import BlocksDesign from "@/app/[id]/components/block-options/settings"
+import React from "react"
 import {
   ChevronDown,
   ChevronUp,
   Copy,
   Edit,
-  Paintbrush,
   Settings,
   Trash,
 } from "lucide-react"
@@ -122,6 +120,12 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
         promptMessage: "New button text:",
         icon: Edit,
       },
+      {
+        propertyName: "href",
+        propertyPath: ["props", "href"],
+        promptMessage: "Button URL:",
+        icon: Edit,
+      },
     ],
   }
 
@@ -131,8 +135,8 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
 
     if (blockProperties) {
       return blockProperties.map((property: any) => (
-        <div className="flex flex-col gap-2">
-          <Label className="text-xs text-white" htmlFor={property.propertyName}>
+        <div className="flex flex-col items-start gap-2">
+          <Label className="text-xs text-white/60" htmlFor={property.propertyName}>
             {property.promptMessage}
           </Label>
           <Input
@@ -160,12 +164,12 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
 
   return (
     <div
-      className="fixed bottom-6 left-0 flex w-full justify-center"
+      className="fixed bottom-12 left-0 flex w-full flex-col justify-center"
       style={{ zIndex: 1 }}
     >
-      <div className="z-10 flex w-fit flex-row items-center justify-center gap-2 rounded-xl border border-white/20 bg-black px-4 py-2">
+      <div className="z-10 flex w-full flex-row items-center justify-between gap-2 bg-black px-4 py-2">
         {template.type && (
-          <span className="flex flex-row items-center gap-2 px-2 text-sm font-normal text-white">
+          <span className="flex flex-row items-center gap-2 text-sm font-normal text-white">
             {template.type}
             <span className="inline-flex rounded-full bg-white/10 px-2 py-1 text-xs">
               {template.id}
@@ -201,27 +205,27 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
         >
           <ChevronDown size="16" />
         </Button>
-
-        <BlocksDesign
-          handleClassNameChange={handleClassNameChange}
-          classNames={classNames}
-          renderPropertyButtons={renderPropertyButtons}
-        >
-          <Button
-            onClick={(event) => event.stopPropagation()}
-            className={clientBlocksButton}
-          >
-            <Settings size="16" />
-          </Button>
-        </BlocksDesign>
-        {index !== 0 && (
-          <Button className={clientBlocksButton} onClick={handleClone}>
-            <Copy size="16" />
-          </Button>
-        )}
+        <Button className={clientBlocksButton} onClick={handleClone}>
+          <Copy size="16" />
+        </Button>
         <Button className={clientBlocksButton} onClick={handleRemove}>
           <Trash size="16" />
         </Button>
+      </div>
+      <div
+        className="mx-auto flex w-full max-w-2xl flex-col gap-4 border-b border-white/10 bg-black px-4 pb-2 pt-4 font-normal"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {renderPropertyButtons()}
+        <div className="flex flex-col gap-2">
+          <Input
+            id="classNames"
+            defaultValue={classNames}
+            onChange={(e) => handleClassNameChange(e.target.value)}
+            autoComplete="off"
+            className="h-auto border-white/0 p-0 text-center text-xs text-white/30 focus:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
+          />
+        </div>
       </div>
     </div>
   )

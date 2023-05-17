@@ -146,7 +146,7 @@ const BuilderBlocksRender: React.FC<BuilderBlocksRenderProps> = ({
 
   const shadow =
     selectedBlockId === template.id
-      ? "inset 0 0 0 1px red"
+      ? "0 0 0 2px red"
       : showShadow
       ? "inset 0 0 0 1px blue"
       : "inset 0 0 0 1px transparent"

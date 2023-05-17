@@ -27,7 +27,7 @@ export default function SidebarBlocks() {
           <PlusCircleIcon size="18" />
         </Button>
       </SheetTrigger>
-      <SheetContent position="left" className={navbarContent}>
+      <SheetContent position="bottom" className={navbarContent}>
         <SheetHeader className={navbarTitle}>Blocks</SheetHeader>
         <p className={navbarTitle}>Common used</p>
         <div className="mx-auto flex w-full flex-wrap px-4">
