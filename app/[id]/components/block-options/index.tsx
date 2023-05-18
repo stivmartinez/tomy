@@ -1,16 +1,9 @@
-import React from "react"
-import {
-  ChevronDown,
-  ChevronUp,
-  Copy,
-  Edit,
-  Settings,
-  Trash,
-} from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ChevronDown, ChevronUp, Copy, Edit, Settings, Trash, X } from "lucide-react"
+import React from "react"
+
 import { clientBlocksButton } from "../blocks-render/styles"
 
 type BlockProperty = {
@@ -171,7 +164,7 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
       style={{ zIndex: 1 }}
     >
       <div className="z-10 flex h-12 w-full flex-row items-center justify-between gap-2 border-y border-white/10 bg-black px-4">
-        <div className="mx-auto flex w-full max-w-3xl flex-row items-center justify-between gap-4">
+        <div className="mx-auto flex w-full flex-row items-center justify-between gap-4">
           {template.type && (
             <span className="flex flex-row items-center gap-2 text-sm font-normal text-white/60">
               {template.type}
@@ -221,6 +214,11 @@ const BlockOptions: React.FC<BlockOptionsProps> = ({
                 </Button>
               </>
             )}
+          <div className="flex justify-end">
+            <Button className="h-6 w-6 rounded-none bg-black p-0 text-white/60">
+              <X size="14" />
+            </Button>
+          </div>
         </div>
       </div>
       <div

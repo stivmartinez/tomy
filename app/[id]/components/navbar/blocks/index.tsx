@@ -1,21 +1,11 @@
-import { PlusCircleIcon, PlusIcon, Square } from "lucide-react"
-
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "@/components/ui/sheet"
 import blocks from "@/lib/blocks"
 import { generateRandomId } from "@/lib/generateRandomId"
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { PlusIcon, Square } from "lucide-react"
+
 import { useBuilderContext } from "../../context"
-import {
-  navbarButton,
-  navbarContent,
-  navbarInternalButtonSquare,
-  navbarTitle,
-} from "../styles"
+import { navbarButton, navbarContent, navbarInternalButtonSquare, navbarTitle } from "../styles"
 
 export default function SidebarBlocks() {
   const { selectedBlockId, setStructure, addBlock } = useBuilderContext()
