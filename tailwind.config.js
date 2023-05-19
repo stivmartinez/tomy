@@ -7,11 +7,11 @@ module.exports = {
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./ui/**/*.{js,ts,jsx,tsx}",
   ],
-  safelist: [
-    {
-      pattern: /.*/,
-    },
-  ],
+  //safelist: [
+    //{
+      //pattern: /.*/,
+    //},
+  //],
   theme: {
     container: {
       center: true,

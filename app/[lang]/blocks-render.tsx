@@ -10,7 +10,7 @@ interface Child {
   children: Child[]
 }
 
-interface BlocksRenderProps {
+export interface BlocksRenderProps {
   template: any
   level?: number
   children?: React.ReactNode
