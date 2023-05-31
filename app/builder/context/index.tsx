@@ -95,25 +95,6 @@ export const BuilderContextProvider: React.FC<any> = ({ children }) => {
     [addChild]
   )
 
-  const removeBlock = useCallback((blockId: string) => {
-    setStructure((prevStructure) => removeBlockById(prevStructure, blockId))
-    setRenderKey((prevRenderKey) => prevRenderKey + 1)
-  }, [])
-
-  const removeBlockById = (blocks: any[], blockId: string): any[] => {
-    const result = []
-    for (let i = 0; i < blocks.length; i++) {
-      const block = blocks[i]
-      if (block.id !== blockId) {
-        if (block.children && block.children.length > 0) {
-          block.children = removeBlockById(block.children, blockId)
-        }
-        result.push(block)
-      }
-    }
-    return result
-  }
-
   const moveBlock = (blockId: any, direction: any) => {
     setStructure((prevStructure) => {
       const newStructure = JSON.parse(JSON.stringify(prevStructure))
@@ -234,7 +215,6 @@ export const BuilderContextProvider: React.FC<any> = ({ children }) => {
         selectedBlockId,
         setSelectedBlockId,
         addBlock,
-        removeBlock,
         showShadow,
         setShowShadow,
         saveStructure,

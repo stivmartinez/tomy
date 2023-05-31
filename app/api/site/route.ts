@@ -1,4 +1,3 @@
-// Import the necessary modules
 import fs from 'fs'
 import { NextRequest, NextResponse } from 'next/server'
 import path from 'path'
@@ -8,13 +7,13 @@ export async function GET(req: Request) {
   const filePath = path.join(process.cwd(), 'sites', `${siteId}.json`)
 
   if (!fs.existsSync(filePath)) {
-    return NextResponse.error({ status: 404 })
+    return new NextResponse(null, { status: 404 })
   }
 
   const fileContents = fs.readFileSync(filePath, 'utf8')
   const data = JSON.parse(fileContents)
 
-  return NextResponse.json(data)
+  return new NextResponse(JSON.stringify(data))
 }
 
 export async function POST(req: NextRequest) {
@@ -24,8 +23,18 @@ export async function POST(req: NextRequest) {
     const filePath = path.join(process.cwd(), 'sites', `${siteId}.json`)
     fs.writeFileSync(filePath, JSON.stringify(jsonData))
 
-    return NextResponse.json({ status: 'success' })
+    return new NextResponse(JSON.stringify({ status: 'success' }))
   } catch (error) {
-    return NextResponse.json({ status: 'error', error: error.message }, 500)
+    if (error instanceof Error) {
+      return new NextResponse(
+        JSON.stringify({ status: 'error', error: error.message }),
+        { status: 500 }
+      )
+    }
+
+    return new NextResponse(
+      JSON.stringify({ status: 'error', error: 'An unknown error occurred.' }),
+      { status: 500 }
+    )
   }
 }
