@@ -6,11 +6,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./ui/**/*.{js,ts,jsx,tsx}",
-  ],
-  safelist: [
-    {
-      pattern: /.*/,
-    },
+    "./sites/**/*.{js,ts,jsx,tsx,json}",
   ],
   theme: {
     container: {
